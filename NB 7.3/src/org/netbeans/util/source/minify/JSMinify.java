@@ -83,7 +83,7 @@ public final class JSMinify implements ActionListener {
             String outputFilePath ;
 
             if (minifyProperty.isNewJSFile() && minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()) {
-                outputFilePath = file.getParent().getPath() + File.separator + file.getName() + "-" + minifyProperty.getPreExtensionJS() + "." + file.getExt();
+                outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorJS() + minifyProperty.getPreExtensionJS() + "." + file.getExt();
             } else {
                 outputFilePath = inputFilePath;
             }

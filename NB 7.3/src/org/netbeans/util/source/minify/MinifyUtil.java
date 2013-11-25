@@ -20,6 +20,7 @@ import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 import org.mozilla.javascript.ErrorReporter;
 import org.mozilla.javascript.EvaluatorException;
@@ -55,14 +56,14 @@ public class MinifyUtil {
                     String outputFilePath;
 
                     if (minifyProperty.isSkipPreExtensionJS() && minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
-                        String postFix = file.getName().substring(file.getName().lastIndexOf("-") + 1, file.getName().length());
-                        if (minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty() && minifyProperty.getPreExtensionJS().equalsIgnoreCase(postFix)) {
+                         if (minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty() &&
+                                file.getName().matches(".*"+Pattern.quote(minifyProperty.getSeparatorJS() + minifyProperty.getPreExtensionJS()))) {
                             allow = false;
                         }
                     }
                     if (allow) {
                         if (minifyProperty.isNewJSFile() && minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()) {
-                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + "-" + minifyProperty.getPreExtensionJS() + "." + file.getExt();
+                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorJS() + minifyProperty.getPreExtensionJS() + "." + file.getExt();
                         } else {
                             outputFilePath = inputFilePath;
                         }
@@ -83,14 +84,15 @@ public class MinifyUtil {
                     String outputFilePath;
 
                     if (minifyProperty.isSkipPreExtensionCSS() && minifyProperty.isBuildCSSMinify() && minifyProperty.isNewCSSFile()) {
-                        String postFix = file.getName().substring(file.getName().lastIndexOf("-") + 1, file.getName().length());
-                        if (minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty() && minifyProperty.getPreExtensionCSS().equalsIgnoreCase(postFix)) {
+                       // String postFix = file.getName().substring(file.getName().lastIndexOf(minifyProperty.getSeparatorCSS()) + 1, file.getName().length());
+                        if (minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty() && 
+                                 file.getName().matches(".*"+Pattern.quote(minifyProperty.getSeparatorCSS() + minifyProperty.getPreExtensionCSS()))) {
                             allow = false;
-                        }
+                        } 
                     }
                     if (allow) {
                         if (minifyProperty.isNewCSSFile() && minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty()) {
-                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + "-" + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
+                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorCSS() + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
                         } else {
                             outputFilePath = inputFilePath;
                         }
@@ -122,7 +124,7 @@ public class MinifyUtil {
             File outputFile = new File(outputFilename);
             in = new InputStreamReader(new FileInputStream(inputFile), minifyProperty.getCharset());
 
-            JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.YuiCompressorErrorReporter());
+            JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter());
             in.close();
             in = null;
 
@@ -141,7 +143,7 @@ public class MinifyUtil {
 
     public void compressJavaScriptInternal(Reader in, Writer out, MinifyProperty minifyProperty) throws IOException {
         try {
-            JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.YuiCompressorErrorReporter());
+            JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter());
             in.close();
             in = null;
             compressor.compress(out, minifyProperty.getLineBreakPosition(), minifyProperty.isJsObfuscate(), minifyProperty.getVerbose(), minifyProperty.isPreserveSemicolon(), minifyProperty.getDisableOptimizations());
@@ -193,7 +195,7 @@ public class MinifyUtil {
     }
     private static final Logger logger = Logger.getLogger(MinifyUtil.class.getName());
 
-    private static class YuiCompressorErrorReporter implements ErrorReporter {
+    private static class CompressorErrorReporter implements ErrorReporter {
 
         @Override
         public void warning(String message, String sourceName, int line, String lineSource, int lineOffset) {

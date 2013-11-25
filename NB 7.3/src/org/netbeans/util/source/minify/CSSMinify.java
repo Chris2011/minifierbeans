@@ -84,7 +84,7 @@ public final class CSSMinify implements ActionListener {
             String outputFilePath;
 
             if (minifyProperty.isNewCSSFile() && minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty()) {
-                outputFilePath = file.getParent().getPath() + File.separator + file.getName() + "-" + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
+                outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorCSS() + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
             } else {
                 outputFilePath = inputFilePath;
             }
