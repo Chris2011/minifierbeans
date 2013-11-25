@@ -24,9 +24,16 @@ public class MinifyProperty implements Serializable {
     private String preExtensionJS = "min";
     private Boolean jsObfuscate = true;//munge
     private Boolean preserveSemicolon = false;
+    private Character separatorJS = '.';
+    
     private Boolean newCSSFile = true;
     private String preExtensionCSS = "min";
+     private Character separatorCSS = '.';
+     
+     
     private Boolean separatBuild = false;
+    
+    
     private Boolean buildCSSMinify = true;
     private Boolean skipPreExtensionCSS = true;
     
@@ -276,5 +283,33 @@ public class MinifyProperty implements Serializable {
      */
     public void setSkipPreExtensionJS(Boolean skipPreExtensionJS) {
         this.skipPreExtensionJS = skipPreExtensionJS;
+    }
+
+    /**
+     * @return the separatorJS
+     */
+    public Character getSeparatorJS() {
+        return separatorJS;
+    }
+
+    /**
+     * @param separatorJS the separatorJS to set
+     */
+    public void setSeparatorJS(Character separatorJS) {
+        this.separatorJS = separatorJS;
+    }
+
+    /**
+     * @return the separatorCSS
+     */
+    public Character getSeparatorCSS() {
+        return separatorCSS;
+    }
+
+    /**
+     * @param separatorCSS the separatorCSS to set
+     */
+    public void setSeparatorCSS(Character separatorCSS) {
+        this.separatorCSS = separatorCSS;
     }
 }
