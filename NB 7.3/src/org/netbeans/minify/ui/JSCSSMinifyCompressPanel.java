@@ -34,37 +34,58 @@ package org.netbeans.minify.ui;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        javascriptMinifyTab = new javax.swing.JTabbedPane();
         jLayeredPane1 = new javax.swing.JLayeredPane();
+        jLayeredPane5 = new javax.swing.JLayeredPane();
         jLabel3 = new javax.swing.JLabel();
         newJSFile = new javax.swing.JCheckBox();
         jsObfuscate = new javax.swing.JCheckBox();
+        preExtensionJS_Label = new javax.swing.JLabel();
         separatorJS_Label = new javax.swing.JLabel();
         preExtensionJS = new javax.swing.JTextField();
-        preExtensionJS_Label = new javax.swing.JLabel();
         separatorJS = new javax.swing.JTextField();
         jLayeredPane2 = new javax.swing.JLayeredPane();
+        jLayeredPane7 = new javax.swing.JLayeredPane();
         jLabel4 = new javax.swing.JLabel();
         newCSSFile = new javax.swing.JCheckBox();
+        preExtensionCSS_Label = new javax.swing.JLabel();
         separatorCSS_Label = new javax.swing.JLabel();
         preExtensionCSS = new javax.swing.JTextField();
-        preExtensionCSS_Label = new javax.swing.JLabel();
         separatorCSS = new javax.swing.JTextField();
+        jLayeredPane4 = new javax.swing.JLayeredPane();
+        jLayeredPane9 = new javax.swing.JLayeredPane();
+        jLabel8 = new javax.swing.JLabel();
+        newHTMLFile = new javax.swing.JCheckBox();
+        preExtensionHTML_Label = new javax.swing.JLabel();
+        separatorHTML_Label = new javax.swing.JLabel();
+        preExtensionHTML = new javax.swing.JTextField();
+        separatorHTML = new javax.swing.JTextField();
+        buildInternalJSMinify = new javax.swing.JCheckBox();
+        buildInternalCSSMinify = new javax.swing.JCheckBox();
         jLayeredPane3 = new javax.swing.JLayeredPane();
+        jLayeredPane6 = new javax.swing.JLayeredPane();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         separatBuild = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         buildJSMinify = new javax.swing.JCheckBox();
         buildCSSMinify = new javax.swing.JCheckBox();
         skipPreExtensionJS = new javax.swing.JCheckBox();
         skipPreExtensionCSS = new javax.swing.JCheckBox();
+        jLabel6 = new javax.swing.JLabel();
+        buildHTMLMinify = new javax.swing.JCheckBox();
+        skipPreExtensionHTML = new javax.swing.JCheckBox();
+        addLogToFile = new javax.swing.JCheckBox();
+
+        setAlignmentX(0.0F);
+        setAlignmentY(0.0F);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.jLabel3.text")); // NOI18N
-        jLabel3.setBounds(30, 10, 210, 22);
-        jLayeredPane1.add(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLabel3.setBounds(0, 0, 210, 22);
+        jLayeredPane5.add(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        newJSFile.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(newJSFile, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.newJSFile.text")); // NOI18N
         newJSFile.setToolTipText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.newJSFile.toolTipText")); // NOI18N
         newJSFile.addActionListener(new java.awt.event.ActionListener() {
@@ -73,15 +94,20 @@ package org.netbeans.minify.ui;
             }
         });
         newJSFile.setBounds(50, 40, 140, 23);
-        jLayeredPane1.add(newJSFile, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane5.add(newJSFile, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        jsObfuscate.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(jsObfuscate, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.jsObfuscate.text")); // NOI18N
         jsObfuscate.setBounds(50, 70, 89, 23);
-        jLayeredPane1.add(jsObfuscate, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane5.add(jsObfuscate, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        org.openide.awt.Mnemonics.setLocalizedText(preExtensionJS_Label, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.preExtensionJS_Label.text")); // NOI18N
+        preExtensionJS_Label.setBounds(205, 40, 120, 20);
+        jLayeredPane5.add(preExtensionJS_Label, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         org.openide.awt.Mnemonics.setLocalizedText(separatorJS_Label, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.separatorJS_Label.text")); // NOI18N
-        separatorJS_Label.setBounds(200, 70, 140, 20);
-        jLayeredPane1.add(separatorJS_Label, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        separatorJS_Label.setBounds(200, 70, 120, 20);
+        jLayeredPane5.add(separatorJS_Label, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         preExtensionJS.setText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.preExtensionJS.text")); // NOI18N
         preExtensionJS.addActionListener(new java.awt.event.ActionListener() {
@@ -90,11 +116,7 @@ package org.netbeans.minify.ui;
             }
         });
         preExtensionJS.setBounds(340, 40, 50, 20);
-        jLayeredPane1.add(preExtensionJS, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionJS_Label, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.preExtensionJS_Label.text")); // NOI18N
-        preExtensionJS_Label.setBounds(205, 40, 130, 20);
-        jLayeredPane1.add(preExtensionJS_Label, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane5.add(preExtensionJS, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         separatorJS.setText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.separatorJS.text")); // NOI18N
         separatorJS.setToolTipText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.separatorJS.toolTipText")); // NOI18N
@@ -104,14 +126,20 @@ package org.netbeans.minify.ui;
             }
         });
         separatorJS.setBounds(340, 70, 50, 20);
-        jLayeredPane1.add(separatorJS, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane5.add(separatorJS, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLayeredPane5.setBounds(20, 20, 430, 120);
+        jLayeredPane1.add(jLayeredPane5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javascriptMinifyTab.addTab(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.jLayeredPane1.TabConstraints.tabTitle"), jLayeredPane1); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.jLabel4.text")); // NOI18N
-        jLabel4.setBounds(30, 20, 170, 25);
-        jLayeredPane2.add(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLabel4.setBounds(10, 20, 170, 25);
+        jLayeredPane7.add(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        newCSSFile.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(newCSSFile, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.newCSSFile.text")); // NOI18N
         newCSSFile.setToolTipText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.newCSSFile.toolTipText")); // NOI18N
         newCSSFile.addActionListener(new java.awt.event.ActionListener() {
@@ -119,12 +147,16 @@ package org.netbeans.minify.ui;
                 newCSSFileActionPerformed(evt);
             }
         });
-        newCSSFile.setBounds(50, 50, 123, 23);
-        jLayeredPane2.add(newCSSFile, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        newCSSFile.setBounds(50, 60, 123, 23);
+        jLayeredPane7.add(newCSSFile, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        org.openide.awt.Mnemonics.setLocalizedText(preExtensionCSS_Label, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.preExtensionCSS_Label.text")); // NOI18N
+        preExtensionCSS_Label.setBounds(210, 60, 113, 20);
+        jLayeredPane7.add(preExtensionCSS_Label, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         org.openide.awt.Mnemonics.setLocalizedText(separatorCSS_Label, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.separatorCSS_Label.text")); // NOI18N
-        separatorCSS_Label.setBounds(210, 80, 130, 20);
-        jLayeredPane2.add(separatorCSS_Label, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        separatorCSS_Label.setBounds(210, 90, 120, 20);
+        jLayeredPane7.add(separatorCSS_Label, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         preExtensionCSS.setText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.preExtensionCSS.text")); // NOI18N
         preExtensionCSS.addActionListener(new java.awt.event.ActionListener() {
@@ -132,12 +164,8 @@ package org.netbeans.minify.ui;
                 preExtensionCSSActionPerformed(evt);
             }
         });
-        preExtensionCSS.setBounds(340, 50, 50, 20);
-        jLayeredPane2.add(preExtensionCSS, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionCSS_Label, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.preExtensionCSS_Label.text")); // NOI18N
-        preExtensionCSS_Label.setBounds(210, 50, 113, 20);
-        jLayeredPane2.add(preExtensionCSS_Label, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        preExtensionCSS.setBounds(340, 60, 50, 20);
+        jLayeredPane7.add(preExtensionCSS, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         separatorCSS.setText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.separatorCSS.text")); // NOI18N
         separatorCSS.setToolTipText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.separatorCSS.toolTipText")); // NOI18N
@@ -146,40 +174,108 @@ package org.netbeans.minify.ui;
                 separatorCSSActionPerformed(evt);
             }
         });
-        separatorCSS.setBounds(340, 80, 50, 20);
-        jLayeredPane2.add(separatorCSS, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        separatorCSS.setBounds(340, 90, 50, 20);
+        jLayeredPane7.add(separatorCSS, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLayeredPane7.setBounds(10, 0, 450, 190);
+        jLayeredPane2.add(jLayeredPane7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javascriptMinifyTab.addTab(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.jLayeredPane2.TabConstraints.tabTitle"), jLayeredPane2); // NOI18N
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(51, 51, 51));
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel8, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.jLabel8.text")); // NOI18N
+        jLabel8.setBounds(0, 0, 210, 22);
+        jLayeredPane9.add(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        newHTMLFile.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(newHTMLFile, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.newHTMLFile.text")); // NOI18N
+        newHTMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.newHTMLFile.toolTipText")); // NOI18N
+        newHTMLFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newHTMLFileActionPerformed(evt);
+            }
+        });
+        newHTMLFile.setBounds(40, 40, 140, 23);
+        jLayeredPane9.add(newHTMLFile, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        org.openide.awt.Mnemonics.setLocalizedText(preExtensionHTML_Label, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.preExtensionHTML_Label.text")); // NOI18N
+        preExtensionHTML_Label.setBounds(190, 40, 130, 20);
+        jLayeredPane9.add(preExtensionHTML_Label, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        org.openide.awt.Mnemonics.setLocalizedText(separatorHTML_Label, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.separatorHTML_Label.text")); // NOI18N
+        separatorHTML_Label.setBounds(200, 70, 120, 20);
+        jLayeredPane9.add(separatorHTML_Label, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        preExtensionHTML.setText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.preExtensionHTML.text")); // NOI18N
+        preExtensionHTML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                preExtensionHTMLActionPerformed(evt);
+            }
+        });
+        preExtensionHTML.setBounds(330, 40, 50, 20);
+        jLayeredPane9.add(preExtensionHTML, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        separatorHTML.setText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.separatorHTML.text")); // NOI18N
+        separatorHTML.setToolTipText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.separatorHTML.toolTipText")); // NOI18N
+        separatorHTML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                separatorHTMLActionPerformed(evt);
+            }
+        });
+        separatorHTML.setBounds(330, 70, 50, 20);
+        jLayeredPane9.add(separatorHTML, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        buildInternalJSMinify.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(buildInternalJSMinify, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.buildInternalJSMinify.text")); // NOI18N
+        buildInternalJSMinify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buildInternalJSMinifyActionPerformed(evt);
+            }
+        });
+        buildInternalJSMinify.setBounds(40, 120, 150, 23);
+        jLayeredPane9.add(buildInternalJSMinify, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        buildInternalCSSMinify.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(buildInternalCSSMinify, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.buildInternalCSSMinify.text")); // NOI18N
+        buildInternalCSSMinify.setBounds(190, 120, 170, 23);
+        jLayeredPane9.add(buildInternalCSSMinify, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLayeredPane9.setBounds(20, 20, 430, 230);
+        jLayeredPane4.add(jLayeredPane9, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javascriptMinifyTab.addTab(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.jLayeredPane4.TabConstraints.tabTitle"), jLayeredPane4); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.jLabel5.text")); // NOI18N
-        jLabel5.setBounds(30, 10, 180, 15);
-        jLayeredPane3.add(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLabel5.setBounds(10, 10, 180, 15);
+        jLayeredPane6.add(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jLabel6.setForeground(new java.awt.Color(102, 102, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.jLabel6.text")); // NOI18N
-        jLabel6.setBounds(230, 10, 168, 14);
-        jLayeredPane3.add(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
+        separatBuild.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(separatBuild, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.separatBuild.text")); // NOI18N
         separatBuild.setToolTipText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.separatBuild.toolTipText")); // NOI18N
         separatBuild.setActionCommand(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.separatBuild.actionCommand")); // NOI18N
         separatBuild.setBounds(50, 40, 163, 23);
-        jLayeredPane3.add(separatBuild, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane6.add(separatBuild, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(51, 51, 51));
         org.openide.awt.Mnemonics.setLocalizedText(jLabel7, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.jLabel7.text")); // NOI18N
         jLabel7.setBounds(50, 80, 292, 13);
-        jLayeredPane3.add(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane6.add(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        buildJSMinify.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(buildJSMinify, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.buildJSMinify.text")); // NOI18N
         buildJSMinify.setBounds(50, 100, 67, 23);
-        jLayeredPane3.add(buildJSMinify, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane6.add(buildJSMinify, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        buildCSSMinify.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(buildCSSMinify, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.buildCSSMinify.text")); // NOI18N
         buildCSSMinify.setBounds(50, 130, 75, 23);
-        jLayeredPane3.add(buildCSSMinify, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane6.add(buildCSSMinify, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        skipPreExtensionJS.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(skipPreExtensionJS, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.skipPreExtensionJS.text")); // NOI18N
         skipPreExtensionJS.setToolTipText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.skipPreExtensionJS.toolTipText")); // NOI18N
         skipPreExtensionJS.addActionListener(new java.awt.event.ActionListener() {
@@ -188,35 +284,59 @@ package org.netbeans.minify.ui;
             }
         });
         skipPreExtensionJS.setBounds(210, 100, 250, 23);
-        jLayeredPane3.add(skipPreExtensionJS, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane6.add(skipPreExtensionJS, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        skipPreExtensionCSS.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(skipPreExtensionCSS, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.skipPreExtensionCSS.text")); // NOI18N
         skipPreExtensionCSS.setToolTipText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.skipPreExtensionCSS.toolTipText")); // NOI18N
         skipPreExtensionCSS.setBounds(210, 130, 230, 23);
-        jLayeredPane3.add(skipPreExtensionCSS, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane6.add(skipPreExtensionCSS, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLabel6.setForeground(new java.awt.Color(102, 102, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.jLabel6.text")); // NOI18N
+        jLabel6.setBounds(230, 10, 168, 14);
+        jLayeredPane6.add(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        buildHTMLMinify.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(buildHTMLMinify, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.buildHTMLMinify.text")); // NOI18N
+        buildHTMLMinify.setBounds(50, 160, 90, 23);
+        jLayeredPane6.add(buildHTMLMinify, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        skipPreExtensionHTML.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(skipPreExtensionHTML, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.skipPreExtensionHTML.text")); // NOI18N
+        skipPreExtensionHTML.setToolTipText(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.skipPreExtensionHTML.toolTipText")); // NOI18N
+        skipPreExtensionHTML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skipPreExtensionHTMLActionPerformed(evt);
+            }
+        });
+        skipPreExtensionHTML.setBounds(210, 160, 230, 23);
+        jLayeredPane6.add(skipPreExtensionHTML, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLayeredPane6.setBounds(20, 10, 440, 200);
+        jLayeredPane3.add(jLayeredPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        addLogToFile.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(addLogToFile, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.addLogToFile.text")); // NOI18N
+        addLogToFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addLogToFileActionPerformed(evt);
+            }
+        });
+        addLogToFile.setBounds(70, 220, 180, 23);
+        jLayeredPane3.add(addLogToFile, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javascriptMinifyTab.addTab(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.jLayeredPane3.TabConstraints.tabTitle"), jLayeredPane3); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(147, 147, 147)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLayeredPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
-                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLayeredPane2))
-                .addContainerGap(137, Short.MAX_VALUE))
+            .addComponent(javascriptMinifyTab, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+            .addComponent(javascriptMinifyTab, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -247,6 +367,30 @@ package org.netbeans.minify.ui;
     private void separatorCSSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_separatorCSSActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_separatorCSSActionPerformed
+
+    private void newHTMLFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newHTMLFileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newHTMLFileActionPerformed
+
+    private void preExtensionHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preExtensionHTMLActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_preExtensionHTMLActionPerformed
+
+    private void separatorHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_separatorHTMLActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_separatorHTMLActionPerformed
+
+    private void skipPreExtensionHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipPreExtensionHTMLActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_skipPreExtensionHTMLActionPerformed
+
+    private void buildInternalJSMinifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buildInternalJSMinifyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buildInternalJSMinifyActionPerformed
+
+    private void addLogToFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLogToFileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addLogToFileActionPerformed
   
     void load() {
         // TODO read settings and initialize GUI
@@ -273,29 +417,46 @@ package org.netbeans.minify.ui;
         return true;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JCheckBox addLogToFile;
     public javax.swing.JCheckBox buildCSSMinify;
+    public javax.swing.JCheckBox buildHTMLMinify;
+    public javax.swing.JCheckBox buildInternalCSSMinify;
+    public javax.swing.JCheckBox buildInternalJSMinify;
     public javax.swing.JCheckBox buildJSMinify;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JLayeredPane jLayeredPane3;
+    private javax.swing.JLayeredPane jLayeredPane4;
+    private javax.swing.JLayeredPane jLayeredPane5;
+    private javax.swing.JLayeredPane jLayeredPane6;
+    private javax.swing.JLayeredPane jLayeredPane7;
+    private javax.swing.JLayeredPane jLayeredPane9;
+    private javax.swing.JTabbedPane javascriptMinifyTab;
     public javax.swing.JCheckBox jsObfuscate;
     public javax.swing.JCheckBox newCSSFile;
+    public javax.swing.JCheckBox newHTMLFile;
     public javax.swing.JCheckBox newJSFile;
     public javax.swing.JTextField preExtensionCSS;
     public javax.swing.JLabel preExtensionCSS_Label;
+    public javax.swing.JTextField preExtensionHTML;
+    public javax.swing.JLabel preExtensionHTML_Label;
     public javax.swing.JTextField preExtensionJS;
     public javax.swing.JLabel preExtensionJS_Label;
     public javax.swing.JCheckBox separatBuild;
     public javax.swing.JTextField separatorCSS;
     public javax.swing.JLabel separatorCSS_Label;
+    public javax.swing.JTextField separatorHTML;
+    public javax.swing.JLabel separatorHTML_Label;
     public javax.swing.JTextField separatorJS;
     public javax.swing.JLabel separatorJS_Label;
     public javax.swing.JCheckBox skipPreExtensionCSS;
+    public javax.swing.JCheckBox skipPreExtensionHTML;
     public javax.swing.JCheckBox skipPreExtensionJS;
     // End of variables declaration//GEN-END:variables
 }

@@ -30,6 +30,13 @@ public class MinifyProperty implements Serializable {
     private String preExtensionCSS = "min";
      private Character separatorCSS = '.';
      
+         private Boolean newHTMLFile = true;
+    private String preExtensionHTML = "min";
+     private Character separatorHTML = '.';
+     
+      private Boolean buildInternalJSMinify = true;
+      private Boolean buildInternalCSSMinify = true;
+     
      
     private Boolean separatBuild = false;
     
@@ -39,6 +46,11 @@ public class MinifyProperty implements Serializable {
     
     private Boolean buildJSMinify = true;
     private Boolean skipPreExtensionJS = true;
+    
+        private Boolean buildHTMLMinify = true;
+    private Boolean skipPreExtensionHTML = true;
+    
+    private Boolean appendLogToFile = false;
     
      private String charset = "UTF-8";
     private Integer lineBreakPosition = -1;
@@ -311,5 +323,117 @@ public class MinifyProperty implements Serializable {
      */
     public void setSeparatorCSS(Character separatorCSS) {
         this.separatorCSS = separatorCSS;
+    }
+
+    /**
+     * @return the newHTMLFile
+     */
+    public Boolean isNewHTMLFile() {
+        return newHTMLFile;
+    }
+
+    /**
+     * @param newHTMLFile the newHTMLFile to set
+     */
+    public void setNewHTMLFile(Boolean newHTMLFile) {
+        this.newHTMLFile = newHTMLFile;
+    }
+
+    /**
+     * @return the preExtensionHTML
+     */
+    public String getPreExtensionHTML() {
+        return preExtensionHTML;
+    }
+
+    /**
+     * @param preExtensionHTML the preExtensionHTML to set
+     */
+    public void setPreExtensionHTML(String preExtensionHTML) {
+        this.preExtensionHTML = preExtensionHTML;
+    }
+
+    /**
+     * @return the separatorHTML
+     */
+    public Character getSeparatorHTML() {
+        return separatorHTML;
+    }
+
+    /**
+     * @param separatorHTML the separatorHTML to set
+     */
+    public void setSeparatorHTML(Character separatorHTML) {
+        this.separatorHTML = separatorHTML;
+    }
+
+    /**
+     * @return the buildHTMLMinify
+     */
+    public Boolean isBuildHTMLMinify() {
+        return buildHTMLMinify;
+    }
+
+    /**
+     * @param buildHTMLMinify the buildHTMLMinify to set
+     */
+    public void setBuildHTMLMinify(Boolean buildHTMLMinify) {
+        this.buildHTMLMinify = buildHTMLMinify;
+    }
+
+    /**
+     * @return the skipPreExtensionHTML
+     */
+    public Boolean isSkipPreExtensionHTML() {
+        return skipPreExtensionHTML;
+    }
+
+    /**
+     * @param skipPreExtensionHTML the skipPreExtensionHTML to set
+     */
+    public void setSkipPreExtensionHTML(Boolean skipPreExtensionHTML) {
+        this.skipPreExtensionHTML = skipPreExtensionHTML;
+    }
+
+    /**
+     * @return the buildInternalJSMinify
+     */
+    public Boolean isBuildInternalJSMinify() {
+        return buildInternalJSMinify;
+    }
+
+    /**
+     * @param buildInternalJSMinify the buildInternalJSMinify to set
+     */
+    public void setBuildInternalJSMinify(Boolean buildInternalJSMinify) {
+        this.buildInternalJSMinify = buildInternalJSMinify;
+    }
+
+    /**
+     * @return the buildInternalCSSMinify
+     */
+    public Boolean isBuildInternalCSSMinify() {
+        return buildInternalCSSMinify;
+    }
+
+    /**
+     * @param buildInternalCSSMinify the buildInternalCSSMinify to set
+     */
+    public void setBuildInternalCSSMinify(Boolean buildInternalCSSMinify) {
+        this.buildInternalCSSMinify = buildInternalCSSMinify;
+    }
+
+    /**
+     * @return the appendLogToFile
+     */
+    public Boolean isAppendLogToFile() {
+        return appendLogToFile;
+    }
+
+    /**
+     * @param appendLogToFile the appendLogToFile to set
+     */
+    public void setAppendLogToFile(Boolean appendLogToFile) {
+        this.appendLogToFile = appendLogToFile;
     }
 }
