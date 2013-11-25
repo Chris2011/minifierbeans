@@ -53,6 +53,8 @@ public class MinifyFileResult {
         this.outputFileSize = outputFileSize;
     }
 
-   
  
+  public float getSavedPercentage() {
+        return (1 - ((float) this.getOutputFileSize() / (float) this.getInputFileSize())) * 100;
+    }
 }

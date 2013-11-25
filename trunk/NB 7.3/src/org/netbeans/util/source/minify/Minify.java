@@ -49,7 +49,7 @@ displayName = "#CTL_Minify")
 @ActionReferences({
     @ActionReference(path = "Loaders/folder/any/Actions", position = 0, separatorBefore = -50, separatorAfter = 50)
 })
-@Messages("CTL_Minify=Minify JS-CSS")
+@Messages("CTL_Minify=Minify WEB Content")
 public final class Minify implements ActionListener {
 
     private final DataObject context;
@@ -65,7 +65,7 @@ public final class Minify implements ActionListener {
             public void run() {minify();}
         };
         final RequestProcessor.Task theTask = RP.create(runnable);
-        final ProgressHandle ph = ProgressHandleFactory.createHandle("Minifying JS & CSS ", theTask);
+        final ProgressHandle ph = ProgressHandleFactory.createHandle("Minifying JS , CSS and other WEB Content ", theTask);
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
@@ -121,8 +121,9 @@ return df.format(today);
      minifyResult.setDirectories(minifyResult.getDirectories()+1);
      float jsSpaceSaved =(1 - ((float)minifyResult.getOutputJsFilesSize()/(float)minifyResult.getInputJsFilesSize()))*100;
        float cssSpaceSaved =(1 - ((float)minifyResult.getOutputCssFilesSize()/(float)minifyResult.getInputCssFilesSize()))*100;
+        float htmlSpaceSaved =(1 - ((float)minifyResult.getOutputHtmlFilesSize()/(float)minifyResult.getInputHtmlFilesSize()))*100;
      
-     String cssEval = "" , jsEval = "";
+     String cssEval = "" , jsEval = "",htmlEval = "" ;
      
      
      if(!Float.isNaN(jsSpaceSaved)){
@@ -135,6 +136,11 @@ return df.format(today);
                 "After Minifying CSS Files Size :  "+minifyResult.getOutputCssFilesSize()+" Bytes \n"+
                 "Css Space Saved "+ cssSpaceSaved +"% \n"  ;
      }
+     if(!Float.isNaN(htmlSpaceSaved)){
+         htmlEval = "Input HTML Files Size :  "+minifyResult.getInputHtmlFilesSize()+" Bytes \n"+
+                "After Minifying HTML Files Size :  "+minifyResult.getOutputHtmlFilesSize()+" Bytes \n"+
+                "Html Space Saved "+ htmlSpaceSaved +"% \n"  ;
+     }
        
        
        
@@ -143,7 +149,8 @@ return df.format(today);
                 minifyResult.getDirectories()+" Directories Found \n"+
                 minifyResult.getJsFiles()+" JS Files Minified \n"+
                 minifyResult.getCssFiles()+" CSS Files Minified \n"+
-                jsEval + cssEval +
+                minifyResult.getHtmlFiles()+" HTML Files Minified \n"+
+                jsEval + cssEval + htmlEval+
                 "Total Time - "+totalTime +"ms");
          } catch (Exception ex) {
            io.getOut().println("Exception: " + ex.toString());

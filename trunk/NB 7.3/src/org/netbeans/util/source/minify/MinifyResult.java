@@ -20,11 +20,14 @@ public class MinifyResult {
     private Integer directories;
     private Integer cssFiles;
     private Integer jsFiles;
+    private Integer htmlFiles;
     
     private long inputJsFilesSize;
     private long outputJsFilesSize;
     private long inputCssFilesSize;
     private long outputCssFilesSize;
+    private long inputHtmlFilesSize;
+    private long outputHtmlFilesSize;
 
     /**
      * @return the directories
@@ -122,6 +125,48 @@ public class MinifyResult {
      */
     public void setOutputCssFilesSize(long outputCssFilesSize) {
         this.outputCssFilesSize = outputCssFilesSize;
+    }
+
+    /**
+     * @return the htmlFiles
+     */
+    public Integer getHtmlFiles() {
+        return htmlFiles;
+    }
+
+    /**
+     * @param htmlFiles the htmlFiles to set
+     */
+    public void setHtmlFiles(Integer htmlFiles) {
+        this.htmlFiles = htmlFiles;
+    }
+
+    /**
+     * @return the inputHtmlFilesSize
+     */
+    public long getInputHtmlFilesSize() {
+        return inputHtmlFilesSize;
+    }
+
+    /**
+     * @param inputHtmlFilesSize the inputHtmlFilesSize to set
+     */
+    public void setInputHtmlFilesSize(long inputHtmlFilesSize) {
+        this.inputHtmlFilesSize = inputHtmlFilesSize;
+    }
+
+    /**
+     * @return the outputHtmlFilesSize
+     */
+    public long getOutputHtmlFilesSize() {
+        return outputHtmlFilesSize;
+    }
+
+    /**
+     * @param outputHtmlFilesSize the outputHtmlFilesSize to set
+     */
+    public void setOutputHtmlFilesSize(long outputHtmlFilesSize) {
+        this.outputHtmlFilesSize = outputHtmlFilesSize;
     }
  
  

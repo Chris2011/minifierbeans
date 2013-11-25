@@ -89,13 +89,12 @@ public final class JSMinify implements ActionListener {
             }
 
             MinifyFileResult minifyFileResult = util.compressJavaScript(inputFilePath, outputFilePath, minifyProperty);
-            float spaceSaved = (1 - ((float) minifyFileResult.getOutputFileSize() / (float) minifyFileResult.getInputFileSize())) * 100;
-
+           
 
             JOptionPane.showMessageDialog(null, "JS Minified Completed Successfully\n"
                     + "Input JS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
                     + "After Minifying JS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
-                    + "JS Space Saved " + spaceSaved + "%");
+                    + "JS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
 
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);

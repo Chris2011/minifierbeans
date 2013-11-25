@@ -91,12 +91,11 @@ public final class CSSMinify implements ActionListener {
 
 
             MinifyFileResult minifyFileResult = util.compressCss(inputFilePath, outputFilePath, minifyProperty);
-            float spaceSaved = (1 - ((float) minifyFileResult.getOutputFileSize() / (float) minifyFileResult.getInputFileSize())) * 100;
-
+           
             JOptionPane.showMessageDialog(null, "CSS Minified Completed Successfully\n"
                     + "Input CSS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
                     + "After Minifying CSS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
-                    + "CSS Space Saved " + spaceSaved + "%");
+                    + "CSS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
 
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
