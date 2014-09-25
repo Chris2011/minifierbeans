@@ -41,7 +41,7 @@ import org.openide.windows.InputOutput;
 @ActionRegistration(iconBase = "org/netbeans/util/source/minify/compress.png",
         displayName = "#CTL_JSMinify")
 @ActionReferences({
-    @ActionReference(path = "Loaders/text/javascript/Actions", position = 0, separatorBefore = -50, separatorAfter = 50)
+    @ActionReference(path = "Loaders/text/javascript/Actions", position = 200, separatorBefore = 150, separatorAfter = 250)
 })
 @Messages("CTL_JSMinify=Minify JS")
 public final class JSMinify implements ActionListener {
@@ -80,7 +80,7 @@ public final class JSMinify implements ActionListener {
         try {
             FileObject file = context.getPrimaryFile();
             String inputFilePath = file.getPath();
-            String outputFilePath ;
+            String outputFilePath;
 
             if (minifyProperty.isNewJSFile() && minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()) {
                 outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorJS() + minifyProperty.getPreExtensionJS() + "." + file.getExt();
@@ -89,13 +89,13 @@ public final class JSMinify implements ActionListener {
             }
 
             MinifyFileResult minifyFileResult = util.compressJavaScript(inputFilePath, outputFilePath, minifyProperty);
-           
 
-            JOptionPane.showMessageDialog(null, "JS Minified Completed Successfully\n"
-                    + "Input JS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
-                    + "After Minifying JS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
-                    + "JS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
-
+            if (minifyProperty.isEnableOutputLogAlert()) {
+                JOptionPane.showMessageDialog(null, "JS Minified Completed Successfully\n"
+                        + "Input JS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
+                        + "After Minifying JS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
+                        + "JS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+            }
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }

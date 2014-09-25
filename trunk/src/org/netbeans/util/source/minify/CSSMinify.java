@@ -41,7 +41,7 @@ import org.openide.windows.InputOutput;
 @ActionRegistration(iconBase = "org/netbeans/util/source/minify/compress.png",
         displayName = "#CTL_CSSMinify")
 @ActionReferences({
-    @ActionReference(path = "Loaders/text/css/Actions", position = 0, separatorBefore = -50, separatorAfter = 50)
+    @ActionReference(path = "Loaders/text/css/Actions", position = 300, separatorBefore = 250, separatorAfter = 350)
 })
 @Messages("CTL_CSSMinify=Minify CSS")
 public final class CSSMinify implements ActionListener {
@@ -91,12 +91,12 @@ public final class CSSMinify implements ActionListener {
 
 
             MinifyFileResult minifyFileResult = util.compressCss(inputFilePath, outputFilePath, minifyProperty);
-           
-            JOptionPane.showMessageDialog(null, "CSS Minified Completed Successfully\n"
-                    + "Input CSS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
-                    + "After Minifying CSS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
-                    + "CSS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
-
+            if (minifyProperty.isEnableOutputLogAlert()) {
+                JOptionPane.showMessageDialog(null, "CSS Minified Completed Successfully\n"
+                        + "Input CSS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
+                        + "After Minifying CSS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
+                        + "CSS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+            }
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }
