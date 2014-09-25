@@ -23,13 +23,12 @@ import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
-import org.openide.loaders.DataObject;
-
-import org.openide.awt.ActionRegistration;
+import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
-import org.openide.awt.ActionID;
+import org.openide.awt.ActionRegistration;
 import org.openide.filesystems.FileObject;
+import org.openide.loaders.DataObject;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.RequestProcessor;
 import org.openide.util.TaskListener;
@@ -37,10 +36,10 @@ import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
 
 @ActionID(category = "Build",
-id = "org.netbeans.util.image.compress.Base64Decode")
+        id = "org.netbeans.util.image.compress.Base64Decode")
 @ActionRegistration(displayName = "#CTL_Base64Decode")
 @ActionReferences({
-    @ActionReference(path = "Loaders/content/unknown/Actions",position = 0, separatorBefore = -50, separatorAfter = 50)
+    @ActionReference(path = "Loaders/content/unknown/Actions", position = 300, separatorBefore = 250, separatorAfter = 350)
 })
 @Messages("CTL_Base64Decode=Base64 Decode")
 public final class Base64Decode implements ActionListener {
@@ -50,11 +49,14 @@ public final class Base64Decode implements ActionListener {
     public Base64Decode(DataObject context) {
         this.context = context;
     }
- private final static RequestProcessor RP = new RequestProcessor("Base64Decode", 1, true);
+    private final static RequestProcessor RP = new RequestProcessor("Base64Decode", 1, true);
+
     public void actionPerformed(ActionEvent ev) {
-         Runnable runnable = new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
-            public void run() {decode();}
+            public void run() {
+                decode();
+            }
         };
         final RequestProcessor.Task theTask = RP.create(runnable);
         final ProgressHandle ph = ProgressHandleFactory.createHandle("Base64 Decoding Image " + context.getPrimaryFile().getName(), theTask);
@@ -68,21 +70,21 @@ public final class Base64Decode implements ActionListener {
         ph.start();
         theTask.schedule(0);
     }
-    
-    void decode(){
-      InputOutput io = IOProvider.getDefault().getIO(Bundle.CTL_Base64Encode(), false); 
+
+    void decode() {
+        InputOutput io = IOProvider.getDefault().getIO(Bundle.CTL_Base64Encode(), false);
         ImageUtil imageUtil = new ImageUtil();
-         try {
+        try {
             FileObject file = context.getPrimaryFile();
-            if(file.getExt().equalsIgnoreCase("ENCODE")){
-                   File newFile = new File(file.getPath());
-            String fileType = file.getName().substring(file.getName().lastIndexOf('.')+1);
-           imageUtil.decodeToImage(FileUtils.readFileToString(newFile),file.getParent().getPath() +  File.separator + file.getName() ,fileType);
-         }else{
-               JOptionPane.showMessageDialog(null,  "Invalid file to decode", "Warning",JOptionPane.WARNING_MESSAGE);  
+            if (file.getExt().equalsIgnoreCase("ENCODE")) {
+                File newFile = new File(file.getPath());
+                String fileType = file.getName().substring(file.getName().lastIndexOf('.') + 1);
+                imageUtil.decodeToImage(FileUtils.readFileToString(newFile), file.getParent().getPath() + File.separator + file.getName(), fileType);
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid file to decode", "Warning", JOptionPane.WARNING_MESSAGE);
             }
-         } catch (IOException ex) {
-             io.getOut().println("Exception: " + ex.toString());
+        } catch (IOException ex) {
+            io.getOut().println("Exception: " + ex.toString());
         }
     }
 }

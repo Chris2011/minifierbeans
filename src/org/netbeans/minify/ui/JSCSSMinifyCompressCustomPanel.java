@@ -23,44 +23,25 @@ import java.awt.event.ItemListener;
 public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPanel {
 
     private MinifyProperty minifyProperty;
-    private MinifyPropertyController minifyPropertyController = null;
+//    private MinifyPropertyController //minifyPropertyController = null;
 
     JSCSSMinifyCompressCustomPanel(JSCSSMinifyCompressOptionsPanelController controller) {
         super(controller);
 
         minifyProperty = MinifyProperty.getInstance();
-        minifyPropertyController = new MinifyPropertyController();
 
-        if (minifyProperty.isNewJSFile()) {
-            newJSFile.setSelected(Boolean.TRUE);
-            preExtensionJS.setEnabled(Boolean.TRUE);
-            preExtensionJS_Label.setEnabled(Boolean.TRUE);
-            separatorJS.setEnabled(Boolean.TRUE);
-            separatorJS_Label.setEnabled(Boolean.TRUE);
-            skipPreExtensionJS.setEnabled(Boolean.TRUE);
-            if (minifyProperty.getPreExtensionJS() == null) {
-                minifyProperty.setPreExtensionJS("min");
-            }
-            this.preExtensionJS.setText(minifyProperty.getPreExtensionJS());
-            if (minifyProperty.getSeparatorJS() == null) {
-                minifyProperty.setSeparatorJS('.');
-            }
-            this.separatorJS.setText(minifyProperty.getSeparatorJS().toString());
-        } else {
-            newJSFile.setSelected(false);
-            preExtensionJS.setEnabled(Boolean.FALSE);
-            preExtensionJS_Label.setEnabled(Boolean.FALSE);
-            separatorJS.setEnabled(Boolean.FALSE);
-            separatorJS_Label.setEnabled(Boolean.FALSE);
-            skipPreExtensionJS.setEnabled(Boolean.FALSE);
-        }
+        newJSFile.setSelected(minifyProperty.isNewJSFile());
+        preExtensionJS.setEnabled(minifyProperty.isNewJSFile());
+        preExtensionJS_Label.setEnabled(minifyProperty.isNewJSFile());
+        separatorJS.setEnabled(minifyProperty.isNewJSFile());
+        separatorJS_Label.setEnabled(minifyProperty.isNewJSFile());
+        skipPreExtensionJS.setEnabled(minifyProperty.isNewJSFile());
+        this.preExtensionJS.setText(minifyProperty.getPreExtensionJS());
+        this.separatorJS.setText(minifyProperty.getSeparatorJS().toString());
 
         if (minifyProperty.isJsObfuscate()) {
             this.jsObfuscate.setSelected(Boolean.TRUE);
         }
-//        if (minifyProperty.isPreserveSemicolon()) {
-//            this.preserveSemicolon.setSelected(Boolean.TRUE);
-//        }
 
         this.newJSFile.addItemListener(new ItemListener() {
             @Override
@@ -82,10 +63,6 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                     }
                 } else {
                     minifyProperty.setNewJSFile(Boolean.FALSE);
-                    minifyProperty.setPreExtensionJS(null);
-                    preExtensionJS.setText("");
-                    minifyProperty.setSeparatorJS(null);
-                    separatorJS.setText("");
                     preExtensionJS.setEnabled(Boolean.FALSE);
                     preExtensionJS_Label.setEnabled(Boolean.FALSE);
                     separatorJS.setEnabled(Boolean.FALSE);
@@ -94,21 +71,8 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                     minifyProperty.setSkipPreExtensionJS(Boolean.FALSE);
                     skipPreExtensionJS.setSelected(false);
                 }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
-
-
-
-
-
-//        this.preExtensionJS.addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyReleased(KeyEvent e) {
-//                minifyProperty.setPreExtensionJS(preExtensionJS.getText());
-//                minifyPropertyController.writeMinifyProperty(minifyProperty);
-//            }
-//        });
 
         this.preExtensionJS.addFocusListener(new FocusListener() {
             @Override
@@ -125,19 +89,16 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                     text = text.trim();
                 }
                 minifyProperty.setPreExtensionJS(text);
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
 
-
-     
-         this.separatorJS.addFocusListener(new FocusListener() {
+        this.separatorJS.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent fe) {
             }
 
             @Override
-            public void focusLost(FocusEvent fe)  {
+            public void focusLost(FocusEvent fe) {
                 String text = separatorJS.getText();
                 if (text == null || text.trim().isEmpty()) {
                     text = ".";
@@ -150,15 +111,10 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                         || text.equals("?") || text.equals("*")) {
                     text = ".";
                 }
-                       // > : " / \ | ? *)
-                
                 separatorJS.setText(text);
                 minifyProperty.setSeparatorJS(text.charAt(0));
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
-        
-
 
         this.jsObfuscate.addItemListener(new ItemListener() {
             @Override
@@ -168,56 +124,17 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                 } else {
                     minifyProperty.setJsObfuscate(Boolean.FALSE);
                 }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
-//        this.preserveSemicolon.addItemListener(new ItemListener() {
-//            @Override
-//            public void itemStateChanged(ItemEvent e) {
-//                if (e.getStateChange() == ItemEvent.SELECTED) {
-//                    minifyProperty.setPreserveSemicolon(Boolean.TRUE);
-//                } else {
-//                    minifyProperty.setPreserveSemicolon(Boolean.FALSE);
-//                }
-//                minifyPropertyController.writeMinifyProperty(minifyProperty);
-//            }
-//        });
 
-
-
-
-        if (minifyProperty.isNewCSSFile()) {
-            newCSSFile.setSelected(Boolean.TRUE);
-            preExtensionCSS.setEnabled(Boolean.TRUE);
-            preExtensionCSS_Label.setEnabled(Boolean.TRUE);
-            separatorCSS.setEnabled(Boolean.TRUE);
-            separatorCSS_Label.setEnabled(Boolean.TRUE);
-            skipPreExtensionCSS.setEnabled(Boolean.TRUE);
-
-            if (minifyProperty.getPreExtensionCSS() == null) {
-                minifyProperty.setPreExtensionCSS("min");
-            }
-            this.preExtensionCSS.setText(minifyProperty.getPreExtensionCSS());
-            if (minifyProperty.getSeparatorCSS() == null) {
-                minifyProperty.setSeparatorCSS('.');
-            }
-            this.separatorCSS.setText(minifyProperty.getSeparatorCSS().toString());
-
-
-
-        } else {
-            newCSSFile.setSelected(false);
-            preExtensionCSS.setEnabled(Boolean.FALSE);
-            preExtensionCSS_Label.setEnabled(false);
-            separatorCSS.setEnabled(Boolean.FALSE);
-            separatorCSS_Label.setEnabled(Boolean.FALSE);
-            skipPreExtensionCSS.setEnabled(false);
-        }
-
-
-
-
-
+        newCSSFile.setSelected(minifyProperty.isNewCSSFile());
+        preExtensionCSS.setEnabled(minifyProperty.isNewCSSFile());
+        preExtensionCSS_Label.setEnabled(minifyProperty.isNewCSSFile());
+        separatorCSS.setEnabled(minifyProperty.isNewCSSFile());
+        separatorCSS_Label.setEnabled(minifyProperty.isNewCSSFile());
+        skipPreExtensionCSS.setEnabled(minifyProperty.isNewCSSFile());
+        this.preExtensionCSS.setText(minifyProperty.getPreExtensionCSS());
+        this.separatorCSS.setText(minifyProperty.getSeparatorCSS().toString());
 
         this.newCSSFile.addItemListener(new ItemListener() {
             @Override
@@ -240,10 +157,6 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
 
                 } else {
                     minifyProperty.setNewCSSFile(Boolean.FALSE);
-                    minifyProperty.setPreExtensionCSS(null);
-                    preExtensionCSS.setText("");
-                    minifyProperty.setSeparatorCSS(null);
-                    separatorCSS.setText("");
                     preExtensionCSS.setEnabled(Boolean.FALSE);
                     preExtensionCSS_Label.setEnabled(Boolean.FALSE);
                     separatorCSS.setEnabled(Boolean.FALSE);
@@ -251,21 +164,9 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                     skipPreExtensionCSS.setEnabled(Boolean.FALSE);
                     minifyProperty.setSkipPreExtensionCSS(Boolean.FALSE);
                     skipPreExtensionCSS.setSelected(Boolean.FALSE);
-
                 }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
-
-
-//        this.preExtensionCSS.addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyReleased(KeyEvent e) {
-//                minifyProperty.setPreExtensionCSS(preExtensionCSS.getText());
-//                minifyPropertyController.writeMinifyProperty(minifyProperty);
-//            }
-//        });
-
 
         this.preExtensionCSS.addFocusListener(new FocusListener() {
             @Override
@@ -282,10 +183,8 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                     text = text.trim();
                 }
                 minifyProperty.setPreExtensionCSS(text);
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
-
 
         this.separatorCSS.addFocusListener(new FocusListener() {
             @Override
@@ -300,7 +199,7 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                 } else {
                     text = String.valueOf(text.trim().charAt(0));
                 }
-                 if (text.equals("<") || text.equals(">")
+                if (text.equals("<") || text.equals(">")
                         || text.equals(":") || text.equals("/")
                         || text.equals("\\") || text.equals("|")
                         || text.equals("?") || text.equals("*")) {
@@ -308,46 +207,20 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                 }
                 separatorCSS.setText(text);
                 minifyProperty.setSeparatorCSS(text.charAt(0));
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
-           
+
 //---------------------------------------------------------------------------------------------//
-        
+
         /* HTML Minify Setting */
-        
-        if (minifyProperty.isNewHTMLFile()) {
-            newHTMLFile.setSelected(Boolean.TRUE);
-            preExtensionHTML.setEnabled(Boolean.TRUE);
-            preExtensionHTML_Label.setEnabled(Boolean.TRUE);
-            separatorHTML.setEnabled(Boolean.TRUE);
-            separatorHTML_Label.setEnabled(Boolean.TRUE);
-            skipPreExtensionHTML.setEnabled(Boolean.TRUE);
-
-            if (minifyProperty.getPreExtensionHTML() == null) {
-                minifyProperty.setPreExtensionHTML("min");
-            }
-            this.preExtensionHTML.setText(minifyProperty.getPreExtensionHTML());
-            if (minifyProperty.getSeparatorHTML() == null) {
-                minifyProperty.setSeparatorHTML('.');
-            }
-            this.separatorHTML.setText(minifyProperty.getSeparatorHTML().toString());
-
-
-
-        } else {
-            newHTMLFile.setSelected(false);
-            preExtensionHTML.setEnabled(Boolean.FALSE);
-            preExtensionHTML_Label.setEnabled(false);
-            separatorHTML.setEnabled(Boolean.FALSE);
-            separatorHTML_Label.setEnabled(Boolean.FALSE);
-            skipPreExtensionHTML.setEnabled(false);
-        }
-
-
-
-
-
+        newHTMLFile.setSelected(minifyProperty.isNewHTMLFile());
+        preExtensionHTML.setEnabled(minifyProperty.isNewHTMLFile());
+        preExtensionHTML_Label.setEnabled(minifyProperty.isNewHTMLFile());
+        separatorHTML.setEnabled(minifyProperty.isNewHTMLFile());
+        separatorHTML_Label.setEnabled(minifyProperty.isNewHTMLFile());
+        skipPreExtensionHTML.setEnabled(minifyProperty.isNewHTMLFile());
+        this.preExtensionHTML.setText(minifyProperty.getPreExtensionHTML());
+        this.separatorHTML.setText(minifyProperty.getSeparatorHTML().toString());
 
         this.newHTMLFile.addItemListener(new ItemListener() {
             @Override
@@ -370,10 +243,10 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
 
                 } else {
                     minifyProperty.setNewHTMLFile(Boolean.FALSE);
-                    minifyProperty.setPreExtensionHTML(null);
-                    preExtensionHTML.setText("");
-                    minifyProperty.setSeparatorHTML(null);
-                    separatorHTML.setText("");
+//                    minifyProperty.setPreExtensionHTML(null);
+//                    preExtensionHTML.setText("");
+//                    minifyProperty.setSeparatorHTML(null);
+//                    separatorHTML.setText("");
                     preExtensionHTML.setEnabled(Boolean.FALSE);
                     preExtensionHTML_Label.setEnabled(Boolean.FALSE);
                     separatorHTML.setEnabled(Boolean.FALSE);
@@ -383,13 +256,9 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                     skipPreExtensionHTML.setSelected(Boolean.FALSE);
 
                 }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
-
-   
-
-
 
         this.preExtensionHTML.addFocusListener(new FocusListener() {
             @Override
@@ -406,10 +275,9 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                     text = text.trim();
                 }
                 minifyProperty.setPreExtensionHTML(text);
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
-
 
         this.separatorHTML.addFocusListener(new FocusListener() {
             @Override
@@ -424,7 +292,7 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                 } else {
                     text = String.valueOf(text.trim().charAt(0));
                 }
-                 if (text.equals("<") || text.equals(">")
+                if (text.equals("<") || text.equals(">")
                         || text.equals(":") || text.equals("/")
                         || text.equals("\\") || text.equals("|")
                         || text.equals("?") || text.equals("*")) {
@@ -432,20 +300,18 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                 }
                 separatorHTML.setText(text);
                 minifyProperty.setSeparatorHTML(text.charAt(0));
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
 
-        
-             
-         if (minifyProperty.isBuildInternalCSSMinify()) {
+        if (minifyProperty.isBuildInternalCSSMinify()) {
             this.buildInternalCSSMinify.setSelected(Boolean.TRUE);
         }
 
         if (minifyProperty.isBuildInternalJSMinify()) {
             this.buildInternalJSMinify.setSelected(Boolean.TRUE);
         }
- this.buildInternalCSSMinify.addItemListener(new ItemListener() {
+        this.buildInternalCSSMinify.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -453,10 +319,10 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                 } else {
                     minifyProperty.setBuildInternalCSSMinify(Boolean.FALSE);
                 }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
-        }); 
- this.buildInternalJSMinify.addItemListener(new ItemListener() {
+        });
+        this.buildInternalJSMinify.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -464,46 +330,210 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                 } else {
                     minifyProperty.setBuildInternalJSMinify(Boolean.FALSE);
                 }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
-        
-        
-        
-      //-----------------------------------------------------------------------------------------------//  
-        
-        
-        
-        
-        /** Build Setting**/
+
+        //-----------------------------------------------------------------------------------------------//
+        /**
+         * XML Setting *
+         */
+        newXMLFile.setSelected(minifyProperty.isNewXMLFile());
+        preExtensionXML.setEnabled(minifyProperty.isNewXMLFile());
+        preExtensionXML_Label.setEnabled(minifyProperty.isNewXMLFile());
+        separatorXML.setEnabled(minifyProperty.isNewXMLFile());
+        separatorXML_Label.setEnabled(minifyProperty.isNewXMLFile());
+        skipPreExtensionXML.setEnabled(minifyProperty.isNewXMLFile());
+        this.preExtensionXML.setText(minifyProperty.getPreExtensionXML());
+        this.separatorXML.setText(minifyProperty.getSeparatorXML().toString());
+
+        this.newXMLFile.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setNewXMLFile(Boolean.TRUE);
+                    minifyProperty.setPreExtensionXML("min");
+                    preExtensionXML.setText("min");
+                    minifyProperty.setSeparatorXML('.');
+                    separatorXML.setText(".");
+                    preExtensionXML.setEnabled(Boolean.TRUE);
+                    preExtensionXML_Label.setEnabled(Boolean.TRUE);
+                    separatorXML.setEnabled(Boolean.TRUE);
+                    separatorXML_Label.setEnabled(Boolean.TRUE);
+                    if (minifyProperty.isBuildXMLMinify() && minifyProperty.isNewXMLFile()) {
+                        skipPreExtensionXML.setEnabled(Boolean.TRUE);
+                        minifyProperty.setSkipPreExtensionXML(Boolean.TRUE);
+                        skipPreExtensionXML.setSelected(Boolean.TRUE);
+                    }
+
+                } else {
+                    minifyProperty.setNewXMLFile(Boolean.FALSE);
+                    preExtensionXML.setEnabled(Boolean.FALSE);
+                    preExtensionXML_Label.setEnabled(Boolean.FALSE);
+                    separatorXML.setEnabled(Boolean.FALSE);
+                    separatorXML_Label.setEnabled(Boolean.FALSE);
+                    skipPreExtensionXML.setEnabled(Boolean.FALSE);
+                    minifyProperty.setSkipPreExtensionXML(Boolean.FALSE);
+                    skipPreExtensionXML.setSelected(Boolean.FALSE);
+                }
+            }
+        });
+
+        this.preExtensionXML.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = preExtensionXML.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = "min";
+                    preExtensionXML.setText(text);
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setPreExtensionXML(text);
+            }
+        });
+
+        this.separatorXML.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = separatorXML.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = ".";
+                } else {
+                    text = String.valueOf(text.trim().charAt(0));
+                }
+                if (text.equals("<") || text.equals(">")
+                        || text.equals(":") || text.equals("/")
+                        || text.equals("\\") || text.equals("|")
+                        || text.equals("?") || text.equals("*")) {
+                    text = ".";
+                }
+                separatorXML.setText(text);
+                minifyProperty.setSeparatorXML(text.charAt(0));
+            }
+        });
+
+//---------------------------------------------------------------------------------------------//
+        /**
+         * JSON Setting *
+         */
+        newJSONFile.setSelected(minifyProperty.isNewJSONFile());
+        preExtensionJSON.setEnabled(minifyProperty.isNewJSONFile());
+        preExtensionJSON_Label.setEnabled(minifyProperty.isNewJSONFile());
+        separatorJSON.setEnabled(minifyProperty.isNewJSONFile());
+        separatorJSON_Label.setEnabled(minifyProperty.isNewJSONFile());
+        skipPreExtensionJSON.setEnabled(minifyProperty.isNewJSONFile());
+        this.preExtensionJSON.setText(minifyProperty.getPreExtensionJSON());
+        this.separatorJSON.setText(minifyProperty.getSeparatorJSON().toString());
+
+        this.newJSONFile.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setNewJSONFile(Boolean.TRUE);
+                    minifyProperty.setPreExtensionJSON("min");
+                    preExtensionJSON.setText("min");
+                    minifyProperty.setSeparatorJSON('.');
+                    separatorJSON.setText(".");
+                    preExtensionJSON.setEnabled(Boolean.TRUE);
+                    preExtensionJSON_Label.setEnabled(Boolean.TRUE);
+                    separatorJSON.setEnabled(Boolean.TRUE);
+                    separatorJSON_Label.setEnabled(Boolean.TRUE);
+                    if (minifyProperty.isBuildJSONMinify() && minifyProperty.isNewJSONFile()) {
+                        skipPreExtensionJSON.setEnabled(Boolean.TRUE);
+                        minifyProperty.setSkipPreExtensionJSON(Boolean.TRUE);
+                        skipPreExtensionJSON.setSelected(Boolean.TRUE);
+                    }
+
+                } else {
+                    minifyProperty.setNewJSONFile(Boolean.FALSE);
+                    preExtensionJSON.setEnabled(Boolean.FALSE);
+                    preExtensionJSON_Label.setEnabled(Boolean.FALSE);
+                    separatorJSON.setEnabled(Boolean.FALSE);
+                    separatorJSON_Label.setEnabled(Boolean.FALSE);
+                    skipPreExtensionJSON.setEnabled(Boolean.FALSE);
+                    minifyProperty.setSkipPreExtensionJSON(Boolean.FALSE);
+                    skipPreExtensionJSON.setSelected(Boolean.FALSE);
+                }
+            }
+        });
+
+        this.preExtensionJSON.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = preExtensionJSON.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = "min";
+                    preExtensionJSON.setText(text);
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setPreExtensionJSON(text);
+            }
+        });
+
+        this.separatorJSON.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = separatorJSON.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = ".";
+                } else {
+                    text = String.valueOf(text.trim().charAt(0));
+                }
+                if (text.equals("<") || text.equals(">")
+                        || text.equals(":") || text.equals("/")
+                        || text.equals("\\") || text.equals("|")
+                        || text.equals("?") || text.equals("*")) {
+                    text = ".";
+                }
+                separatorJSON.setText(text);
+                minifyProperty.setSeparatorJSON(text.charAt(0));
+            }
+        });
+
+//---------------------------------------------------------------------------------------------//
+        /**
+         * Build Setting*
+         */
         if (minifyProperty.isSeparatBuild()) {
             this.separatBuild.setSelected(Boolean.TRUE);
-        }
-
-        if (minifyProperty.isBuildCSSMinify()) {
-            this.buildCSSMinify.setSelected(Boolean.TRUE);
         }
 
         if (minifyProperty.isBuildJSMinify()) {
             this.buildJSMinify.setSelected(Boolean.TRUE);
         }
 
-          if (minifyProperty.isBuildHTMLMinify()) {
+        if (minifyProperty.isBuildCSSMinify()) {
+            this.buildCSSMinify.setSelected(Boolean.TRUE);
+        }
+
+        if (minifyProperty.isBuildHTMLMinify()) {
             this.buildHTMLMinify.setSelected(Boolean.TRUE);
         }
 
-        
-        
-        if (minifyProperty.isBuildCSSMinify() && minifyProperty.isNewCSSFile()) {
-            skipPreExtensionCSS.setEnabled(Boolean.TRUE);
-            if (minifyProperty.isSkipPreExtensionCSS()) {
-                skipPreExtensionCSS.setSelected(Boolean.TRUE);
-            } else {
-                skipPreExtensionCSS.setSelected(Boolean.FALSE);
-            }
-        } else {
-            this.skipPreExtensionCSS.setEnabled(Boolean.FALSE);
-            skipPreExtensionCSS.setSelected(Boolean.FALSE);
+        if (minifyProperty.isBuildXMLMinify()) {
+            this.buildXMLMinify.setSelected(Boolean.TRUE);
+        }
+
+        if (minifyProperty.isBuildJSONMinify()) {
+            this.buildJSONMinify.setSelected(Boolean.TRUE);
         }
 
         if (minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
@@ -518,8 +548,19 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
             skipPreExtensionJS.setSelected(Boolean.FALSE);
         }
 
+        if (minifyProperty.isBuildCSSMinify() && minifyProperty.isNewCSSFile()) {
+            skipPreExtensionCSS.setEnabled(Boolean.TRUE);
+            if (minifyProperty.isSkipPreExtensionCSS()) {
+                skipPreExtensionCSS.setSelected(Boolean.TRUE);
+            } else {
+                skipPreExtensionCSS.setSelected(Boolean.FALSE);
+            }
+        } else {
+            this.skipPreExtensionCSS.setEnabled(Boolean.FALSE);
+            skipPreExtensionCSS.setSelected(Boolean.FALSE);
+        }
 
-   if (minifyProperty.isBuildHTMLMinify() && minifyProperty.isNewHTMLFile()) {
+        if (minifyProperty.isBuildHTMLMinify() && minifyProperty.isNewHTMLFile()) {
             skipPreExtensionHTML.setEnabled(Boolean.TRUE);
             if (minifyProperty.isSkipPreExtensionHTML()) {
                 skipPreExtensionHTML.setSelected(Boolean.TRUE);
@@ -531,12 +572,29 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
             skipPreExtensionHTML.setSelected(Boolean.FALSE);
         }
 
+        if (minifyProperty.isBuildXMLMinify() && minifyProperty.isNewXMLFile()) {
+            skipPreExtensionXML.setEnabled(Boolean.TRUE);
+            if (minifyProperty.isSkipPreExtensionXML()) {
+                skipPreExtensionXML.setSelected(Boolean.TRUE);
+            } else {
+                skipPreExtensionXML.setSelected(Boolean.FALSE);
+            }
+        } else {
+            this.skipPreExtensionXML.setEnabled(Boolean.FALSE);
+            skipPreExtensionXML.setSelected(Boolean.FALSE);
+        }
 
-
-
-
-
-
+        if (minifyProperty.isBuildJSONMinify() && minifyProperty.isNewJSONFile()) {
+            skipPreExtensionJSON.setEnabled(Boolean.TRUE);
+            if (minifyProperty.isSkipPreExtensionJSON()) {
+                skipPreExtensionJSON.setSelected(Boolean.TRUE);
+            } else {
+                skipPreExtensionJSON.setSelected(Boolean.FALSE);
+            }
+        } else {
+            this.skipPreExtensionJSON.setEnabled(Boolean.FALSE);
+            skipPreExtensionJSON.setSelected(Boolean.FALSE);
+        }
 
         this.separatBuild.addItemListener(new ItemListener() {
             @Override
@@ -546,38 +604,6 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                 } else {
                     minifyProperty.setSeparatBuild(Boolean.FALSE);
                 }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
-            }
-        });
-        this.buildCSSMinify.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    minifyProperty.setBuildCSSMinify(Boolean.TRUE);
-                    if (minifyProperty.isBuildCSSMinify() && minifyProperty.isNewCSSFile()) {
-                        skipPreExtensionCSS.setEnabled(Boolean.TRUE);
-                        minifyProperty.setSkipPreExtensionCSS(Boolean.TRUE);
-                        skipPreExtensionCSS.setSelected(Boolean.TRUE);
-                    }
-                } else {
-                    minifyProperty.setBuildCSSMinify(Boolean.FALSE);
-                    skipPreExtensionCSS.setEnabled(Boolean.FALSE);
-                    minifyProperty.setSkipPreExtensionCSS(Boolean.FALSE);
-                    skipPreExtensionCSS.setSelected(Boolean.FALSE);
-
-                }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
-            }
-        });
-           this.skipPreExtensionCSS.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    minifyProperty.setSkipPreExtensionCSS(Boolean.TRUE);
-                } else {
-                    minifyProperty.setSkipPreExtensionCSS(Boolean.FALSE);
-                }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
         this.buildJSMinify.addItemListener(new ItemListener() {
@@ -596,10 +622,9 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                     minifyProperty.setSkipPreExtensionJS(Boolean.FALSE);
                     skipPreExtensionJS.setSelected(Boolean.FALSE);
                 }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
-     
         this.skipPreExtensionJS.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -608,13 +633,38 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                 } else {
                     minifyProperty.setSkipPreExtensionJS(Boolean.FALSE);
                 }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
-
-        
-        
-           this.buildHTMLMinify.addItemListener(new ItemListener() {
+        this.buildCSSMinify.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setBuildCSSMinify(Boolean.TRUE);
+                    if (minifyProperty.isBuildCSSMinify() && minifyProperty.isNewCSSFile()) {
+                        skipPreExtensionCSS.setEnabled(Boolean.TRUE);
+                        minifyProperty.setSkipPreExtensionCSS(Boolean.TRUE);
+                        skipPreExtensionCSS.setSelected(Boolean.TRUE);
+                    }
+                } else {
+                    minifyProperty.setBuildCSSMinify(Boolean.FALSE);
+                    skipPreExtensionCSS.setEnabled(Boolean.FALSE);
+                    minifyProperty.setSkipPreExtensionCSS(Boolean.FALSE);
+                    skipPreExtensionCSS.setSelected(Boolean.FALSE);
+                }
+            }
+        });
+        this.skipPreExtensionCSS.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setSkipPreExtensionCSS(Boolean.TRUE);
+                } else {
+                    minifyProperty.setSkipPreExtensionCSS(Boolean.FALSE);
+                }
+            }
+        });
+        this.buildHTMLMinify.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -631,10 +681,10 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                     skipPreExtensionHTML.setSelected(Boolean.FALSE);
 
                 }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
-   this.skipPreExtensionHTML.addItemListener(new ItemListener() {
+        this.skipPreExtensionHTML.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -642,14 +692,72 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                 } else {
                     minifyProperty.setSkipPreExtensionHTML(Boolean.FALSE);
                 }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
 
+        this.buildXMLMinify.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setBuildXMLMinify(Boolean.TRUE);
+                    if (minifyProperty.isBuildXMLMinify() && minifyProperty.isNewXMLFile()) {
+                        skipPreExtensionXML.setEnabled(Boolean.TRUE);
+                        minifyProperty.setSkipPreExtensionXML(Boolean.TRUE);
+                        skipPreExtensionXML.setSelected(Boolean.TRUE);
+                    }
+                } else {
+                    minifyProperty.setBuildXMLMinify(Boolean.FALSE);
+                    skipPreExtensionXML.setEnabled(Boolean.FALSE);
+                    minifyProperty.setSkipPreExtensionXML(Boolean.FALSE);
+                    skipPreExtensionXML.setSelected(Boolean.FALSE);
+                }
+            }
+        });
+        this.skipPreExtensionXML.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setSkipPreExtensionXML(Boolean.TRUE);
+                } else {
+                    minifyProperty.setSkipPreExtensionXML(Boolean.FALSE);
+                }
+            }
+        });
 
+        this.buildJSONMinify.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setBuildJSONMinify(Boolean.TRUE);
+                    if (minifyProperty.isBuildJSONMinify() && minifyProperty.isNewJSONFile()) {
+                        skipPreExtensionJSON.setEnabled(Boolean.TRUE);
+                        minifyProperty.setSkipPreExtensionJSON(Boolean.TRUE);
+                        skipPreExtensionJSON.setSelected(Boolean.TRUE);
+                    }
+                } else {
+                    minifyProperty.setBuildJSONMinify(Boolean.FALSE);
+                    skipPreExtensionJSON.setEnabled(Boolean.FALSE);
+                    minifyProperty.setSkipPreExtensionJSON(Boolean.FALSE);
+                    skipPreExtensionJSON.setSelected(Boolean.FALSE);
+                }
+            }
+        });
+        this.skipPreExtensionJSON.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setSkipPreExtensionJSON(Boolean.TRUE);
+                } else {
+                    minifyProperty.setSkipPreExtensionJSON(Boolean.FALSE);
+                }
+            }
+        });
 
         if (minifyProperty.isAppendLogToFile()) {
             this.addLogToFile.setSelected(Boolean.TRUE);
+        } else {
+            this.addLogToFile.setSelected(Boolean.FALSE);
         }
         this.addLogToFile.addItemListener(new ItemListener() {
             @Override
@@ -659,10 +767,87 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                 } else {
                     minifyProperty.setAppendLogToFile(Boolean.FALSE);
                 }
-                minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
 
+        if (minifyProperty.isEnableOutputLogAlert()) {
+            this.enableOutputLogAlert.setSelected(Boolean.TRUE);
+        } else {
+            this.enableOutputLogAlert.setSelected(Boolean.FALSE);
+        }
+        this.enableOutputLogAlert.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setEnableOutputLogAlert(Boolean.TRUE);
+                } else {
+                    minifyProperty.setEnableOutputLogAlert(Boolean.FALSE);
+                }
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
+            }
+        });
 
+        if (minifyProperty.isEnableShortKeyAction()) {
+            this.enableShortKeyAction.setSelected(Boolean.TRUE);
+            this.enableShortKeyActionConfirmBox.setEnabled(Boolean.TRUE);
+//            this.enableShortKeyActionConfirmBox.setSelected(Boolean.TRUE);
+//            minifyProperty.setEnableShortKeyActionConfirmBox(Boolean.TRUE);
+        } else {
+            this.enableShortKeyAction.setSelected(Boolean.FALSE);
+            this.enableShortKeyActionConfirmBox.setEnabled(Boolean.FALSE);
+            this.enableShortKeyActionConfirmBox.setSelected(Boolean.FALSE);
+            minifyProperty.setEnableShortKeyActionConfirmBox(Boolean.FALSE);
+        }
+        this.enableShortKeyAction.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setEnableShortKeyAction(Boolean.TRUE);
+                    JSCSSMinifyCompressCustomPanel.this.enableShortKeyActionConfirmBox.setEnabled(Boolean.TRUE);
+                    JSCSSMinifyCompressCustomPanel.this.enableShortKeyActionConfirmBox.setSelected(Boolean.TRUE);
+                    minifyProperty.setEnableShortKeyActionConfirmBox(Boolean.TRUE);
+                } else {
+                    minifyProperty.setEnableShortKeyAction(Boolean.FALSE);
+                    JSCSSMinifyCompressCustomPanel.this.enableShortKeyActionConfirmBox.setEnabled(Boolean.FALSE);
+                    JSCSSMinifyCompressCustomPanel.this.enableShortKeyActionConfirmBox.setSelected(Boolean.FALSE);
+                    minifyProperty.setEnableShortKeyActionConfirmBox(Boolean.FALSE);
+                }
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
+            }
+        });
+
+        if (minifyProperty.isEnableShortKeyActionConfirmBox()) {
+            this.enableShortKeyActionConfirmBox.setSelected(Boolean.TRUE);
+        } else {
+            this.enableShortKeyActionConfirmBox.setSelected(Boolean.FALSE);
+        }
+        this.enableShortKeyActionConfirmBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setEnableShortKeyActionConfirmBox(Boolean.TRUE);
+                } else {
+                    minifyProperty.setEnableShortKeyActionConfirmBox(Boolean.FALSE);
+                }
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
+            }
+        });
+
+    }
+
+    public void load() {
+//      minifyProperty.load();//loaded on MinifyProperty initiation time
+    }
+
+    public void store() {
+        minifyProperty.store();
+    }
+
+    public void cancel() {
+        minifyProperty.cancel();
+    }
+
+    public boolean valid() {
+        return true;
     }
 }

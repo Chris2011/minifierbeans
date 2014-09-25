@@ -15,19 +15,25 @@
  */
 package org.netbeans.util.source.minify;
 
-
 public class MinifyResult {
+
     private Integer directories;
     private Integer cssFiles;
     private Integer jsFiles;
     private Integer htmlFiles;
-    
+    private Integer xmlFiles;
+    private Integer jsonFiles;
+
     private long inputJsFilesSize;
     private long outputJsFilesSize;
     private long inputCssFilesSize;
     private long outputCssFilesSize;
     private long inputHtmlFilesSize;
     private long outputHtmlFilesSize;
+    private long inputXmlFilesSize;
+    private long outputXmlFilesSize;
+    private long inputJsonFilesSize;
+    private long outputJsonFilesSize;
 
     /**
      * @return the directories
@@ -168,6 +174,89 @@ public class MinifyResult {
     public void setOutputHtmlFilesSize(long outputHtmlFilesSize) {
         this.outputHtmlFilesSize = outputHtmlFilesSize;
     }
- 
- 
+
+    /**
+     * @return the xmlFiles
+     */
+    public Integer getXmlFiles() {
+        return xmlFiles;
+    }
+
+    /**
+     * @param xmlFiles the xmlFiles to set
+     */
+    public void setXmlFiles(Integer xmlFiles) {
+        this.xmlFiles = xmlFiles;
+    }
+
+    /**
+     * @return the jsonFiles
+     */
+    public Integer getJsonFiles() {
+        return jsonFiles;
+    }
+
+    /**
+     * @param jsonFiles the jsonFiles to set
+     */
+    public void setJsonFiles(Integer jsonFiles) {
+        this.jsonFiles = jsonFiles;
+    }
+
+    /**
+     * @return the inputXmlFilesSize
+     */
+    public long getInputXmlFilesSize() {
+        return inputXmlFilesSize;
+    }
+
+    /**
+     * @param inputXmlFilesSize the inputXmlFilesSize to set
+     */
+    public void setInputXmlFilesSize(long inputXmlFilesSize) {
+        this.inputXmlFilesSize = inputXmlFilesSize;
+    }
+
+    /**
+     * @return the outputXmlFilesSize
+     */
+    public long getOutputXmlFilesSize() {
+        return outputXmlFilesSize;
+    }
+
+    /**
+     * @param outputXmlFilesSize the outputXmlFilesSize to set
+     */
+    public void setOutputXmlFilesSize(long outputXmlFilesSize) {
+        this.outputXmlFilesSize = outputXmlFilesSize;
+    }
+
+    /**
+     * @return the inputJsonFilesSize
+     */
+    public long getInputJsonFilesSize() {
+        return inputJsonFilesSize;
+    }
+
+    /**
+     * @param inputJsonFilesSize the inputJsonFilesSize to set
+     */
+    public void setInputJsonFilesSize(long inputJsonFilesSize) {
+        this.inputJsonFilesSize = inputJsonFilesSize;
+    }
+
+    /**
+     * @return the outputJsonFilesSize
+     */
+    public long getOutputJsonFilesSize() {
+        return outputJsonFilesSize;
+    }
+
+    /**
+     * @param outputJsonFilesSize the outputJsonFilesSize to set
+     */
+    public void setOutputJsonFilesSize(long outputJsonFilesSize) {
+        this.outputJsonFilesSize = outputJsonFilesSize;
+    }
+
 }

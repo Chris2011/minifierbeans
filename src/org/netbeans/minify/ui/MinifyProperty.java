@@ -16,85 +16,160 @@
 package org.netbeans.minify.ui;
 
 import java.io.Serializable;
-
+import java.lang.reflect.Field;
+import java.util.prefs.Preferences;
+import org.openide.util.Exceptions;
+import org.openide.util.NbPreferences;
 
 public class MinifyProperty implements Serializable {
 
-    private Boolean newJSFile = true;
+    private boolean newJSFile = true;
     private String preExtensionJS = "min";
-    private Boolean jsObfuscate = true;//munge
-    private Boolean preserveSemicolon = false;
+    private boolean jsObfuscate = true;//munge
+    private boolean preserveSemicolon = false;
     private Character separatorJS = '.';
-    
-    private Boolean newCSSFile = true;
+    private boolean newCSSFile = true;
     private String preExtensionCSS = "min";
-     private Character separatorCSS = '.';
-     
-         private Boolean newHTMLFile = true;
+    private Character separatorCSS = '.';
+    private boolean newHTMLFile = true;
     private String preExtensionHTML = "min";
-     private Character separatorHTML = '.';
-     
-      private Boolean buildInternalJSMinify = true;
-      private Boolean buildInternalCSSMinify = true;
-     
-     
-    private Boolean separatBuild = false;
-    
-    
-    private Boolean buildCSSMinify = true;
-    private Boolean skipPreExtensionCSS = true;
-    
-    private Boolean buildJSMinify = true;
-    private Boolean skipPreExtensionJS = true;
-    
-        private Boolean buildHTMLMinify = true;
-    private Boolean skipPreExtensionHTML = true;
-    
-    private Boolean appendLogToFile = false;
-    
-     private String charset = "UTF-8";
-    private Integer lineBreakPosition = -1;
-    private Boolean verbose = false;
-  private Boolean disableOptimizations = false;
+    private Character separatorHTML = '.';
+    private boolean buildInternalJSMinify = true;
+    private boolean buildInternalCSSMinify = true;
+    private boolean newXMLFile = true;
+    private String preExtensionXML = "min";
+    private Character separatorXML = '.';
+    private boolean newJSONFile = true;
+    private String preExtensionJSON = "min";
+    private Character separatorJSON = '.';
 
-    
-   private static MinifyProperty uniqInstance;
+    private boolean separatBuild = false;
+    private boolean buildJSMinify = true;
+    private boolean skipPreExtensionJS = true;
+    private boolean buildCSSMinify = true;
+    private boolean skipPreExtensionCSS = true;
+    private boolean buildHTMLMinify = true;
+    private boolean skipPreExtensionHTML = true;
+    private boolean buildXMLMinify = true;
+    private boolean skipPreExtensionXML = true;
+    private boolean buildJSONMinify = true;
+    private boolean skipPreExtensionJSON = true;
+    private boolean appendLogToFile = false;
+    private boolean enableOutputLogAlert = true;
+    private boolean enableShortKeyAction = false;
+    private boolean enableShortKeyActionConfirmBox = false;
+    private String charset = "UTF-8";
+    private int lineBreakPosition = -1;
+    private boolean verbose = false;
+    private boolean disableOptimizations = false;
+    private static MinifyProperty uniqueInstance;
 
-  private MinifyProperty() {
-  }
-
-  public static synchronized MinifyProperty getInstance() {
-  if (uniqInstance == null) {
-        MinifyPropertyController minifyPropertyController = new MinifyPropertyController();
-        uniqInstance = minifyPropertyController.readMinifyProperty();
+    private MinifyProperty() {
     }
-    return uniqInstance;
-  }
-  
-  public static synchronized MinifyProperty getDefaultInstance() {
-  if (uniqInstance == null) {
-        uniqInstance = new MinifyProperty();
+
+    public static synchronized MinifyProperty getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new MinifyProperty();//MinifyPropertyController.getInstance().readMinifyProperty();
+            uniqueInstance.load();
+        }
+        return uniqueInstance;
     }
-    return uniqInstance;
-  }
-  
-  
-  
-    
-    
-    
-    
+
+    public void store() {
+        Preferences prefs = NbPreferences.forModule(DummyCorePreference.class);
+        prefs.put("separatorJS", separatorJS != null ? separatorJS.toString() : null);
+        prefs.put("separatorCSS", separatorCSS != null ? separatorCSS.toString() : null);
+        prefs.put("separatorHTML", separatorHTML != null ? separatorHTML.toString() : null);
+        prefs.put("separatorXML", getSeparatorXML() != null ? getSeparatorXML().toString() : null);
+        prefs.put("separatorJSON", getSeparatorJSON() != null ? getSeparatorJSON().toString() : null);
+
+        Class<?> clazz = this.getClass();
+
+        for (Field field : clazz.getDeclaredFields()) {
+            if (field.getType() == boolean.class) {
+                try {
+                    prefs.putBoolean(field.getName(), field.getBoolean(this));
+                } catch (IllegalArgumentException ex) {
+                    Exceptions.printStackTrace(ex);
+                } catch (IllegalAccessException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            } else if (field.getType() == String.class) {
+                try {
+                    prefs.put(field.getName(), (String) field.get(this));
+                } catch (IllegalArgumentException ex) {
+                    Exceptions.printStackTrace(ex);
+                } catch (IllegalAccessException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            } else if (field.getType() == int.class) {
+                try {
+                    prefs.putInt(field.getName(), field.getInt(this));
+                } catch (IllegalArgumentException ex) {
+                    Exceptions.printStackTrace(ex);
+                } catch (IllegalAccessException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }
+
+        }
+
+    }
+
+    public void load() {
+        Preferences prefs = NbPreferences.forModule(DummyCorePreference.class);
+        Class<?> clazz = this.getClass();
+        separatorJS = prefs.get("separatorJS", separatorJS.toString()).toCharArray()[0];
+        separatorCSS = prefs.get("separatorCSS", separatorCSS.toString()).toCharArray()[0];
+        separatorHTML = prefs.get("separatorHTML", separatorHTML.toString()).toCharArray()[0];
+        setSeparatorXML((Character) prefs.get("separatorXML", getSeparatorXML().toString()).toCharArray()[0]);
+        setSeparatorJSON((Character) prefs.get("separatorJSON", getSeparatorJSON().toString()).toCharArray()[0]);
+
+        for (Field field : clazz.getDeclaredFields()) {
+            if (field.getType() == boolean.class) {
+                try {
+                    field.setBoolean(this, prefs.getBoolean(field.getName(), field.getBoolean(this)));
+                } catch (IllegalArgumentException ex) {
+                    Exceptions.printStackTrace(ex);
+                } catch (IllegalAccessException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            } else if (field.getType() == String.class) {
+                try {
+                    field.set(this, prefs.get(field.getName(), (String) field.get(this)));
+                } catch (IllegalArgumentException ex) {
+                    Exceptions.printStackTrace(ex);
+                } catch (IllegalAccessException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            } else if (field.getType() == int.class) {
+                try {
+                    prefs.putInt(field.getName(), field.getInt(this));
+                    field.setInt(this, prefs.getInt(field.getName(), field.getInt(this)));
+                } catch (IllegalArgumentException ex) {
+                    Exceptions.printStackTrace(ex);
+                } catch (IllegalAccessException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            }
+
+        }
+    }
+
+    public void cancel() {
+    }
+
     /**
      * @return the newJSFile
      */
-    public Boolean isNewJSFile() {
+    public boolean isNewJSFile() {
         return newJSFile;
     }
 
     /**
      * @param newJSFile the newJSFile to set
      */
-    public void setNewJSFile(Boolean newJSFile) {
+    public void setNewJSFile(boolean newJSFile) {
         this.newJSFile = newJSFile;
     }
 
@@ -115,42 +190,42 @@ public class MinifyProperty implements Serializable {
     /**
      * @return the jsObfuscate
      */
-    public Boolean isJsObfuscate() {
+    public boolean isJsObfuscate() {
         return jsObfuscate;
     }
 
     /**
      * @param jsObfuscate the jsObfuscate to set
      */
-    public void setJsObfuscate(Boolean jsObfuscate) {
+    public void setJsObfuscate(boolean jsObfuscate) {
         this.jsObfuscate = jsObfuscate;
     }
 
     /**
      * @return the preserveSemicolon
      */
-    public Boolean isPreserveSemicolon() {
+    public boolean isPreserveSemicolon() {
         return preserveSemicolon;
     }
 
     /**
      * @param preserveSemicolon the preserveSemicolon to set
      */
-    public void setPreserveSemicolon(Boolean preserveSemicolon) {
+    public void setPreserveSemicolon(boolean preserveSemicolon) {
         this.preserveSemicolon = preserveSemicolon;
     }
 
     /**
      * @return the newCSSFile
      */
-    public Boolean isNewCSSFile() {
+    public boolean isNewCSSFile() {
         return newCSSFile;
     }
 
     /**
      * @param newCSSFile the newCSSFile to set
      */
-    public void setNewCSSFile(Boolean newCSSFile) {
+    public void setNewCSSFile(boolean newCSSFile) {
         this.newCSSFile = newCSSFile;
     }
 
@@ -171,42 +246,42 @@ public class MinifyProperty implements Serializable {
     /**
      * @return the separatBuild
      */
-    public Boolean isSeparatBuild() {
+    public boolean isSeparatBuild() {
         return separatBuild;
     }
 
     /**
      * @param separatBuild the separatBuild to set
      */
-    public void setSeparatBuild(Boolean separatBuild) {
+    public void setSeparatBuild(boolean separatBuild) {
         this.separatBuild = separatBuild;
     }
 
     /**
      * @return the buildCSSMinify
      */
-    public Boolean isBuildCSSMinify() {
+    public boolean isBuildCSSMinify() {
         return buildCSSMinify;
     }
 
     /**
      * @param buildCSSMinify the buildCSSMinify to set
      */
-    public void setBuildCSSMinify(Boolean buildCSSMinify) {
+    public void setBuildCSSMinify(boolean buildCSSMinify) {
         this.buildCSSMinify = buildCSSMinify;
     }
 
     /**
      * @return the buildJSMinify
      */
-    public Boolean isBuildJSMinify() {
+    public boolean isBuildJSMinify() {
         return buildJSMinify;
     }
 
     /**
      * @param buildJSMinify the buildJSMinify to set
      */
-    public void setBuildJSMinify(Boolean buildJSMinify) {
+    public void setBuildJSMinify(boolean buildJSMinify) {
         this.buildJSMinify = buildJSMinify;
     }
 
@@ -224,76 +299,73 @@ public class MinifyProperty implements Serializable {
         this.charset = charset;
     }
 
-
-
-
     /**
      * @return the lineBreakPosition
      */
-    public Integer getLineBreakPosition() {
+    public int getLineBreakPosition() {
         return lineBreakPosition;
     }
 
     /**
      * @param lineBreakPosition the lineBreakPosition to set
      */
-    public void setLineBreakPosition(Integer lineBreakPosition) {
+    public void setLineBreakPosition(int lineBreakPosition) {
         this.lineBreakPosition = lineBreakPosition;
     }
 
     /**
      * @return the verbose
      */
-    public Boolean getVerbose() {
+    public boolean getVerbose() {
         return verbose;
     }
 
     /**
      * @param verbose the verbose to set
      */
-    public void setVerbose(Boolean verbose) {
+    public void setVerbose(boolean verbose) {
         this.verbose = verbose;
     }
 
     /**
      * @return the disableOptimizations
      */
-    public Boolean getDisableOptimizations() {
+    public boolean getDisableOptimizations() {
         return disableOptimizations;
     }
 
     /**
      * @param disableOptimizations the disableOptimizations to set
      */
-    public void setDisableOptimizations(Boolean disableOptimizations) {
+    public void setDisableOptimizations(boolean disableOptimizations) {
         this.disableOptimizations = disableOptimizations;
     }
 
     /**
      * @return the skipPreExtensionCSS
      */
-    public Boolean isSkipPreExtensionCSS() {
+    public boolean isSkipPreExtensionCSS() {
         return skipPreExtensionCSS;
     }
 
     /**
      * @param skipPreExtensionCSS the skipPreExtensionCSS to set
      */
-    public void setSkipPreExtensionCSS(Boolean skipPreExtensionCSS) {
+    public void setSkipPreExtensionCSS(boolean skipPreExtensionCSS) {
         this.skipPreExtensionCSS = skipPreExtensionCSS;
     }
 
     /**
      * @return the skipPreExtensionJS
      */
-    public Boolean isSkipPreExtensionJS() {
+    public boolean isSkipPreExtensionJS() {
         return skipPreExtensionJS;
     }
 
     /**
      * @param skipPreExtensionJS the skipPreExtensionJS to set
      */
-    public void setSkipPreExtensionJS(Boolean skipPreExtensionJS) {
+    public void setSkipPreExtensionJS(boolean skipPreExtensionJS) {
         this.skipPreExtensionJS = skipPreExtensionJS;
     }
 
@@ -328,14 +400,14 @@ public class MinifyProperty implements Serializable {
     /**
      * @return the newHTMLFile
      */
-    public Boolean isNewHTMLFile() {
+    public boolean isNewHTMLFile() {
         return newHTMLFile;
     }
 
     /**
      * @param newHTMLFile the newHTMLFile to set
      */
-    public void setNewHTMLFile(Boolean newHTMLFile) {
+    public void setNewHTMLFile(boolean newHTMLFile) {
         this.newHTMLFile = newHTMLFile;
     }
 
@@ -370,70 +442,253 @@ public class MinifyProperty implements Serializable {
     /**
      * @return the buildHTMLMinify
      */
-    public Boolean isBuildHTMLMinify() {
+    public boolean isBuildHTMLMinify() {
         return buildHTMLMinify;
     }
 
     /**
      * @param buildHTMLMinify the buildHTMLMinify to set
      */
-    public void setBuildHTMLMinify(Boolean buildHTMLMinify) {
+    public void setBuildHTMLMinify(boolean buildHTMLMinify) {
         this.buildHTMLMinify = buildHTMLMinify;
     }
 
     /**
      * @return the skipPreExtensionHTML
      */
-    public Boolean isSkipPreExtensionHTML() {
+    public boolean isSkipPreExtensionHTML() {
         return skipPreExtensionHTML;
     }
 
     /**
      * @param skipPreExtensionHTML the skipPreExtensionHTML to set
      */
-    public void setSkipPreExtensionHTML(Boolean skipPreExtensionHTML) {
+    public void setSkipPreExtensionHTML(boolean skipPreExtensionHTML) {
         this.skipPreExtensionHTML = skipPreExtensionHTML;
     }
 
     /**
      * @return the buildInternalJSMinify
      */
-    public Boolean isBuildInternalJSMinify() {
+    public boolean isBuildInternalJSMinify() {
         return buildInternalJSMinify;
     }
 
     /**
      * @param buildInternalJSMinify the buildInternalJSMinify to set
      */
-    public void setBuildInternalJSMinify(Boolean buildInternalJSMinify) {
+    public void setBuildInternalJSMinify(boolean buildInternalJSMinify) {
         this.buildInternalJSMinify = buildInternalJSMinify;
     }
 
     /**
      * @return the buildInternalCSSMinify
      */
-    public Boolean isBuildInternalCSSMinify() {
+    public boolean isBuildInternalCSSMinify() {
         return buildInternalCSSMinify;
     }
 
     /**
      * @param buildInternalCSSMinify the buildInternalCSSMinify to set
      */
-    public void setBuildInternalCSSMinify(Boolean buildInternalCSSMinify) {
+    public void setBuildInternalCSSMinify(boolean buildInternalCSSMinify) {
         this.buildInternalCSSMinify = buildInternalCSSMinify;
     }
 
     /**
      * @return the appendLogToFile
      */
-    public Boolean isAppendLogToFile() {
+    public boolean isAppendLogToFile() {
         return appendLogToFile;
     }
 
     /**
      * @param appendLogToFile the appendLogToFile to set
      */
-    public void setAppendLogToFile(Boolean appendLogToFile) {
+    public void setAppendLogToFile(boolean appendLogToFile) {
         this.appendLogToFile = appendLogToFile;
+    }
+
+    /**
+     * @return the enableShortKeyAction
+     */
+    public boolean isEnableShortKeyAction() {
+        return enableShortKeyAction;
+    }
+
+    /**
+     * @param enableShortKeyAction the enableShortKeyAction to set
+     */
+    public void setEnableShortKeyAction(boolean enableShortKeyAction) {
+        this.enableShortKeyAction = enableShortKeyAction;
+    }
+
+    /**
+     * @return the enableShortKeyActionConfirmBox
+     */
+    public boolean isEnableShortKeyActionConfirmBox() {
+        return enableShortKeyActionConfirmBox;
+    }
+
+    /**
+     * @param enableShortKeyActionConfirmBox the enableShortKeyActionConfirmBox
+     * to set
+     */
+    public void setEnableShortKeyActionConfirmBox(boolean enableShortKeyActionConfirmBox) {
+        this.enableShortKeyActionConfirmBox = enableShortKeyActionConfirmBox;
+    }
+
+    /**
+     * @return the enableOutputLogAlert
+     */
+    public boolean isEnableOutputLogAlert() {
+        return enableOutputLogAlert;
+    }
+
+    /**
+     * @param enableOutputLogAlert the enableOutputLogAlert to set
+     */
+    public void setEnableOutputLogAlert(boolean enableOutputLogAlert) {
+        this.enableOutputLogAlert = enableOutputLogAlert;
+    }
+
+    /**
+     * @return the newXMLFile
+     */
+    public boolean isNewXMLFile() {
+        return newXMLFile;
+    }
+
+    /**
+     * @param newXMLFile the newXMLFile to set
+     */
+    public void setNewXMLFile(boolean newXMLFile) {
+        this.newXMLFile = newXMLFile;
+    }
+
+    /**
+     * @return the preExtensionXML
+     */
+    public String getPreExtensionXML() {
+        return preExtensionXML;
+    }
+
+    /**
+     * @param preExtensionXML the preExtensionXML to set
+     */
+    public void setPreExtensionXML(String preExtensionXML) {
+        this.preExtensionXML = preExtensionXML;
+    }
+
+    /**
+     * @return the separatorXML
+     */
+    public Character getSeparatorXML() {
+        return separatorXML;
+    }
+
+    /**
+     * @param separatorXML the separatorXML to set
+     */
+    public void setSeparatorXML(Character separatorXML) {
+        this.separatorXML = separatorXML;
+    }
+
+    /**
+     * @return the newJSONFile
+     */
+    public boolean isNewJSONFile() {
+        return newJSONFile;
+    }
+
+    /**
+     * @param newJSONFile the newJSONFile to set
+     */
+    public void setNewJSONFile(boolean newJSONFile) {
+        this.newJSONFile = newJSONFile;
+    }
+
+    /**
+     * @return the preExtensionJSON
+     */
+    public String getPreExtensionJSON() {
+        return preExtensionJSON;
+    }
+
+    /**
+     * @param preExtensionJSON the preExtensionJSON to set
+     */
+    public void setPreExtensionJSON(String preExtensionJSON) {
+        this.preExtensionJSON = preExtensionJSON;
+    }
+
+    /**
+     * @return the separatorJSON
+     */
+    public Character getSeparatorJSON() {
+        return separatorJSON;
+    }
+
+    /**
+     * @param separatorJSON the separatorJSON to set
+     */
+    public void setSeparatorJSON(Character separatorJSON) {
+        this.separatorJSON = separatorJSON;
+    }
+
+    /**
+     * @return the buildXMLMinify
+     */
+    public boolean isBuildXMLMinify() {
+        return buildXMLMinify;
+    }
+
+    /**
+     * @param buildXMLMinify the buildXMLMinify to set
+     */
+    public void setBuildXMLMinify(boolean buildXMLMinify) {
+        this.buildXMLMinify = buildXMLMinify;
+    }
+
+    /**
+     * @return the skipPreExtensionXML
+     */
+    public boolean isSkipPreExtensionXML() {
+        return skipPreExtensionXML;
+    }
+
+    /**
+     * @param skipPreExtensionXML the skipPreExtensionXML to set
+     */
+    public void setSkipPreExtensionXML(boolean skipPreExtensionXML) {
+        this.skipPreExtensionXML = skipPreExtensionXML;
+    }
+
+    /**
+     * @return the buildJSONMinify
+     */
+    public boolean isBuildJSONMinify() {
+        return buildJSONMinify;
+    }
+
+    /**
+     * @param buildJSONMinify the buildJSONMinify to set
+     */
+    public void setBuildJSONMinify(boolean buildJSONMinify) {
+        this.buildJSONMinify = buildJSONMinify;
+    }
+
+    /**
+     * @return the skipPreExtensionJSON
+     */
+    public boolean isSkipPreExtensionJSON() {
+        return skipPreExtensionJSON;
+    }
+
+    /**
+     * @param skipPreExtensionJSON the skipPreExtensionJSON to set
+     */
+    public void setSkipPreExtensionJSON(boolean skipPreExtensionJSON) {
+        this.skipPreExtensionJSON = skipPreExtensionJSON;
     }
 }

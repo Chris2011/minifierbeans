@@ -15,42 +15,44 @@
  */
 package org.netbeans.util.image.compress;
 
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
-import org.openide.loaders.DataObject;
-
-import org.openide.awt.ActionRegistration;
+import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
-import org.openide.awt.ActionID;
+import org.openide.awt.ActionRegistration;
 import org.openide.filesystems.FileObject;
+import org.openide.loaders.DataObject;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.RequestProcessor;
 import org.openide.util.TaskListener;
 
 @ActionID(category = "Build",
-id = "org.netbeans.util.image.compress.ImageCompress")
+        id = "org.netbeans.util.image.compress.ImageCompress")
 @ActionRegistration(displayName = "#CTL_ImageCompress")
 @ActionReferences({
-    @ActionReference(path = "Loaders/image/png-gif-jpeg-bmp/Actions", position = -150, separatorBefore = -200, separatorAfter = -100)
+    @ActionReference(path = "Loaders/image/png-gif-jpeg-bmp/Actions", position = 300, separatorBefore = 250, separatorAfter = 350)
 })
 @Messages("CTL_ImageCompress=Compress")
 public final class ImageCompress implements ActionListener {
- 
+
     private final DataObject context;
 
     public ImageCompress(DataObject context) {
         this.context = context;
     }
- private final static RequestProcessor RP = new RequestProcessor("ImageCompress", 1, true);
- @Override
+    private final static RequestProcessor RP = new RequestProcessor("ImageCompress", 1, true);
+
+    @Override
     public void actionPerformed(ActionEvent ev) {
-         Runnable runnable = new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
-            public void run() {compress();}
+            public void run() {
+                compress();
+            }
         };
         final RequestProcessor.Task theTask = RP.create(runnable);
         final ProgressHandle ph = ProgressHandleFactory.createHandle("Compressing Image " + context.getPrimaryFile().getName(), theTask);
@@ -63,12 +65,12 @@ public final class ImageCompress implements ActionListener {
         });
         ph.start();
         theTask.schedule(0);
-          
+
     }
-    
-    void compress(){
+
+    void compress() {
         ImageUtil imageUtil = new ImageUtil();
         FileObject file = context.getPrimaryFile();
-         imageUtil.compress(file.getPath(),file.getParent().getPath() +  File.separator + file.getName() + "-min." + file.getExt(),file.getExt());
+        imageUtil.compress(file.getPath(), file.getParent().getPath() + File.separator + file.getName() + "-min." + file.getExt(), file.getExt());
     }
 }
