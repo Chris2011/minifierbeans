@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.minify.ui.MinifyProperty;
+import static org.netbeans.util.source.minify.JSMinify.execute;
 import org.openide.loaders.DataObject;
 
 import org.openide.awt.ActionRegistration;
@@ -33,8 +34,6 @@ import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.RequestProcessor;
 import org.openide.util.TaskListener;
-import org.openide.windows.IOProvider;
-import org.openide.windows.InputOutput;
 
 @ActionID(category = "Build",
         id = "org.netbeans.util.source.minify.CSSMinify")
@@ -55,10 +54,14 @@ public final class CSSMinify implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        Runnable runnable = new Runnable() {
+         execute(context,null,true);
+    }
+
+    public static void execute(final DataObject context,final String content, final boolean notify) {
+       Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                cssMinify();
+                cssMinify(context,content,notify);
             }
         };
         final RequestProcessor.Task theTask = RP.create(runnable);
@@ -73,8 +76,7 @@ public final class CSSMinify implements ActionListener {
         ph.start();
         theTask.schedule(0);
     }
-
-    public void cssMinify() {
+    private static void cssMinify(DataObject context ,String content, boolean notify) {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         MinifyUtil util = new MinifyUtil();
         try {
@@ -90,8 +92,13 @@ public final class CSSMinify implements ActionListener {
             }
 
 
-            MinifyFileResult minifyFileResult = util.compressCss(inputFilePath, outputFilePath, minifyProperty);
-            if (minifyProperty.isEnableOutputLogAlert()) {
+            MinifyFileResult minifyFileResult;
+            if (content != null) {
+                minifyFileResult = util.compressContent(content, "text/css", outputFilePath, minifyProperty);
+            } else {
+                minifyFileResult = util.compress(inputFilePath, "text/css", outputFilePath, minifyProperty);
+            }
+            if (minifyProperty.isEnableOutputLogAlert() && notify) {
                 JOptionPane.showMessageDialog(null, "CSS Minified Completed Successfully\n"
                         + "Input CSS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
                         + "After Minifying CSS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"

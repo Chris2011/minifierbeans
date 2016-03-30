@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.minify.ui.MinifyProperty;
+import static org.netbeans.util.source.minify.JSMinify.execute;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -52,10 +53,13 @@ public final class XMLMinify implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        Runnable runnable = new Runnable() {
+       execute(context,null,true);
+    }
+    public static void execute(final DataObject context,final String content, final boolean notify) {
+         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                xmlMinify();
+                xmlMinify(context,content,notify);
             }
         };
         final RequestProcessor.Task theTask = RP.create(runnable);
@@ -71,7 +75,7 @@ public final class XMLMinify implements ActionListener {
         theTask.schedule(0);
     }
 
-    public void xmlMinify() {
+    private static void xmlMinify(DataObject context ,String content, boolean notify) {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         MinifyUtil util = new MinifyUtil();
         try {
@@ -86,8 +90,13 @@ public final class XMLMinify implements ActionListener {
                 outputFilePath = inputFilePath;
             }
 
-            MinifyFileResult minifyFileResult = util.compressXml(inputFilePath, outputFilePath, minifyProperty);
-            if (minifyProperty.isEnableOutputLogAlert()) {
+            MinifyFileResult minifyFileResult;
+            if (content != null) {
+                minifyFileResult = util.compressContent(content, "text/xml-mime", outputFilePath, minifyProperty);
+            } else {
+                minifyFileResult = util.compress(inputFilePath, "text/xml-mime", outputFilePath, minifyProperty);
+            }
+            if (minifyProperty.isEnableOutputLogAlert() && notify) {
                 JOptionPane.showMessageDialog(null, "XML Minified Completed Successfully\n"
                         + "Input XML Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
                         + "After Minifying XML Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"

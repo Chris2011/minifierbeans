@@ -23,6 +23,18 @@ import org.openide.util.NbPreferences;
 
 public class MinifyProperty implements Serializable {
 
+    private boolean autoMinifyJS = false;
+    private boolean autoMinifyCSS = false;
+    private boolean autoMinifyHTML = false;
+    private boolean autoMinifyXML = false;
+    private boolean autoMinifyJSON = false;
+    
+    private String headerJS = "";
+    private String headerCSS = "";
+    private String headerHTML = "";
+    private String headerXML = "";
+    private String headerJSON = "";
+    
     private boolean newJSFile = true;
     private String preExtensionJS = "min";
     private boolean jsObfuscate = true;//munge
@@ -80,8 +92,8 @@ public class MinifyProperty implements Serializable {
         prefs.put("separatorJS", separatorJS != null ? separatorJS.toString() : null);
         prefs.put("separatorCSS", separatorCSS != null ? separatorCSS.toString() : null);
         prefs.put("separatorHTML", separatorHTML != null ? separatorHTML.toString() : null);
-        prefs.put("separatorXML", getSeparatorXML() != null ? getSeparatorXML().toString() : null);
-        prefs.put("separatorJSON", getSeparatorJSON() != null ? getSeparatorJSON().toString() : null);
+        prefs.put("separatorXML", separatorXML != null ? separatorXML.toString() : null);
+        prefs.put("separatorJSON", separatorJSON != null ? separatorJSON.toString() : null);
 
         Class<?> clazz = this.getClass();
 
@@ -96,6 +108,7 @@ public class MinifyProperty implements Serializable {
                 }
             } else if (field.getType() == String.class) {
                 try {
+                    System.out.println("qqqqqqqqqqqqqqqqq " + field.get(this));
                     prefs.put(field.getName(), (String) field.get(this));
                 } catch (IllegalArgumentException ex) {
                     Exceptions.printStackTrace(ex);
@@ -122,8 +135,8 @@ public class MinifyProperty implements Serializable {
         separatorJS = prefs.get("separatorJS", separatorJS.toString()).toCharArray()[0];
         separatorCSS = prefs.get("separatorCSS", separatorCSS.toString()).toCharArray()[0];
         separatorHTML = prefs.get("separatorHTML", separatorHTML.toString()).toCharArray()[0];
-        setSeparatorXML((Character) prefs.get("separatorXML", getSeparatorXML().toString()).toCharArray()[0]);
-        setSeparatorJSON((Character) prefs.get("separatorJSON", getSeparatorJSON().toString()).toCharArray()[0]);
+        separatorXML =  prefs.get("separatorXML", getSeparatorXML().toString()).toCharArray()[0];
+        separatorJSON =  prefs.get("separatorJSON", getSeparatorJSON().toString()).toCharArray()[0];
 
         for (Field field : clazz.getDeclaredFields()) {
             if (field.getType() == boolean.class) {
@@ -690,5 +703,145 @@ public class MinifyProperty implements Serializable {
      */
     public void setSkipPreExtensionJSON(boolean skipPreExtensionJSON) {
         this.skipPreExtensionJSON = skipPreExtensionJSON;
+    }
+
+    /**
+     * @return the autoMinifyJS
+     */
+    public boolean isAutoMinifyJS() {
+        return autoMinifyJS;
+    }
+
+    /**
+     * @param autoMinifyJS the autoMinifyJS to set
+     */
+    public void setAutoMinifyJS(boolean autoMinifyJS) {
+        this.autoMinifyJS = autoMinifyJS;
+    }
+
+    /**
+     * @return the autoMinifyCSS
+     */
+    public boolean isAutoMinifyCSS() {
+        return autoMinifyCSS;
+    }
+
+    /**
+     * @param autoMinifyCSS the autoMinifyCSS to set
+     */
+    public void setAutoMinifyCSS(boolean autoMinifyCSS) {
+        this.autoMinifyCSS = autoMinifyCSS;
+    }
+
+    /**
+     * @return the autoMinifyHTML
+     */
+    public boolean isAutoMinifyHTML() {
+        return autoMinifyHTML;
+    }
+
+    /**
+     * @param autoMinifyHTML the autoMinifyHTML to set
+     */
+    public void setAutoMinifyHTML(boolean autoMinifyHTML) {
+        this.autoMinifyHTML = autoMinifyHTML;
+    }
+
+    /**
+     * @return the autoMinifyXML
+     */
+    public boolean isAutoMinifyXML() {
+        return autoMinifyXML;
+    }
+
+    /**
+     * @param autoMinifyXML the autoMinifyXML to set
+     */
+    public void setAutoMinifyXML(boolean autoMinifyXML) {
+        this.autoMinifyXML = autoMinifyXML;
+    }
+
+    /**
+     * @return the autoMinifyJSON
+     */
+    public boolean isAutoMinifyJSON() {
+        return autoMinifyJSON;
+    }
+
+    /**
+     * @param autoMinifyJSON the autoMinifyJSON to set
+     */
+    public void setAutoMinifyJSON(boolean autoMinifyJSON) {
+        this.autoMinifyJSON = autoMinifyJSON;
+    }
+
+    /**
+     * @return the headerJS
+     */
+    public String getHeaderJS() {
+        return headerJS;
+    }
+
+    /**
+     * @param headerJS the headerJS to set
+     */
+    public void setHeaderJS(String headerJS) {
+        this.headerJS = headerJS;
+    }
+
+    /**
+     * @return the headerCSS
+     */
+    public String getHeaderCSS() {
+        return headerCSS;
+    }
+
+    /**
+     * @param headerCSS the headerCSS to set
+     */
+    public void setHeaderCSS(String headerCSS) {
+        this.headerCSS = headerCSS;
+    }
+
+    /**
+     * @return the headerHTML
+     */
+    public String getHeaderHTML() {
+        return headerHTML;
+    }
+
+    /**
+     * @param headerHTML the headerHTML to set
+     */
+    public void setHeaderHTML(String headerHTML) {
+        this.headerHTML = headerHTML;
+    }
+
+    /**
+     * @return the headerXML
+     */
+    public String getHeaderXML() {
+        return headerXML;
+    }
+
+    /**
+     * @param headerXML the headerXML to set
+     */
+    public void setHeaderXML(String headerXML) {
+        this.headerXML = headerXML;
+    }
+
+    /**
+     * @return the headerJSON
+     */
+    public String getHeaderJSON() {
+        return headerJSON;
+    }
+
+    /**
+     * @param headerJSON the headerJSON to set
+     */
+    public void setHeaderJSON(String headerJSON) {
+        this.headerJSON = headerJSON;
     }
 }

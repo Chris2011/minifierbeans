@@ -23,7 +23,6 @@ import java.awt.event.ItemListener;
 public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPanel {
 
     private MinifyProperty minifyProperty;
-//    private MinifyPropertyController //minifyPropertyController = null;
 
     JSCSSMinifyCompressCustomPanel(JSCSSMinifyCompressOptionsPanelController controller) {
         super(controller);
@@ -36,12 +35,43 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
         separatorJS.setEnabled(minifyProperty.isNewJSFile());
         separatorJS_Label.setEnabled(minifyProperty.isNewJSFile());
         skipPreExtensionJS.setEnabled(minifyProperty.isNewJSFile());
-        this.preExtensionJS.setText(minifyProperty.getPreExtensionJS());
-        this.separatorJS.setText(minifyProperty.getSeparatorJS().toString());
+        preExtensionJS.setText(minifyProperty.getPreExtensionJS());
+        separatorJS.setText(minifyProperty.getSeparatorJS().toString());
 
         if (minifyProperty.isJsObfuscate()) {
             this.jsObfuscate.setSelected(Boolean.TRUE);
         }
+
+        autoMinifyJS.setSelected(minifyProperty.isAutoMinifyJS());
+        headerEditorPaneJS.setText(minifyProperty.getHeaderJS());
+        
+        headerEditorPaneJS.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = headerEditorPaneJS.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = null;
+                    headerEditorPaneJS.setText("");
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setHeaderJS(text);
+            }
+        });
+        this.autoMinifyJS.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setAutoMinifyJS(Boolean.TRUE);
+                } else {
+                    minifyProperty.setAutoMinifyJS(Boolean.FALSE);
+                }
+            }
+        });
 
         this.newJSFile.addItemListener(new ItemListener() {
             @Override
@@ -136,6 +166,36 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
         this.preExtensionCSS.setText(minifyProperty.getPreExtensionCSS());
         this.separatorCSS.setText(minifyProperty.getSeparatorCSS().toString());
 
+        autoMinifyCSS.setSelected(minifyProperty.isAutoMinifyCSS());
+        headerEditorPaneCSS.setText(minifyProperty.getHeaderCSS());
+        
+        headerEditorPaneCSS.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = headerEditorPaneCSS.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = null;
+                    headerEditorPaneCSS.setText("");
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setHeaderCSS(text);
+            }
+        });
+        this.autoMinifyCSS.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setAutoMinifyCSS(Boolean.TRUE);
+                } else {
+                    minifyProperty.setAutoMinifyCSS(Boolean.FALSE);
+                }
+            }
+        });
         this.newCSSFile.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -221,7 +281,35 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
         skipPreExtensionHTML.setEnabled(minifyProperty.isNewHTMLFile());
         this.preExtensionHTML.setText(minifyProperty.getPreExtensionHTML());
         this.separatorHTML.setText(minifyProperty.getSeparatorHTML().toString());
+        autoMinifyHTML.setSelected(minifyProperty.isAutoMinifyHTML());
+        headerEditorPaneHTML.setText(minifyProperty.getHeaderHTML());
+        headerEditorPaneHTML.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
 
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = headerEditorPaneHTML.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = null;
+                    headerEditorPaneHTML.setText("");
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setHeaderHTML(text);
+            }
+        });
+        this.autoMinifyHTML.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setAutoMinifyHTML(Boolean.TRUE);
+                } else {
+                    minifyProperty.setAutoMinifyHTML(Boolean.FALSE);
+                }
+            }
+        });
         this.newHTMLFile.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -346,6 +434,36 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
         skipPreExtensionXML.setEnabled(minifyProperty.isNewXMLFile());
         this.preExtensionXML.setText(minifyProperty.getPreExtensionXML());
         this.separatorXML.setText(minifyProperty.getSeparatorXML().toString());
+        autoMinifyXML.setSelected(minifyProperty.isAutoMinifyXML());
+        headerEditorPaneXML.setText(minifyProperty.getHeaderXML());
+
+        headerEditorPaneXML.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = headerEditorPaneXML.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = null;
+                    headerEditorPaneXML.setText("");
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setHeaderXML(text);
+            }
+        });
+        this.autoMinifyXML.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setAutoMinifyXML(Boolean.TRUE);
+                } else {
+                    minifyProperty.setAutoMinifyXML(Boolean.FALSE);
+                }
+            }
+        });
 
         this.newXMLFile.addItemListener(new ItemListener() {
             @Override
@@ -433,6 +551,36 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
         skipPreExtensionJSON.setEnabled(minifyProperty.isNewJSONFile());
         this.preExtensionJSON.setText(minifyProperty.getPreExtensionJSON());
         this.separatorJSON.setText(minifyProperty.getSeparatorJSON().toString());
+        autoMinifyJSON.setSelected(minifyProperty.isAutoMinifyJSON());
+        headerEditorPaneJSON.setText(minifyProperty.getHeaderJSON());
+
+        headerEditorPaneJSON.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = headerEditorPaneJSON.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = null;
+                    headerEditorPaneJSON.setText("");
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setHeaderJSON(text);
+            }
+        });
+        this.autoMinifyJSON.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setAutoMinifyJSON(Boolean.TRUE);
+                } else {
+                    minifyProperty.setAutoMinifyJSON(Boolean.FALSE);
+                }
+            }
+        });
 
         this.newJSONFile.addItemListener(new ItemListener() {
             @Override

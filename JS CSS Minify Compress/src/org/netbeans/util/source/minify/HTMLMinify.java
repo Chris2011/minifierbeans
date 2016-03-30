@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.minify.ui.MinifyProperty;
+import static org.netbeans.util.source.minify.JSMinify.execute;
 import org.openide.loaders.DataObject;
 
 import org.openide.awt.ActionRegistration;
@@ -55,10 +56,14 @@ public final class HTMLMinify implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
+         execute(context,null,true);
+    }
+    
+    public static void execute(final DataObject context,final String content, final boolean notify) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                htmlMinify();
+                htmlMinify(context,content,notify);
             }
         };
         final RequestProcessor.Task theTask = RP.create(runnable);
@@ -74,7 +79,7 @@ public final class HTMLMinify implements ActionListener {
         theTask.schedule(0);
     }
 
-    public void htmlMinify() {
+    private static void htmlMinify(DataObject context ,String content, boolean notify) {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         MinifyUtil util = new MinifyUtil();
         try {
@@ -89,9 +94,13 @@ public final class HTMLMinify implements ActionListener {
                 outputFilePath = inputFilePath;
             }
 
-
-            MinifyFileResult minifyFileResult = util.compressHtml(inputFilePath, outputFilePath, minifyProperty);
-            if (minifyProperty.isEnableOutputLogAlert()) {
+            MinifyFileResult minifyFileResult;
+            if (content != null) {
+                minifyFileResult = util.compressContent(content, "text/html", outputFilePath, minifyProperty);
+            } else {
+                minifyFileResult = util.compress(inputFilePath, "text/html", outputFilePath, minifyProperty);
+            }
+            if (minifyProperty.isEnableOutputLogAlert() && notify) {
                 JOptionPane.showMessageDialog(null, "HTML Minified Completed Successfully\n"
                         + "Input HTML Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
                         + "After Minifying HTML Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"

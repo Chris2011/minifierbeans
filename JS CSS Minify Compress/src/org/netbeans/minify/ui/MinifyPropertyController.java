@@ -73,8 +73,8 @@ public class MinifyPropertyController {
         } catch (ClassNotFoundException ex) {
             Exceptions.printStackTrace(ex);
         } catch (IOException ex) {
-            minifyProperty = MinifyProperty.getDefaultInstance();
-            //Exceptions.printStackTrace(ex);
+            minifyProperty = MinifyProperty.getInstance();
+//            Exceptions.printStackTrace(ex);
         } finally {
             try {
                 if (input != null) {

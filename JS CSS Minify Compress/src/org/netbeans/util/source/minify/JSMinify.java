@@ -55,10 +55,14 @@ public final class JSMinify implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
+        execute(context,null,true);
+    }
+    
+    public static void execute(final DataObject context,final String content, final boolean notify) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                jsMinify();
+                jsMinify(context,content,notify);
             }
         };
         final RequestProcessor.Task theTask = RP.create(runnable);
@@ -74,7 +78,7 @@ public final class JSMinify implements ActionListener {
         theTask.schedule(0);
     }
 
-    public void jsMinify() {
+    private static void jsMinify(DataObject context ,String content, boolean notify) {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         MinifyUtil util = new MinifyUtil();
         try {
@@ -88,9 +92,13 @@ public final class JSMinify implements ActionListener {
                 outputFilePath = inputFilePath;
             }
 
-            MinifyFileResult minifyFileResult = util.compressJavaScript(inputFilePath, outputFilePath, minifyProperty);
-
-            if (minifyProperty.isEnableOutputLogAlert()) {
+            MinifyFileResult minifyFileResult;
+            if (content != null) {
+                minifyFileResult = util.compressContent(content, "text/javascript", outputFilePath, minifyProperty);
+            } else {
+                minifyFileResult = util.compress(inputFilePath, "text/javascript", outputFilePath, minifyProperty);
+            }
+            if (minifyProperty.isEnableOutputLogAlert() && notify) {
                 JOptionPane.showMessageDialog(null, "JS Minified Completed Successfully\n"
                         + "Input JS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
                         + "After Minifying JS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"

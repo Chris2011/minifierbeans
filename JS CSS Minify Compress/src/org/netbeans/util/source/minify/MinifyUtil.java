@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,7 +86,7 @@ public class MinifyUtil {
                             outputFilePath = inputFilePath;
                         }
 
-                        MinifyFileResult minifyFileResult = compressJavaScript(inputFilePath, outputFilePath, minifyProperty);
+                        MinifyFileResult minifyFileResult = compress(inputFilePath,"text/javascript", outputFilePath, minifyProperty);
                         minifyResult.setInputJsFilesSize(minifyResult.getInputJsFilesSize() + minifyFileResult.getInputFileSize());
                         minifyResult.setOutputJsFilesSize(minifyResult.getOutputJsFilesSize() + minifyFileResult.getOutputFileSize());
                     }
@@ -112,7 +114,7 @@ public class MinifyUtil {
                             outputFilePath = inputFilePath;
                         }
 
-                        MinifyFileResult minifyFileResult = compressCss(inputFilePath, outputFilePath, minifyProperty);
+                        MinifyFileResult minifyFileResult = compress(inputFilePath,"text/css", outputFilePath, minifyProperty);
                         minifyResult.setInputCssFilesSize(minifyResult.getInputCssFilesSize() + minifyFileResult.getInputFileSize());
                         minifyResult.setOutputCssFilesSize(minifyResult.getOutputCssFilesSize() + minifyFileResult.getOutputFileSize());
                     }
@@ -140,7 +142,7 @@ public class MinifyUtil {
                             outputFilePath = inputFilePath;
                         }
 
-                        MinifyFileResult minifyFileResult = compressHtml(inputFilePath, outputFilePath, minifyProperty);
+                        MinifyFileResult minifyFileResult = compress(inputFilePath,"text/html", outputFilePath, minifyProperty);
                         minifyResult.setInputHtmlFilesSize(minifyResult.getInputHtmlFilesSize() + minifyFileResult.getInputFileSize());
                         minifyResult.setOutputHtmlFilesSize(minifyResult.getOutputHtmlFilesSize() + minifyFileResult.getOutputFileSize());
                     }
@@ -168,7 +170,7 @@ public class MinifyUtil {
                             outputFilePath = inputFilePath;
                         }
 
-                        MinifyFileResult minifyFileResult = compressXml(inputFilePath, outputFilePath, minifyProperty);
+                        MinifyFileResult minifyFileResult = compress(inputFilePath,"text/xml-mime", outputFilePath, minifyProperty);
                         minifyResult.setInputXmlFilesSize(minifyResult.getInputXmlFilesSize() + minifyFileResult.getInputFileSize());
                         minifyResult.setOutputXmlFilesSize(minifyResult.getOutputXmlFilesSize() + minifyFileResult.getOutputFileSize());
                     }
@@ -196,7 +198,7 @@ public class MinifyUtil {
                             outputFilePath = inputFilePath;
                         }
 
-                        MinifyFileResult minifyFileResult = compressJson(inputFilePath, outputFilePath, minifyProperty);
+                        MinifyFileResult minifyFileResult = compress(inputFilePath,"text/x-json", outputFilePath, minifyProperty);
                         minifyResult.setInputJsonFilesSize(minifyResult.getInputJsonFilesSize() + minifyFileResult.getInputFileSize());
                         minifyResult.setOutputJsonFilesSize(minifyResult.getOutputJsonFilesSize() + minifyFileResult.getOutputFileSize());
                     }
@@ -217,38 +219,7 @@ public class MinifyUtil {
         return minifyResult;
     }
 
-    public MinifyFileResult compressJavaScript(String inputFilename, String outputFilename, MinifyProperty minifyProperty) throws IOException {
-        Reader in = null;
-        Writer out = null;
-        MinifyFileResult minifyFileResult = new MinifyFileResult();
-        try {
-            File inputFile = new File(inputFilename);
-            File outputFile = new File(outputFilename);
-            in = new InputStreamReader(new FileInputStream(inputFile), minifyProperty.getCharset());
-            minifyFileResult.setInputFileSize(inputFile.length());
-
-            JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter());
-            in.close();
-            in = null;
-
-            out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
-            compressor.compress(out, minifyProperty.getLineBreakPosition(), minifyProperty.isJsObfuscate(), minifyProperty.getVerbose(), minifyProperty.isPreserveSemicolon(), minifyProperty.getDisableOptimizations());
-            out.flush();
-            minifyFileResult.setOutputFileSize(outputFile.length());
-            if (minifyProperty.isAppendLogToFile()) {
-                out.append("\n/*Size: " + minifyFileResult.getInputFileSize() + "->"
-                        + minifyFileResult.getOutputFileSize() + "Bytes "
-                        + "\n Saved " + minifyFileResult.getSavedPercentage() + "%*/");
-            }
-            out.flush();
-
-        } finally {
-            IOUtils.closeQuietly(in);
-            IOUtils.closeQuietly(out);
-        }
-        return minifyFileResult;
-    }
-
+   
     public void compressJavaScriptInternal(Reader in, Writer out, MinifyProperty minifyProperty) throws IOException {
         try {
             JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter());
@@ -262,38 +233,7 @@ public class MinifyUtil {
         }
     }
 
-    public MinifyFileResult compressCss(String inputFilename, String outputFilename, MinifyProperty minifyProperty) throws IOException {
-        Reader in = null;
-        Writer out = null;
-        MinifyFileResult minifyFileResult = new MinifyFileResult();
-        try {
-            File inputFile = new File(inputFilename);
-            File outputFile = new File(outputFilename);
-            in = new InputStreamReader(new FileInputStream(inputFile), minifyProperty.getCharset());
-            minifyFileResult.setInputFileSize(inputFile.length());
-
-            CssCompressor compressor = new CssCompressor(in);
-            in.close();
-            in = null;
-
-            out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
-            compressor.compress(out, minifyProperty.getLineBreakPosition());
-            out.flush();
-            minifyFileResult.setOutputFileSize(outputFile.length());
-            if (minifyProperty.isAppendLogToFile()) {
-                out.append("\n/*Size: " + minifyFileResult.getInputFileSize() + "->"
-                        + minifyFileResult.getOutputFileSize() + "Bytes "
-                        + "\n Saved " + minifyFileResult.getSavedPercentage() + "%*/");
-            }
-            out.flush();
-
-        } finally {
-            IOUtils.closeQuietly(in);
-            IOUtils.closeQuietly(out);
-        }
-        return minifyFileResult;
-    }
-
+  
     public void compressCssInternal(Reader in, Writer out, MinifyProperty minifyProperty) throws IOException {
         try {
             CssCompressor compressor = new CssCompressor(in);
@@ -307,51 +247,7 @@ public class MinifyUtil {
         }
     }
 
-    public MinifyFileResult compressHtml(String inputFilename, String outputFilename, MinifyProperty minifyProperty) throws IOException {
-        InputStreamReader in = null;
-        Writer out = null;
-        MinifyFileResult minifyFileResult = new MinifyFileResult();
-        try {
-            File inputFile = new File(inputFilename);
-            File outputFile = new File(outputFilename);
-            in = new InputStreamReader(new FileInputStream(inputFile), minifyProperty.getCharset());
-            minifyFileResult.setInputFileSize(inputFile.length());
-
-            HtmlCompressor compressor = new HtmlCompressor();
-            compressor.setRemoveIntertagSpaces(true);
-            compressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
-            compressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
-            compressor.setYuiJsNoMunge(!minifyProperty.isJsObfuscate());
-//            compressor.setRemoveQuotes(true); //false may in feature             //removes unnecessary tag attribute quotes
-//compressor.setSimpleDoctype(true);   //false may in feature          //simplify existing doctype
-//compressor.setRemoveComments(true); //false may in feature           //if false keeps HTML comments (default is true)
-//compressor.setSimpleBooleanAttributes(true);  //false may in feature  //remove values from boolean tag attributes
-//compressor.setPreserveLineBreaks(true);        //preserves original line breaks
-
-            String output = compressor.compress(fromStream(in));//out, minifyProperty.getLineBreakPosition());
-
-            in.close();
-            in = null;
-
-            out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
-            out.write(output);
-
-            out.flush();
-            minifyFileResult.setOutputFileSize(outputFile.length());
-            if (minifyProperty.isAppendLogToFile()) {
-                out.append("\n<!--Size: " + minifyFileResult.getInputFileSize() + "=>"
-                        + minifyFileResult.getOutputFileSize() + "Bytes "
-                        + "\n Saved " + minifyFileResult.getSavedPercentage() + "%-->");
-            }
-            out.flush();
-
-        } finally {
-            IOUtils.closeQuietly(in);
-            IOUtils.closeQuietly(out);
-        }
-        return minifyFileResult;
-    }
-
+   
     public void compressHtmlInternal(Reader in, Writer out, MinifyProperty minifyProperty) throws IOException {
         try {
             HtmlCompressor compressor = new HtmlCompressor();
@@ -369,8 +265,68 @@ public class MinifyUtil {
             IOUtils.closeQuietly(out);
         }
     }
+    
+    
+    
+     public MinifyFileResult compressContent(String content, String mimeType, String outputFilename, MinifyProperty minifyProperty) throws IOException {
+        Writer out = null;
+        MinifyFileResult minifyFileResult = new MinifyFileResult();
+        try {
+            File outputFile = new File(outputFilename);
+            out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
 
-    public MinifyFileResult compressXml(String inputFilename, String outputFilename, MinifyProperty minifyProperty) throws IOException {
+            String output;
+            if (mimeType.equals("text/html")) {
+                HtmlCompressor compressor = new HtmlCompressor();
+                compressor.setRemoveIntertagSpaces(true);
+                compressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
+                compressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
+                compressor.setYuiJsNoMunge(!minifyProperty.isJsObfuscate());
+                output = compressor.compress(content);//out, minifyProperty.getLineBreakPosition());
+                out.write(MinifyProperty.getInstance().getHeaderHTML()  +"\n"+ output);
+            } else if (mimeType.equals("text/javascript")) {
+                Reader in = new StringReader(content);
+                JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter());
+                in.close();
+                StringWriter outputWriter = new StringWriter();
+                compressor.compress(outputWriter, minifyProperty.getLineBreakPosition(), minifyProperty.isJsObfuscate(), minifyProperty.getVerbose(), minifyProperty.isPreserveSemicolon(), minifyProperty.getDisableOptimizations());
+                outputWriter.flush();
+                out.write(MinifyProperty.getInstance().getHeaderJS()  +"\n"+ outputWriter.toString());
+                outputWriter.close();
+            } else if (mimeType.equals("text/css")) {
+                Reader in = new StringReader(content);
+                CssCompressor compressor = new CssCompressor(in);
+                in.close();
+                StringWriter outputWriter = new StringWriter();
+                compressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
+                outputWriter.flush();
+                out.write(MinifyProperty.getInstance().getHeaderCSS()  +"\n"+ outputWriter.toString());
+                outputWriter.close();
+            } else if (mimeType.equals("text/x-json")) {
+                JSONMinifyUtil compressor = new JSONMinifyUtil();
+                output = compressor.minify(content);
+                out.write(MinifyProperty.getInstance().getHeaderJSON()  +"\n"+ output);
+            } else if (mimeType.equals("text/xml-mime")) {
+                XmlCompressor compressor = new XmlCompressor();
+                compressor.setRemoveIntertagSpaces(true);
+                compressor.setRemoveComments(true);
+                compressor.setEnabled(true);
+                output = compressor.compress(content);
+                out.write(MinifyProperty.getInstance().getHeaderXML()  +"\n"+ output);
+            }
+
+            out.flush();
+        } finally {
+            IOUtils.closeQuietly(out);
+        }
+        return minifyFileResult;
+    }
+
+
+     
+     
+
+    public MinifyFileResult compress(String inputFilename, String mimeType, String outputFilename, MinifyProperty minifyProperty) throws IOException {
         InputStreamReader in = null;
         Writer out = null;
         MinifyFileResult minifyFileResult = new MinifyFileResult();
@@ -379,28 +335,56 @@ public class MinifyUtil {
             File outputFile = new File(outputFilename);
             in = new InputStreamReader(new FileInputStream(inputFile), minifyProperty.getCharset());
             minifyFileResult.setInputFileSize(inputFile.length());
-
-            XmlCompressor compressor = new XmlCompressor();
-            compressor.setRemoveIntertagSpaces(true);
-            compressor.setRemoveComments(true);
-            compressor.setEnabled(true);
-
-            String output = compressor.compress(fromStream(in));//out, minifyProperty.getLineBreakPosition());
-
+            out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
+            String output;
+             
+            if (mimeType.equals("text/html")) {
+                HtmlCompressor compressor = new HtmlCompressor();
+                compressor.setRemoveIntertagSpaces(true);
+                compressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
+                compressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
+                compressor.setYuiJsNoMunge(!minifyProperty.isJsObfuscate());
+                output = compressor.compress(fromStream(in));//out, minifyProperty.getLineBreakPosition());
+                out.write(MinifyProperty.getInstance().getHeaderHTML()  +"\n"+ output);
+            } else if (mimeType.equals("text/javascript")) {
+                JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter());
+                StringWriter outputWriter = new StringWriter();
+                compressor.compress(outputWriter, minifyProperty.getLineBreakPosition(), minifyProperty.isJsObfuscate(), minifyProperty.getVerbose(), minifyProperty.isPreserveSemicolon(), minifyProperty.getDisableOptimizations());
+                outputWriter.flush();
+                out.write(MinifyProperty.getInstance().getHeaderJS()  +"\n"+ outputWriter.toString());
+                outputWriter.close();
+            } else if (mimeType.equals("text/css")) {
+                CssCompressor compressor = new CssCompressor(in);
+                StringWriter outputWriter = new StringWriter();
+                compressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
+                outputWriter.flush();
+                out.write(MinifyProperty.getInstance().getHeaderCSS()  +"\n"+ outputWriter.toString());
+                outputWriter.close();
+            } else if (mimeType.equals("text/x-json")) {
+                JSONMinifyUtil compressor = new JSONMinifyUtil();
+                output = compressor.minify(fromStream(in));
+                out.write(MinifyProperty.getInstance().getHeaderJSON()  +"\n"+ output);
+            } else if (mimeType.equals("text/xml-mime")) {
+                XmlCompressor compressor = new XmlCompressor();
+                compressor.setRemoveIntertagSpaces(true);
+                compressor.setRemoveComments(true);
+                compressor.setEnabled(true);
+                output = compressor.compress(fromStream(in));
+                out.write(MinifyProperty.getInstance().getHeaderXML()  +"\n"+ output);
+            }
+            
             in.close();
             in = null;
 
-            out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
-            out.write(output);
-
             out.flush();
+            
             minifyFileResult.setOutputFileSize(outputFile.length());
             if (minifyProperty.isAppendLogToFile()) {
                 out.append("\n<!--Size: " + minifyFileResult.getInputFileSize() + "=>"
                         + minifyFileResult.getOutputFileSize() + "Bytes "
                         + "\n Saved " + minifyFileResult.getSavedPercentage() + "%-->");
             }
-            out.flush();
+            
 
         } finally {
             IOUtils.closeQuietly(in);
@@ -426,41 +410,7 @@ public class MinifyUtil {
         }
     }
 
-    public MinifyFileResult compressJson(String inputFilename, String outputFilename, MinifyProperty minifyProperty) throws IOException {
-        InputStreamReader in = null;
-        Writer out = null;
-        MinifyFileResult minifyFileResult = new MinifyFileResult();
-        try {
-            File inputFile = new File(inputFilename);
-            File outputFile = new File(outputFilename);
-            in = new InputStreamReader(new FileInputStream(inputFile), minifyProperty.getCharset());
-            minifyFileResult.setInputFileSize(inputFile.length());
-
-            JSONMinifyUtil compressor = new JSONMinifyUtil();
-            String output = compressor.minify(fromStream(in));
-
-            in.close();
-            in = null;
-
-            out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
-            out.write(output);
-
-            out.flush();
-            minifyFileResult.setOutputFileSize(outputFile.length());
-            if (minifyProperty.isAppendLogToFile()) {
-                out.append("\n<!--Size: " + minifyFileResult.getInputFileSize() + "=>"
-                        + minifyFileResult.getOutputFileSize() + "Bytes "
-                        + "\n Saved " + minifyFileResult.getSavedPercentage() + "%-->");
-            }
-            out.flush();
-
-        } finally {
-            IOUtils.closeQuietly(in);
-            IOUtils.closeQuietly(out);
-        }
-        return minifyFileResult;
-    }
-
+    
     public void compressJsonInternal(Reader in, Writer out, MinifyProperty minifyProperty) throws IOException {
         try {
             JSONMinifyUtil compressor = new JSONMinifyUtil();

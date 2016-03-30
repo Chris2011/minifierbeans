@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.minify.ui.MinifyProperty;
+import static org.netbeans.util.source.minify.JSMinify.execute;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -52,10 +53,14 @@ public final class JSONMinify implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
+        execute(context,null,true);
+    }
+
+    public static void execute(final DataObject context,final String content, final boolean notify) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                jsonMinify();
+                jsonMinify(context,content,notify);
             }
         };
         final RequestProcessor.Task theTask = RP.create(runnable);
@@ -70,8 +75,7 @@ public final class JSONMinify implements ActionListener {
         ph.start();
         theTask.schedule(0);
     }
-
-    public void jsonMinify() {
+    private static void jsonMinify(DataObject context ,String content, boolean notify) {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         MinifyUtil util = new MinifyUtil();
         try {
@@ -86,8 +90,13 @@ public final class JSONMinify implements ActionListener {
                 outputFilePath = inputFilePath;
             }
 
-            MinifyFileResult minifyFileResult = util.compressJson(inputFilePath, outputFilePath, minifyProperty);
-            if (minifyProperty.isEnableOutputLogAlert()) {
+            MinifyFileResult minifyFileResult;
+            if (content != null) {
+                minifyFileResult = util.compressContent(content, "text/x-json", outputFilePath, minifyProperty);
+            } else {
+                minifyFileResult = util.compress(inputFilePath, "text/x-json", outputFilePath, minifyProperty);
+            }
+            if (minifyProperty.isEnableOutputLogAlert() && notify) {
                 JOptionPane.showMessageDialog(null, "JSON Minified Completed Successfully\n"
                         + "Input JSON Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
                         + "After Minifying JSON Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
