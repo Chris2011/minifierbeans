@@ -1,6 +1,6 @@
 # JS CSS Minify Compress [![][license img]][license]
 
-Plugin to minify JS , CSS and HTML for quicken page load times by reducing the size of js/css/html files.
+Plugin to minify JS , CSS and HTML for quicker page load times by reducing the size of js/css/html files.
 This plugin remove all unnecessary characters from source code, without changing its functionality. These unnecessary characters usually include white space characters, new line characters, comments, and sometimes block delimiters, which are used to add readability to the code but are not required for it to execute.
 
 - To minify all js , css or html , right click on folder in netbeans and select Minify WEB Content option ; it will minify all css & js file.
