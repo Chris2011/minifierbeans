@@ -1,4 +1,4 @@
-*** #### Looking for Contributors (Please contact gaurav.gupta.jc@gmail.com if intersted)
+### Looking for Contributors (Please contact gaurav.gupta.jc@gmail.com if intersted)
 
 
 # JS CSS Minify Compress [![][license img]][license]
