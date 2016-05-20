@@ -1,3 +1,6 @@
+*** #### Looking for Contributors (Please contact gaurav.gupta.jc@gmail.com if intersted)
+
+
 # JS CSS Minify Compress [![][license img]][license]
 
 Plugin to minify JS , CSS and HTML for quicker page load times by reducing the size of js/css/html files.
