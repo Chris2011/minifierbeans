@@ -33,6 +33,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.mozilla.javascript.ErrorReporter;
 import org.mozilla.javascript.EvaluatorException;
 import org.netbeans.minify.ui.MinifyProperty;
@@ -283,7 +284,11 @@ public class MinifyUtil {
                 compressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
                 compressor.setYuiJsNoMunge(!minifyProperty.isJsObfuscate());
                 output = compressor.compress(content);//out, minifyProperty.getLineBreakPosition());
-                out.write(MinifyProperty.getInstance().getHeaderHTML()  +"\n"+ output);
+                if(StringUtils.isBlank(MinifyProperty.getInstance().getHeaderHTML())) {
+                    out.write(output);
+                } else {
+                    out.write(MinifyProperty.getInstance().getHeaderHTML() + "\n" + output);
+                }
             } else if (mimeType.equals("text/javascript")) {
                 Reader in = new StringReader(content);
                 JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter());
@@ -291,7 +296,11 @@ public class MinifyUtil {
                 StringWriter outputWriter = new StringWriter();
                 compressor.compress(outputWriter, minifyProperty.getLineBreakPosition(), minifyProperty.isJsObfuscate(), minifyProperty.getVerbose(), minifyProperty.isPreserveSemicolon(), minifyProperty.getDisableOptimizations());
                 outputWriter.flush();
-                out.write(MinifyProperty.getInstance().getHeaderJS()  +"\n"+ outputWriter.toString());
+                if(StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
+                    out.write(outputWriter.toString());
+                } else {
+                    out.write(MinifyProperty.getInstance().getHeaderJS() + "\n" + outputWriter.toString());
+                }
                 outputWriter.close();
             } else if (mimeType.equals("text/css")) {
                 Reader in = new StringReader(content);
@@ -300,19 +309,31 @@ public class MinifyUtil {
                 StringWriter outputWriter = new StringWriter();
                 compressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
                 outputWriter.flush();
-                out.write(MinifyProperty.getInstance().getHeaderCSS()  +"\n"+ outputWriter.toString());
+                if(StringUtils.isBlank(MinifyProperty.getInstance().getHeaderCSS())) {
+                    out.write(outputWriter.toString());
+                } else {
+                    out.write(MinifyProperty.getInstance().getHeaderCSS() + "\n" + outputWriter.toString());
+                }
                 outputWriter.close();
             } else if (mimeType.equals("text/x-json")) {
                 JSONMinifyUtil compressor = new JSONMinifyUtil();
                 output = compressor.minify(content);
-                out.write(MinifyProperty.getInstance().getHeaderJSON()  +"\n"+ output);
+                if(StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJSON())) {
+                    out.write(output);
+                } else {
+                    out.write(MinifyProperty.getInstance().getHeaderJSON() + "\n" + output);
+                }
             } else if (mimeType.equals("text/xml-mime")) {
                 XmlCompressor compressor = new XmlCompressor();
                 compressor.setRemoveIntertagSpaces(true);
                 compressor.setRemoveComments(true);
                 compressor.setEnabled(true);
                 output = compressor.compress(content);
-                out.write(MinifyProperty.getInstance().getHeaderXML()  +"\n"+ output);
+                if(StringUtils.isBlank(MinifyProperty.getInstance().getHeaderXML())) {
+                    out.write(output);
+                } else {
+                    out.write(MinifyProperty.getInstance().getHeaderXML() + "\n" + output);
+                }
             }
 
             out.flush();

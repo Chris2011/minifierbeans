@@ -43,10 +43,6 @@ public final class MinifyKeyAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        Project project = TopComponent.getRegistry().getActivated().getLookup().lookup(Project.class);
-//        if (project != null) {
-//            System.out.println("project : " + project);
-//        }
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         DataObject dob = TopComponent.getRegistry().getActivated().getLookup().lookup(DataObject.class);
         if (dob != null && minifyProperty.isEnableShortKeyAction()) {

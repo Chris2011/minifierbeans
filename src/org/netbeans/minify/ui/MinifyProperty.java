@@ -28,13 +28,13 @@ public class MinifyProperty implements Serializable {
     private boolean autoMinifyHTML = false;
     private boolean autoMinifyXML = false;
     private boolean autoMinifyJSON = false;
-    
+
     private String headerJS = "";
     private String headerCSS = "";
     private String headerHTML = "";
     private String headerXML = "";
     private String headerJSON = "";
-    
+
     private boolean newJSFile = true;
     private String preExtensionJS = "min";
     private boolean jsObfuscate = true;//munge
@@ -98,31 +98,18 @@ public class MinifyProperty implements Serializable {
         Class<?> clazz = this.getClass();
 
         for (Field field : clazz.getDeclaredFields()) {
-            if (field.getType() == boolean.class) {
-                try {
+            try {
+                if (field.getType() == boolean.class) {
                     prefs.putBoolean(field.getName(), field.getBoolean(this));
-                } catch (IllegalArgumentException ex) {
-                    Exceptions.printStackTrace(ex);
-                } catch (IllegalAccessException ex) {
-                    Exceptions.printStackTrace(ex);
-                }
-            } else if (field.getType() == String.class) {
-                try {
-                    System.out.println("qqqqqqqqqqqqqqqqq " + field.get(this));
+                } else if (field.getType() == String.class) {
                     prefs.put(field.getName(), (String) field.get(this));
-                } catch (IllegalArgumentException ex) {
-                    Exceptions.printStackTrace(ex);
-                } catch (IllegalAccessException ex) {
-                    Exceptions.printStackTrace(ex);
-                }
-            } else if (field.getType() == int.class) {
-                try {
+                } else if (field.getType() == int.class) {
                     prefs.putInt(field.getName(), field.getInt(this));
-                } catch (IllegalArgumentException ex) {
-                    Exceptions.printStackTrace(ex);
-                } catch (IllegalAccessException ex) {
-                    Exceptions.printStackTrace(ex);
                 }
+            } catch (IllegalArgumentException ex) {
+                Exceptions.printStackTrace(ex);
+            } catch (IllegalAccessException ex) {
+                Exceptions.printStackTrace(ex);
             }
 
         }
@@ -135,8 +122,8 @@ public class MinifyProperty implements Serializable {
         separatorJS = prefs.get("separatorJS", separatorJS.toString()).toCharArray()[0];
         separatorCSS = prefs.get("separatorCSS", separatorCSS.toString()).toCharArray()[0];
         separatorHTML = prefs.get("separatorHTML", separatorHTML.toString()).toCharArray()[0];
-        separatorXML =  prefs.get("separatorXML", getSeparatorXML().toString()).toCharArray()[0];
-        separatorJSON =  prefs.get("separatorJSON", getSeparatorJSON().toString()).toCharArray()[0];
+        separatorXML = prefs.get("separatorXML", getSeparatorXML().toString()).toCharArray()[0];
+        separatorJSON = prefs.get("separatorJSON", getSeparatorJSON().toString()).toCharArray()[0];
 
         for (Field field : clazz.getDeclaredFields()) {
             if (field.getType() == boolean.class) {
