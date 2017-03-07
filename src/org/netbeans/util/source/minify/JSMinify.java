@@ -15,12 +15,13 @@
  */
 package org.netbeans.util.source.minify;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
-import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.minify.ui.MinifyProperty;
 import org.openide.loaders.DataObject;
 
@@ -33,8 +34,6 @@ import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.RequestProcessor;
 import org.openide.util.TaskListener;
-import org.openide.windows.IOProvider;
-import org.openide.windows.InputOutput;
 
 @ActionID(category = "Build",
         id = "org.netbeans.util.source.minify.JSMinify")
@@ -66,7 +65,7 @@ public final class JSMinify implements ActionListener {
             }
         };
         final RequestProcessor.Task theTask = RP.create(runnable);
-        final ProgressHandle ph = ProgressHandleFactory.createHandle("Minifying JS " + context.getPrimaryFile().getName(), theTask);
+        final ProgressHandle ph = ProgressHandle.createHandle("Minifying JS " + context.getPrimaryFile().getName(), theTask);
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
@@ -104,7 +103,9 @@ public final class JSMinify implements ActionListener {
                         + "After Minifying JS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
                         + "JS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
     }
