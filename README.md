@@ -1,4 +1,4 @@
-### Looking for Contributors (Feel free to contact me if you are interested : gaurav.gupta.jc@gmail.com)
+### Looking for Contributors (Feel free to contact me if you are interested : christian.lenz@gmx.net)
 
 
 # JS CSS Minify Compress [![][license img]][license]
@@ -32,14 +32,14 @@ Also optimize by compressing image PNG/JPEG (Currently Supported format) and pro
 
 ## Communication
 
-- Email : [gaurav.gupta.jc@gmail.com](mailto:gaurav.gupta.jc@gmail.com)
-- Twitter: [@jGauravGupta](http://twitter.com/jGauravGupta)
-- [GitHub Issues](https://github.com/jGauravGupta/js-css-minify-compress/issues)
+- Email : [christian.lenz@gmx.net](mailto:christian.lenz@gmx.net)
+- Twitter: [@Chrizzly42](https://twitter.com/Chrizzly42)
+- [GitHub Issues](https://github.com/Chris2011/js-css-minify-compress/issues)
 
 
 ## Bugs and Feedback
 
-For bugs, questions and discussions please use the [Github Issues](https://github.com/jGauravGupta/js-css-minify-compress/issues).
+For bugs, questions and discussions please use the [Github Issues](https://github.com/Chris2011/js-css-minify-compress/issues).
 
 
 #### If you like:heart: this project, don't forget:blush: to give us a star:star2: on GitHub!
