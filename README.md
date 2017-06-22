@@ -15,7 +15,7 @@ org.mozilla.javascript.EvaluatorException: Compilation produced 2 syntax errors.
 
 This happens in case that the YUICompressor, which is used to minify JS, can't handle ES6 syntax. Please check your JS code before, on this page: http://refresh-sf.com/
 
-If you got the same or similar error, it is related to the YUICompressor, which was mentioned.
+If you got the same or similar error, it is related to the YUICompressor (https://github.com/yui/yuicompressor/issues), which was mentioned.
 It would be great to go to the repo of the YUICompressor and create or vote for similar tickets there.
 Thx.
 
