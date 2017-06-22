@@ -1,5 +1,25 @@
 ### Looking for Contributors (Feel free to contact me if you are interested : christian.lenz@gmx.net)
 
+# ATTENTION
+If you got an error which is similiar to this:
+
+```
+...
+[ERROR] in -
+  3:7:syntax error
+[ERROR] in -
+  1:0:Compilation produced 2 syntax errors.
+org.mozilla.javascript.EvaluatorException: Compilation produced 2 syntax errors.
+...
+```
+
+This happens in case that the YUICompressor, which is used to minify JS, can't handle ES6 syntax. Please check your JS code before, on this page:
+
+http://refresh-sf.com/
+
+If you got the same or similar error, it is related to the YUICompressor, which was mentioned.
+It would be great to go to the repo of the YUICompressor and create or vote for similar tickets there.
+Thx.
 
 # JS CSS Minify Compress [![][license img]][license]
 
