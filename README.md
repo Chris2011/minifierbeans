@@ -1,7 +1,7 @@
 ### Looking for Contributors (Feel free to contact me if you are interested : christian.lenz@gmx.net)
 
 # ATTENTION
-If you got an error which is similiar to this:
+If you get an error which is similiar to this:
 
 ```
 ...
