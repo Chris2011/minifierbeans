@@ -81,28 +81,29 @@ public final class CSSMinify implements ActionListener {
         MinifyUtil util = new MinifyUtil();
         try {
             FileObject file = context.getPrimaryFile();
+            if(!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionCSS(), minifyProperty.getSeparatorCSS().toString())){ 
+                String inputFilePath = file.getPath();
+                String outputFilePath;
 
-            String inputFilePath = file.getPath();
-            String outputFilePath;
-
-            if (minifyProperty.isNewCSSFile() && minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty()) {
-                outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorCSS() + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
-            } else {
-                outputFilePath = inputFilePath;
-            }
+                if (minifyProperty.isNewCSSFile() && minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty()) {
+                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorCSS() + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
+                } else {
+                    outputFilePath = inputFilePath;
+                }
 
 
-            MinifyFileResult minifyFileResult;
-            if (content != null) {
-                minifyFileResult = util.compressContent(content, "text/css", outputFilePath, minifyProperty);
-            } else {
-                minifyFileResult = util.compress(inputFilePath, "text/css", outputFilePath, minifyProperty);
-            }
-            if (minifyProperty.isEnableOutputLogAlert() && notify) {
-                JOptionPane.showMessageDialog(null, "CSS Minified Completed Successfully\n"
-                        + "Input CSS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
-                        + "After Minifying CSS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
-                        + "CSS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+                MinifyFileResult minifyFileResult;
+                if (content != null) {
+                    minifyFileResult = util.compressContent(content, "text/css", outputFilePath, minifyProperty);
+                } else {
+                    minifyFileResult = util.compress(inputFilePath, "text/css", outputFilePath, minifyProperty);
+                }
+                if (minifyProperty.isEnableOutputLogAlert() && notify) {
+                    JOptionPane.showMessageDialog(null, "CSS Minified Completed Successfully\n"
+                            + "Input CSS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
+                            + "After Minifying CSS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
+                            + "CSS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+                }
             }
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);

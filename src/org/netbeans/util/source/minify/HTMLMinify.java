@@ -84,28 +84,30 @@ public final class HTMLMinify implements ActionListener {
         MinifyUtil util = new MinifyUtil();
         try {
             FileObject file = context.getPrimaryFile();
+            if(!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionHTML(), minifyProperty.getSeparatorHTML().toString())){ 
+                String inputFilePath = file.getPath();
+                String outputFilePath;
 
-            String inputFilePath = file.getPath();
-            String outputFilePath;
+                if (minifyProperty.isNewHTMLFile() && minifyProperty.getPreExtensionHTML() != null && !minifyProperty.getPreExtensionHTML().trim().isEmpty()) {
+                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorHTML() + minifyProperty.getPreExtensionHTML() + "." + file.getExt();
+                } else {
+                    outputFilePath = inputFilePath;
+                }
 
-            if (minifyProperty.isNewHTMLFile() && minifyProperty.getPreExtensionHTML() != null && !minifyProperty.getPreExtensionHTML().trim().isEmpty()) {
-                outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorHTML() + minifyProperty.getPreExtensionHTML() + "." + file.getExt();
-            } else {
-                outputFilePath = inputFilePath;
+                MinifyFileResult minifyFileResult;
+                if (content != null) {
+                    minifyFileResult = util.compressContent(content, "text/html", outputFilePath, minifyProperty);
+                } else {
+                    minifyFileResult = util.compress(inputFilePath, "text/html", outputFilePath, minifyProperty);
+                }
+                if (minifyProperty.isEnableOutputLogAlert() && notify) {
+                    JOptionPane.showMessageDialog(null, "HTML Minified Completed Successfully\n"
+                            + "Input HTML Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
+                            + "After Minifying HTML Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
+                            + "HTML Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+                } 
             }
-
-            MinifyFileResult minifyFileResult;
-            if (content != null) {
-                minifyFileResult = util.compressContent(content, "text/html", outputFilePath, minifyProperty);
-            } else {
-                minifyFileResult = util.compress(inputFilePath, "text/html", outputFilePath, minifyProperty);
-            }
-            if (minifyProperty.isEnableOutputLogAlert() && notify) {
-                JOptionPane.showMessageDialog(null, "HTML Minified Completed Successfully\n"
-                        + "Input HTML Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
-                        + "After Minifying HTML Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
-                        + "HTML Space Saved " + minifyFileResult.getSavedPercentage() + "%");
-            }
+            
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }

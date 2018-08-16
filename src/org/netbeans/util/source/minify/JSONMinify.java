@@ -80,27 +80,28 @@ public final class JSONMinify implements ActionListener {
         MinifyUtil util = new MinifyUtil();
         try {
             FileObject file = context.getPrimaryFile();
+            if(!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionJSON(), minifyProperty.getSeparatorJSON().toString())){
+                String inputFilePath = file.getPath();
+                String outputFilePath;
 
-            String inputFilePath = file.getPath();
-            String outputFilePath;
+                if (minifyProperty.isNewJSONFile() && minifyProperty.getPreExtensionJSON() != null && !minifyProperty.getPreExtensionJSON().trim().isEmpty()) {
+                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorJSON() + minifyProperty.getPreExtensionJSON() + "." + file.getExt();
+                } else {
+                    outputFilePath = inputFilePath;
+                }
 
-            if (minifyProperty.isNewJSONFile() && minifyProperty.getPreExtensionJSON() != null && !minifyProperty.getPreExtensionJSON().trim().isEmpty()) {
-                outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorJSON() + minifyProperty.getPreExtensionJSON() + "." + file.getExt();
-            } else {
-                outputFilePath = inputFilePath;
-            }
-
-            MinifyFileResult minifyFileResult;
-            if (content != null) {
-                minifyFileResult = util.compressContent(content, "text/x-json", outputFilePath, minifyProperty);
-            } else {
-                minifyFileResult = util.compress(inputFilePath, "text/x-json", outputFilePath, minifyProperty);
-            }
-            if (minifyProperty.isEnableOutputLogAlert() && notify) {
-                JOptionPane.showMessageDialog(null, "JSON Minified Completed Successfully\n"
-                        + "Input JSON Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
-                        + "After Minifying JSON Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
-                        + "JSON Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+                MinifyFileResult minifyFileResult;
+                if (content != null) {
+                    minifyFileResult = util.compressContent(content, "text/x-json", outputFilePath, minifyProperty);
+                } else {
+                    minifyFileResult = util.compress(inputFilePath, "text/x-json", outputFilePath, minifyProperty);
+                }
+                if (minifyProperty.isEnableOutputLogAlert() && notify) {
+                    JOptionPane.showMessageDialog(null, "JSON Minified Completed Successfully\n"
+                            + "Input JSON Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
+                            + "After Minifying JSON Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
+                            + "JSON Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+                }
             }
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
