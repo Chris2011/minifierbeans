@@ -445,6 +445,12 @@ public class MinifyUtil {
             IOUtils.closeQuietly(out);
         }
     }
+    
+    public Boolean isMinifiedFile(String fileName, String ext, String seperator)
+    {
+        String[] namePaths = fileName.split("\\" + seperator);
+        return (namePaths.length > 1 && namePaths[namePaths.length - 1].equals(ext));
+    }
 
     public static String fromStream(Reader in) throws IOException {
         StringBuffer srcsb = new StringBuffer();
