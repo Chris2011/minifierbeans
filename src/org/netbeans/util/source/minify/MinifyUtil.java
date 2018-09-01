@@ -29,6 +29,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -73,7 +74,7 @@ public class MinifyUtil {
                     Boolean allow = true;
                     String inputFilePath = file.getPath();
                     String outputFilePath;
-
+   
                     if (minifyProperty.isSkipPreExtensionJS() && minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
                         if (minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()
                                 && file.getName().matches(".*" + Pattern.quote(minifyProperty.getSeparatorJS() + minifyProperty.getPreExtensionJS()))) {
@@ -221,16 +222,31 @@ public class MinifyUtil {
     }
 
    
-    public void compressJavaScriptInternal(Reader in, Writer out, MinifyProperty minifyProperty) throws IOException {
+    public String compressJavaScriptInternal(String oldContent, MinifyProperty minifyProperty) throws IOException {
+        String content = "";
+        StringWriter out = null;
+        Reader in = null;
         try {
-            JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter());
+            out = new StringWriter();
+            in = new StringReader(oldContent);
+            JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter(oldContent, out));
             in.close();
             in = null;
             compressor.compress(out, minifyProperty.getLineBreakPosition(), minifyProperty.isJsObfuscate(), minifyProperty.getVerbose(), minifyProperty.isPreserveSemicolon(), minifyProperty.getDisableOptimizations());
             out.flush();
-        } finally {
+            content = out.toString();            
+        } 
+        catch(IOException exception)
+        {
+            if(content.equals(""))
+            {
+                content = oldContent;
+            }
+        }
+        finally {
             IOUtils.closeQuietly(in);
             IOUtils.closeQuietly(out);
+            return content;
         }
     }
 
@@ -291,7 +307,7 @@ public class MinifyUtil {
                 }
             } else if (mimeType.equals("text/javascript")) {
                 Reader in = new StringReader(content);
-                JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter());
+                JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter(content, out));
                 in.close();
                 StringWriter outputWriter = new StringWriter();
                 compressor.compress(outputWriter, minifyProperty.getLineBreakPosition(), minifyProperty.isJsObfuscate(), minifyProperty.getVerbose(), minifyProperty.isPreserveSemicolon(), minifyProperty.getDisableOptimizations());
@@ -368,11 +384,19 @@ public class MinifyUtil {
                 output = compressor.compress(fromStream(in));//out, minifyProperty.getLineBreakPosition());
                 out.write(MinifyProperty.getInstance().getHeaderHTML()  +"\n"+ output);
             } else if (mimeType.equals("text/javascript")) {
-                JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter());
+                Scanner scanner = new Scanner(in).useDelimiter("\\A");
+                String oldContent = scanner.hasNext() ? scanner.next() : "";
+                Reader oldContentReader = new StringReader(oldContent);
+                JavaScriptCompressor compressor = new JavaScriptCompressor(oldContentReader, new MinifyUtil.CompressorErrorReporter(oldContent, out));
+                oldContentReader.close();
                 StringWriter outputWriter = new StringWriter();
                 compressor.compress(outputWriter, minifyProperty.getLineBreakPosition(), minifyProperty.isJsObfuscate(), minifyProperty.getVerbose(), minifyProperty.isPreserveSemicolon(), minifyProperty.getDisableOptimizations());
                 outputWriter.flush();
-                out.write(MinifyProperty.getInstance().getHeaderJS()  +"\n"+ outputWriter.toString());
+                if(StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
+                    out.write(outputWriter.toString());
+                } else {
+                    out.write(MinifyProperty.getInstance().getHeaderJS() + "\n" + outputWriter.toString());
+                }
                 outputWriter.close();
             } else if (mimeType.equals("text/css")) {
                 CssCompressor compressor = new CssCompressor(in);
@@ -467,6 +491,15 @@ public class MinifyUtil {
 
     private static class CompressorErrorReporter implements ErrorReporter {
 
+        private final String unMinifedContent;
+        private final Writer out;
+
+        public CompressorErrorReporter(String unMinifedContent, Writer out)
+        {
+            this.unMinifedContent = unMinifedContent;
+            this.out = out;
+        }
+        
         @Override
         public void warning(String message, String sourceName, int line, String lineSource, int lineOffset) {
             if (line < 0) {
@@ -483,12 +516,30 @@ public class MinifyUtil {
             } else {
                 logger.log(Level.SEVERE, line + ':' + lineOffset + ':' + message);
             }
+            restoreOldContent();
         }
 
         @Override
         public EvaluatorException runtimeError(String message, String sourceName, int line, String lineSource, int lineOffset) {
             error(message, sourceName, line, lineSource, lineOffset);
+            restoreOldContent();
             return new EvaluatorException(message);
+        }
+        
+        private void restoreOldContent()
+        {
+            try
+            {
+                if(out != null)
+                {
+                    out.write(unMinifedContent);
+                    out.flush();
+                    IOUtils.closeQuietly(out);
+                }
+            } catch (IOException ex)
+            {
+                Exceptions.printStackTrace(ex);
+            }
         }
     }
 }

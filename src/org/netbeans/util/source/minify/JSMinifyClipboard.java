@@ -77,7 +77,8 @@ public final class JSMinifyClipboard extends CookieAction{
     
     private String selectedSourceAsMinify(final JEditorPane pane){
           MinifyProperty minifyProperty = MinifyProperty.getInstance();
-          StringWriter out = new StringWriter();
+          String minifedString = "";
+          String oldContent = "";
         try {
             final TokenSequence ts = TokenHierarchy.get(pane.getDocument()).tokenSequence();
             final StringBuilder sb = new StringBuilder();
@@ -86,21 +87,26 @@ public final class JSMinifyClipboard extends CookieAction{
                 sb.append(ts.token().text().toString() );
             }
            MinifyUtil minifyUtil = new MinifyUtil();
-           minifyUtil.compressJavaScriptInternal(new StringReader(sb.toString()), out, minifyProperty);
+            oldContent = sb.toString();
+            minifedString = minifyUtil.compressJavaScriptInternal(sb.toString(), minifyProperty);
              JOptionPane.showMessageDialog(null, "Copied as minified JS Source" ,"Copied",JOptionPane.INFORMATION_MESSAGE);
            } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         } catch (EvaluatorException ex) {
                JOptionPane.showMessageDialog(null,  "Invalid Javascript Source Selected \n " + ex.getMessage(), "Exception",JOptionPane.ERROR_MESSAGE);
          } 
-        return out.toString();
+        if(minifedString.equals(""))
+        {
+            minifedString = oldContent;
+        }
+        
+        return minifedString;
     }
     
     
       
     
 
- 
     @Override
     protected final int mode(){
         return CookieAction.MODE_EXACTLY_ONE;
