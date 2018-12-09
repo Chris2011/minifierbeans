@@ -43,6 +43,9 @@ import org.openide.util.Exceptions;
 
 public class MinifyUtil {
 
+    
+    private final String javascriptCompressError = "// JS Minify is not supported for this code...\n";
+    
     MinifyResult minify(FileObject parentFile, MinifyProperty minifyProperty) {
         int directory = 0, cssFile = 0, jsFile = 0, htmlFile = 0, xmlFile = 0, jsonFile = 0;
         MinifyResult minifyResult = new MinifyResult();
@@ -229,7 +232,7 @@ public class MinifyUtil {
         try {
             out = new StringWriter();
             in = new StringReader(oldContent);
-            JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter(oldContent, out));
+            JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter(oldContent, out, javascriptCompressError));
             in.close();
             in = null;
             compressor.compress(out, minifyProperty.getLineBreakPosition(), minifyProperty.isJsObfuscate(), minifyProperty.getVerbose(), minifyProperty.isPreserveSemicolon(), minifyProperty.getDisableOptimizations());
@@ -307,7 +310,7 @@ public class MinifyUtil {
                 }
             } else if (mimeType.equals("text/javascript")) {
                 Reader in = new StringReader(content);
-                JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter(content, out));
+                JavaScriptCompressor compressor = new JavaScriptCompressor(in, new MinifyUtil.CompressorErrorReporter(content, out, javascriptCompressError));
                 in.close();
                 StringWriter outputWriter = new StringWriter();
                 compressor.compress(outputWriter, minifyProperty.getLineBreakPosition(), minifyProperty.isJsObfuscate(), minifyProperty.getVerbose(), minifyProperty.isPreserveSemicolon(), minifyProperty.getDisableOptimizations());
@@ -387,7 +390,7 @@ public class MinifyUtil {
                 Scanner scanner = new Scanner(in).useDelimiter("\\A");
                 String oldContent = scanner.hasNext() ? scanner.next() : "";
                 Reader oldContentReader = new StringReader(oldContent);
-                JavaScriptCompressor compressor = new JavaScriptCompressor(oldContentReader, new MinifyUtil.CompressorErrorReporter(oldContent, out));
+                JavaScriptCompressor compressor = new JavaScriptCompressor(oldContentReader, new MinifyUtil.CompressorErrorReporter(oldContent, out, javascriptCompressError));
                 oldContentReader.close();
                 StringWriter outputWriter = new StringWriter();
                 compressor.compress(outputWriter, minifyProperty.getLineBreakPosition(), minifyProperty.isJsObfuscate(), minifyProperty.getVerbose(), minifyProperty.isPreserveSemicolon(), minifyProperty.getDisableOptimizations());
@@ -493,11 +496,13 @@ public class MinifyUtil {
 
         private final String unMinifedContent;
         private final Writer out;
+        private final String errorText;
 
-        public CompressorErrorReporter(String unMinifedContent, Writer out)
+        public CompressorErrorReporter(String unMinifedContent, Writer out, String errorText)
         {
             this.unMinifedContent = unMinifedContent;
             this.out = out;
+            this.errorText = errorText;
         }
         
         @Override
@@ -532,7 +537,8 @@ public class MinifyUtil {
             {
                 if(out != null)
                 {
-                    out.write(unMinifedContent);
+                    
+                    out.write(errorText + unMinifedContent);
                     out.flush();
                     IOUtils.closeQuietly(out);
                 }
