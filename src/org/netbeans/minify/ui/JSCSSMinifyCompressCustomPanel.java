@@ -29,40 +29,40 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
 
         minifyProperty = MinifyProperty.getInstance();
 
-        newJSFile.setSelected(minifyProperty.isNewJSFile());
-        preExtensionJS.setEnabled(minifyProperty.isNewJSFile());
-        preExtensionJS_Label.setEnabled(minifyProperty.isNewJSFile());
-        separatorJS.setEnabled(minifyProperty.isNewJSFile());
-        separatorJS_Label.setEnabled(minifyProperty.isNewJSFile());
+        newJSFile1.setSelected(minifyProperty.isNewJSFile());
+        preExtensionJS1.setEnabled(minifyProperty.isNewJSFile());
+        preExtensionJS_Label1.setEnabled(minifyProperty.isNewJSFile());
+        separatorJS1.setEnabled(minifyProperty.isNewJSFile());
+        separatorJS_Label1.setEnabled(minifyProperty.isNewJSFile());
         skipPreExtensionJS.setEnabled(minifyProperty.isNewJSFile());
-        preExtensionJS.setText(minifyProperty.getPreExtensionJS());
-        separatorJS.setText(minifyProperty.getSeparatorJS().toString());
+        preExtensionJS1.setText(minifyProperty.getPreExtensionJS());
+        separatorJS1.setText(minifyProperty.getSeparatorJS().toString());
 
         if (minifyProperty.isJsObfuscate()) {
-            this.jsObfuscate.setSelected(Boolean.TRUE);
+            this.jsObfuscate1.setSelected(Boolean.TRUE);
         }
 
-        autoMinifyJS.setSelected(minifyProperty.isAutoMinifyJS());
-        headerEditorPaneJS.setText(minifyProperty.getHeaderJS());
+        autoMinifyJS1.setSelected(minifyProperty.isAutoMinifyJS());
+        headerEditorPaneJS1.setText(minifyProperty.getHeaderJS());
         
-        headerEditorPaneJS.addFocusListener(new FocusListener() {
+        headerEditorPaneJS1.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent fe) {
             }
 
             @Override
             public void focusLost(FocusEvent fe) {
-                String text = headerEditorPaneJS.getText();
+                String text = headerEditorPaneJS1.getText();
                 if (text == null || text.trim().isEmpty()) {
                     text = null;
-                    headerEditorPaneJS.setText("");
+                    headerEditorPaneJS1.setText("");
                 } else {
                     text = text.trim();
                 }
                 minifyProperty.setHeaderJS(text);
             }
         });
-        this.autoMinifyJS.addItemListener(new ItemListener() {
+        this.autoMinifyJS1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -73,19 +73,19 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
             }
         });
 
-        this.newJSFile.addItemListener(new ItemListener() {
+        this.newJSFile1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     minifyProperty.setNewJSFile(Boolean.TRUE);
                     minifyProperty.setPreExtensionJS("min");
-                    preExtensionJS.setText("min");
+                    preExtensionJS1.setText("min");
                     minifyProperty.setSeparatorJS('.');
-                    separatorJS.setText(".");
-                    preExtensionJS.setEnabled(Boolean.TRUE);
-                    preExtensionJS_Label.setEnabled(Boolean.TRUE);
-                    separatorJS.setEnabled(Boolean.TRUE);
-                    separatorJS_Label.setEnabled(Boolean.TRUE);
+                    separatorJS1.setText(".");
+                    preExtensionJS1.setEnabled(Boolean.TRUE);
+                    preExtensionJS_Label1.setEnabled(Boolean.TRUE);
+                    separatorJS1.setEnabled(Boolean.TRUE);
+                    separatorJS_Label1.setEnabled(Boolean.TRUE);
                     if (minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
                         skipPreExtensionJS.setEnabled(Boolean.TRUE);
                         minifyProperty.setSkipPreExtensionJS(Boolean.TRUE);
@@ -93,10 +93,10 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                     }
                 } else {
                     minifyProperty.setNewJSFile(Boolean.FALSE);
-                    preExtensionJS.setEnabled(Boolean.FALSE);
-                    preExtensionJS_Label.setEnabled(Boolean.FALSE);
-                    separatorJS.setEnabled(Boolean.FALSE);
-                    separatorJS_Label.setEnabled(Boolean.FALSE);
+                    preExtensionJS1.setEnabled(Boolean.FALSE);
+                    preExtensionJS_Label1.setEnabled(Boolean.FALSE);
+                    separatorJS1.setEnabled(Boolean.FALSE);
+                    separatorJS_Label1.setEnabled(Boolean.FALSE);
                     skipPreExtensionJS.setEnabled(false);
                     minifyProperty.setSkipPreExtensionJS(Boolean.FALSE);
                     skipPreExtensionJS.setSelected(false);
@@ -104,17 +104,17 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
             }
         });
 
-        this.preExtensionJS.addFocusListener(new FocusListener() {
+        this.preExtensionJS1.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent fe) {
             }
 
             @Override
             public void focusLost(FocusEvent fe) {
-                String text = preExtensionJS.getText();
+                String text = preExtensionJS1.getText();
                 if (text == null || text.trim().isEmpty()) {
                     text = "min";
-                    preExtensionJS.setText(text);
+                    preExtensionJS1.setText(text);
                 } else {
                     text = text.trim();
                 }
@@ -122,14 +122,14 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
             }
         });
 
-        this.separatorJS.addFocusListener(new FocusListener() {
+        this.separatorJS1.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent fe) {
             }
 
             @Override
             public void focusLost(FocusEvent fe) {
-                String text = separatorJS.getText();
+                String text = separatorJS1.getText();
                 if (text == null || text.trim().isEmpty()) {
                     text = ".";
                 } else {
@@ -141,12 +141,12 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                         || text.equals("?") || text.equals("*")) {
                     text = ".";
                 }
-                separatorJS.setText(text);
+                separatorJS1.setText(text);
                 minifyProperty.setSeparatorJS(text.charAt(0));
             }
         });
 
-        this.jsObfuscate.addItemListener(new ItemListener() {
+        this.jsObfuscate1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -157,36 +157,36 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
             }
         });
 
-        newCSSFile.setSelected(minifyProperty.isNewCSSFile());
-        preExtensionCSS.setEnabled(minifyProperty.isNewCSSFile());
-        preExtensionCSS_Label.setEnabled(minifyProperty.isNewCSSFile());
-        separatorCSS.setEnabled(minifyProperty.isNewCSSFile());
-        separatorCSS_Label.setEnabled(minifyProperty.isNewCSSFile());
+        newCSSFile1.setSelected(minifyProperty.isNewCSSFile());
+        preExtensionCSS1.setEnabled(minifyProperty.isNewCSSFile());
+        preExtensionCSS_Label1.setEnabled(minifyProperty.isNewCSSFile());
+        separatorCSS1.setEnabled(minifyProperty.isNewCSSFile());
+        separatorCSS_Label1.setEnabled(minifyProperty.isNewCSSFile());
         skipPreExtensionCSS.setEnabled(minifyProperty.isNewCSSFile());
-        this.preExtensionCSS.setText(minifyProperty.getPreExtensionCSS());
-        this.separatorCSS.setText(minifyProperty.getSeparatorCSS().toString());
+        this.preExtensionCSS1.setText(minifyProperty.getPreExtensionCSS());
+        this.separatorCSS1.setText(minifyProperty.getSeparatorCSS().toString());
 
-        autoMinifyCSS.setSelected(minifyProperty.isAutoMinifyCSS());
-        headerEditorPaneCSS.setText(minifyProperty.getHeaderCSS());
+        autoMinifyCSS1.setSelected(minifyProperty.isAutoMinifyCSS());
+        headerEditorPaneCSS1.setText(minifyProperty.getHeaderCSS());
         
-        headerEditorPaneCSS.addFocusListener(new FocusListener() {
+        headerEditorPaneCSS1.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent fe) {
             }
 
             @Override
             public void focusLost(FocusEvent fe) {
-                String text = headerEditorPaneCSS.getText();
+                String text = headerEditorPaneCSS1.getText();
                 if (text == null || text.trim().isEmpty()) {
                     text = null;
-                    headerEditorPaneCSS.setText("");
+                    headerEditorPaneCSS1.setText("");
                 } else {
                     text = text.trim();
                 }
                 minifyProperty.setHeaderCSS(text);
             }
         });
-        this.autoMinifyCSS.addItemListener(new ItemListener() {
+        this.autoMinifyCSS1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -196,19 +196,19 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                 }
             }
         });
-        this.newCSSFile.addItemListener(new ItemListener() {
+        this.newCSSFile1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     minifyProperty.setNewCSSFile(Boolean.TRUE);
                     minifyProperty.setPreExtensionCSS("min");
-                    preExtensionCSS.setText("min");
+                    preExtensionCSS1.setText("min");
                     minifyProperty.setSeparatorCSS('.');
-                    separatorCSS.setText(".");
-                    preExtensionCSS.setEnabled(Boolean.TRUE);
-                    preExtensionCSS_Label.setEnabled(Boolean.TRUE);
-                    separatorCSS.setEnabled(Boolean.TRUE);
-                    separatorCSS_Label.setEnabled(Boolean.TRUE);
+                    separatorCSS1.setText(".");
+                    preExtensionCSS1.setEnabled(Boolean.TRUE);
+                    preExtensionCSS_Label1.setEnabled(Boolean.TRUE);
+                    separatorCSS1.setEnabled(Boolean.TRUE);
+                    separatorCSS_Label1.setEnabled(Boolean.TRUE);
                     if (minifyProperty.isBuildCSSMinify() && minifyProperty.isNewCSSFile()) {
                         skipPreExtensionCSS.setEnabled(Boolean.TRUE);
                         minifyProperty.setSkipPreExtensionCSS(Boolean.TRUE);
@@ -217,10 +217,10 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
 
                 } else {
                     minifyProperty.setNewCSSFile(Boolean.FALSE);
-                    preExtensionCSS.setEnabled(Boolean.FALSE);
-                    preExtensionCSS_Label.setEnabled(Boolean.FALSE);
-                    separatorCSS.setEnabled(Boolean.FALSE);
-                    separatorCSS_Label.setEnabled(Boolean.FALSE);
+                    preExtensionCSS1.setEnabled(Boolean.FALSE);
+                    preExtensionCSS_Label1.setEnabled(Boolean.FALSE);
+                    separatorCSS1.setEnabled(Boolean.FALSE);
+                    separatorCSS_Label1.setEnabled(Boolean.FALSE);
                     skipPreExtensionCSS.setEnabled(Boolean.FALSE);
                     minifyProperty.setSkipPreExtensionCSS(Boolean.FALSE);
                     skipPreExtensionCSS.setSelected(Boolean.FALSE);
@@ -228,17 +228,17 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
             }
         });
 
-        this.preExtensionCSS.addFocusListener(new FocusListener() {
+        this.preExtensionCSS1.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent fe) {
             }
 
             @Override
             public void focusLost(FocusEvent fe) {
-                String text = preExtensionCSS.getText();
+                String text = preExtensionCSS1.getText();
                 if (text == null || text.trim().isEmpty()) {
                     text = "min";
-                    preExtensionCSS.setText(text);
+                    preExtensionCSS1.setText(text);
                 } else {
                     text = text.trim();
                 }
@@ -246,14 +246,14 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
             }
         });
 
-        this.separatorCSS.addFocusListener(new FocusListener() {
+        this.separatorCSS1.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent fe) {
             }
 
             @Override
             public void focusLost(FocusEvent fe) {
-                String text = separatorCSS.getText();
+                String text = separatorCSS1.getText();
                 if (text == null || text.trim().isEmpty()) {
                     text = ".";
                 } else {
@@ -265,7 +265,7 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
                         || text.equals("?") || text.equals("*")) {
                     text = ".";
                 }
-                separatorCSS.setText(text);
+                separatorCSS1.setText(text);
                 minifyProperty.setSeparatorCSS(text.charAt(0));
             }
         });

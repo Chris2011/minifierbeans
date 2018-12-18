@@ -21,13 +21,16 @@ import javax.swing.JComponent;
 import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
+import org.openide.util.NbBundle;
 
-@OptionsPanelController.TopLevelRegistration(
-        categoryName = "#OptionsCategory_Name_JSCSSMinifyCompress",
-        iconBase = "org/netbeans/minify/ui/minify.png",
-        keywords = "#OptionsCategory_Keywords_JSCSSMinifyCompress",
-        keywordsCategory = "JSCSSMinifyCompress")
-@org.openide.util.NbBundle.Messages({"OptionsCategory_Name_JSCSSMinifyCompress=JS CSS Minify Compress", "OptionsCategory_Keywords_JSCSSMinifyCompress=JS CSS Minify Compress"})
+@NbBundle.Messages({"OptionsCategory_Name_JSCSSMinifyCompress=Minifier", "OptionsCategory_Keywords_JSCSSMinifyCompress=JS CSS Minify Compress"})
+@OptionsPanelController.SubRegistration(
+    location = "Html5",
+    id = "Minifier",
+    displayName = "#OptionsCategory_Name_JSCSSMinifyCompress",
+    keywords = "#OptionsCategory_Keywords_JSCSSMinifyCompress",
+    keywordsCategory = "JSCSSMinifyCompress"
+)
 public final class JSCSSMinifyCompressOptionsPanelController extends OptionsPanelController {
 
     private JSCSSMinifyCompressCustomPanel panel;
