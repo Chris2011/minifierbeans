@@ -33,8 +33,6 @@ import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.RequestProcessor;
 import org.openide.util.TaskListener;
-import org.openide.windows.IOProvider;
-import org.openide.windows.InputOutput;
 
 @ActionID(category = "Build",
         id = "org.netbeans.util.source.minify.JSMinify")
