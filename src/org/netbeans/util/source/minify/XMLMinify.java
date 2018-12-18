@@ -80,27 +80,28 @@ public final class XMLMinify implements ActionListener {
         MinifyUtil util = new MinifyUtil();
         try {
             FileObject file = context.getPrimaryFile();
+            if(!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionXML(), minifyProperty.getSeparatorXML().toString())){
+                String inputFilePath = file.getPath();
+                String outputFilePath;
 
-            String inputFilePath = file.getPath();
-            String outputFilePath;
+                if (minifyProperty.isNewXMLFile() && minifyProperty.getPreExtensionXML() != null && !minifyProperty.getPreExtensionXML().trim().isEmpty()) {
+                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorXML() + minifyProperty.getPreExtensionXML() + "." + file.getExt();
+                } else {
+                    outputFilePath = inputFilePath;
+                }
 
-            if (minifyProperty.isNewXMLFile() && minifyProperty.getPreExtensionXML() != null && !minifyProperty.getPreExtensionXML().trim().isEmpty()) {
-                outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorXML() + minifyProperty.getPreExtensionXML() + "." + file.getExt();
-            } else {
-                outputFilePath = inputFilePath;
-            }
-
-            MinifyFileResult minifyFileResult;
-            if (content != null) {
-                minifyFileResult = util.compressContent(content, "text/xml-mime", outputFilePath, minifyProperty);
-            } else {
-                minifyFileResult = util.compress(inputFilePath, "text/xml-mime", outputFilePath, minifyProperty);
-            }
-            if (minifyProperty.isEnableOutputLogAlert() && notify) {
-                JOptionPane.showMessageDialog(null, "XML Minified Completed Successfully\n"
-                        + "Input XML Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
-                        + "After Minifying XML Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
-                        + "XML Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+                MinifyFileResult minifyFileResult;
+                if (content != null) {
+                    minifyFileResult = util.compressContent(content, "text/xml-mime", outputFilePath, minifyProperty);
+                } else {
+                    minifyFileResult = util.compress(inputFilePath, "text/xml-mime", outputFilePath, minifyProperty);
+                }
+                if (minifyProperty.isEnableOutputLogAlert() && notify) {
+                    JOptionPane.showMessageDialog(null, "XML Minified Completed Successfully\n"
+                            + "Input XML Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
+                            + "After Minifying XML Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
+                            + "XML Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+                }
             }
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);

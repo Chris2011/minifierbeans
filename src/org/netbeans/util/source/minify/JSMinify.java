@@ -82,26 +82,28 @@ public final class JSMinify implements ActionListener {
         MinifyUtil util = new MinifyUtil();
         try {
             FileObject file = context.getPrimaryFile();
-            String inputFilePath = file.getPath();
-            String outputFilePath;
+            if(!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionJS(), minifyProperty.getSeparatorJS().toString())){ 
+                String inputFilePath = file.getPath();
+                String outputFilePath;
 
-            if (minifyProperty.isNewJSFile() && minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()) {
-                outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorJS() + minifyProperty.getPreExtensionJS() + "." + file.getExt();
-            } else {
-                outputFilePath = inputFilePath;
-            }
+                if (minifyProperty.isNewJSFile() && minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()) {
+                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorJS() + minifyProperty.getPreExtensionJS() + "." + file.getExt();
+                } else {
+                    outputFilePath = inputFilePath;
+                }
 
-            MinifyFileResult minifyFileResult;
-            if (content != null) {
-                minifyFileResult = util.compressContent(content, "text/javascript", outputFilePath, minifyProperty);
-            } else {
-                minifyFileResult = util.compress(inputFilePath, "text/javascript", outputFilePath, minifyProperty);
-            }
-            if (minifyProperty.isEnableOutputLogAlert() && notify) {
-                JOptionPane.showMessageDialog(null, "JS Minified Completed Successfully\n"
-                        + "Input JS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
-                        + "After Minifying JS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
-                        + "JS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+                MinifyFileResult minifyFileResult;
+                if (content != null) {
+                    minifyFileResult = util.compressContent(content, "text/javascript", outputFilePath, minifyProperty);
+                } else {
+                    minifyFileResult = util.compress(inputFilePath, "text/javascript", outputFilePath, minifyProperty);
+                }
+                if (minifyProperty.isEnableOutputLogAlert() && notify) {
+                    JOptionPane.showMessageDialog(null, "JS Minified Completed Successfully\n"
+                            + "Input JS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
+                            + "After Minifying JS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
+                            + "JS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+                }
             }
         } catch (HeadlessException ex) {
             Exceptions.printStackTrace(ex);

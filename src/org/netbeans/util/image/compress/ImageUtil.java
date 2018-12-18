@@ -28,30 +28,28 @@ import javax.imageio.stream.ImageOutputStream;
 import javax.swing.JOptionPane;
 import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import java.util.Base64;
 
 /**
  *
  * @author SERVO006
  */
 public class ImageUtil {
-    
- 
-    public BufferedImage decodeToImage(String imageString , String filePath , String fileType) {
+
+    public BufferedImage decodeToImage(String imageString, String filePath, String fileType) {
 
         BufferedImage image = null;
         byte[] imageByte;
         try {
-            BASE64Decoder decoder = new BASE64Decoder();
-            imageByte = decoder.decodeBuffer(imageString);
+            Base64.Decoder decoder = Base64.getDecoder();
+            imageByte = decoder.decode(imageString);
             ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
             image = ImageIO.read(bis);
-            
+
             ImageIO.write(image, fileType, new File(filePath));
-            
+
             bis.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return image;
@@ -59,16 +57,14 @@ public class ImageUtil {
 
     public String encodeToString(String filePath, String type) {
         String imageString = null;
-       try {
-        BufferedImage image = ImageIO.read(new File(filePath));
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try {
+            BufferedImage image = ImageIO.read(new File(filePath));
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ImageIO.write(image, type, bos);
             byte[] imageBytes = bos.toByteArray();
 
-            BASE64Encoder encoder = new BASE64Encoder();
-            imageString = encoder.encode(imageBytes);
-        //    Base64.encodeBase64String(fileContent);
-            
+            Base64.Encoder encoder = Base64.getEncoder();
+            imageString = encoder.encodeToString(imageBytes);
 
             bos.close();
         } catch (IOException e) {
@@ -76,30 +72,27 @@ public class ImageUtil {
         }
         return imageString;
     }
-    
-    
-     public void compress(String inputFilePath, String outputFilePath, String fileType) {
-          if(fileType.equalsIgnoreCase("JPEG")|| fileType.equalsIgnoreCase("JPG")){
-           compressJPG( inputFilePath,  outputFilePath,  fileType);
-       } else if(fileType.equalsIgnoreCase("PNG")){
-        compressPNG( inputFilePath,  outputFilePath,  fileType);
-                  } else {
-          JOptionPane.showMessageDialog(null,  "Currently only JPG/PNG File Compression is supported", "Warning",JOptionPane.WARNING_MESSAGE);
-       }
+
+    public void compress(String inputFilePath, String outputFilePath, String fileType) {
+        if (fileType.equalsIgnoreCase("JPEG") || fileType.equalsIgnoreCase("JPG")) {
+            compressJPG(inputFilePath, outputFilePath, fileType);
+        } else if (fileType.equalsIgnoreCase("PNG")) {
+            compressPNG(inputFilePath, outputFilePath, fileType);
+        } else {
+            JOptionPane.showMessageDialog(null, "Currently only JPG/PNG File Compression is supported", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }
-    
-     public void compressPNG(String inputFilePath, String outputFilePath, String fileType) {
-             try
-      {
-       PngOptimizer optimizer = new PngOptimizer();
-        PngImage image = new PngImage(inputFilePath);
-        optimizer.optimize(image, outputFilePath, false,9);
-      }catch (IOException e)
-      {
-        e.printStackTrace();
-      }        
-     }
-    
+
+    public void compressPNG(String inputFilePath, String outputFilePath, String fileType) {
+        try {
+            PngOptimizer optimizer = new PngOptimizer();
+            PngImage image = new PngImage(inputFilePath);
+            optimizer.optimize(image, outputFilePath, false, 9);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void compressJPG(String inputFilePath, String outputFilePath, String fileType) {
         InputOutput io = IOProvider.getDefault().getIO(Bundle.CTL_Base64Encode(), false);
         try {
@@ -109,9 +102,9 @@ public class ImageUtil {
             InputStream is = new FileInputStream(imageFile);
             OutputStream os = new FileOutputStream(compressedImageFile);
             float quality = 0.5f;
-// create a BufferedImage as the result of decoding the supplied InputStream
+            // create a BufferedImage as the result of decoding the supplied InputStream
             BufferedImage image = ImageIO.read(is);
-// get all image writers for JPG format
+            // get all image writers for JPG format
             Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(fileType);
 
             if (!writers.hasNext()) {
@@ -123,7 +116,7 @@ public class ImageUtil {
             ImageWriteParam param = writer.getDefaultWriteParam();
             param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
             param.setCompressionQuality(quality);
-// appends a complete image stream containing a single image and
+            // appends a complete image stream containing a single image and
             //associated stream and image metadata and thumbnails to the output
             writer.write(null, new IIOImage(image, null, null), param);
             is.close();
@@ -134,14 +127,4 @@ public class ImageUtil {
             io.getOut().println("Exception: " + ex.toString());
         }
     }
-    
-    
-    
-   
-    
-    
-    
-    
-    
-
 }
