@@ -15,6 +15,7 @@
  */
 package org.netbeans.util.source.minify;
 
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
@@ -22,7 +23,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
-import org.mozilla.javascript.EvaluatorException;
+//import org.mozilla.javascript.EvaluatorException;import
 import org.netbeans.api.lexer.TokenHierarchy;
 import org.netbeans.api.lexer.TokenSequence;
 import org.netbeans.minify.ui.MinifyProperty;
@@ -39,16 +40,16 @@ import org.openide.util.RequestProcessor;
 import org.openide.util.Utilities;
 import org.openide.util.actions.CookieAction;
 
-@ActionID(category = "Build",
-        id = "org.netbeans.util.source.minify.XMLMinifyClipboard")
-@ActionRegistration(displayName = "#CTL_XMLMinifyClipboard")
+@ActionID(
+    category = "Build",
+    id = "org.netbeans.util.source.minify.XMLMinifyClipboard"
+)
+@ActionRegistration(displayName = "#CTL_XMLMinifyClipboard", lazy = false)
 @ActionReferences({
     @ActionReference(path = "Editors/text/xml/Popup", position = 400, separatorBefore = 350, separatorAfter = 450)
 })
 @NbBundle.Messages("CTL_XMLMinifyClipboard=Copy as Minified XML")
-
 public final class XMLMinifyClipboard extends CookieAction {
-
     private final static RequestProcessor RP = new RequestProcessor("XMLMinifyClipboard", 1, true);
 
     @Override
@@ -68,7 +69,7 @@ public final class XMLMinifyClipboard extends CookieAction {
                     Toolkit.getDefaultToolkit().getSystemClipboard().
                             setContents(content, content);
                     return;
-                } catch (final Throwable e) {
+                } catch (final HeadlessException e) {
                     org.openide.ErrorManager.getDefault().notify(e);
                 }
             }
@@ -90,9 +91,10 @@ public final class XMLMinifyClipboard extends CookieAction {
             JOptionPane.showMessageDialog(null, "Copied as minified XML Source", "Copied", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
-        } catch (EvaluatorException ex) {
-            JOptionPane.showMessageDialog(null, "Invalid XML Source Selected \n " + ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+//        } catch (EvaluatorException ex) {
+//            JOptionPane.showMessageDialog(null, "Invalid XML Source Selected \n " + ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
         }
+
         return out.toString();
     }
 

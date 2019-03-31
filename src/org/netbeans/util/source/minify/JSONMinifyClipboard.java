@@ -22,7 +22,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
-import org.mozilla.javascript.EvaluatorException;
+//import org.mozilla.javascript.EvaluatorException;
 import org.netbeans.api.lexer.TokenHierarchy;
 import org.netbeans.api.lexer.TokenSequence;
 import org.netbeans.minify.ui.MinifyProperty;
@@ -90,8 +90,8 @@ public final class JSONMinifyClipboard extends CookieAction {
             JOptionPane.showMessageDialog(null, "Copied as minified JSON Source", "Copied", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
-        } catch (EvaluatorException ex) {
-            JOptionPane.showMessageDialog(null, "Invalid JSON Source Selected \n " + ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+//        } catch (EvaluatorException ex) {
+//            JOptionPane.showMessageDialog(null, "Invalid JSON Source Selected \n " + ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
         }
         return out.toString();
     }

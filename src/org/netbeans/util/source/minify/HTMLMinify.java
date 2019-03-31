@@ -22,7 +22,6 @@ import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.minify.ui.MinifyProperty;
-import static org.netbeans.util.source.minify.JSMinify.execute;
 import org.openide.loaders.DataObject;
 
 import org.openide.awt.ActionRegistration;
@@ -34,8 +33,6 @@ import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.RequestProcessor;
 import org.openide.util.TaskListener;
-import org.openide.windows.IOProvider;
-import org.openide.windows.InputOutput;
 
 @ActionID(category = "Build",
         id = "org.netbeans.util.source.minify.HTMLMinify")
@@ -96,7 +93,7 @@ public final class HTMLMinify implements ActionListener {
 
                 MinifyFileResult minifyFileResult;
                 if (content != null) {
-                    minifyFileResult = util.compressContent(content, "text/html", outputFilePath, minifyProperty);
+                    minifyFileResult = util.compressContent(inputFilePath, content, "text/html", outputFilePath, minifyProperty);
                 } else {
                     minifyFileResult = util.compress(inputFilePath, "text/html", outputFilePath, minifyProperty);
                 }

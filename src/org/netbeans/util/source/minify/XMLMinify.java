@@ -22,7 +22,6 @@ import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.minify.ui.MinifyProperty;
-import static org.netbeans.util.source.minify.JSMinify.execute;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -92,7 +91,7 @@ public final class XMLMinify implements ActionListener {
 
                 MinifyFileResult minifyFileResult;
                 if (content != null) {
-                    minifyFileResult = util.compressContent(content, "text/xml-mime", outputFilePath, minifyProperty);
+                    minifyFileResult = util.compressContent(inputFilePath, content, "text/xml-mime", outputFilePath, minifyProperty);
                 } else {
                     minifyFileResult = util.compress(inputFilePath, "text/xml-mime", outputFilePath, minifyProperty);
                 }

@@ -15,14 +15,15 @@
  */
 package org.netbeans.util.source.minify;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.minify.ui.MinifyProperty;
-import static org.netbeans.util.source.minify.JSMinify.execute;
 import org.openide.loaders.DataObject;
 
 import org.openide.awt.ActionRegistration;
@@ -44,7 +45,6 @@ import org.openide.util.TaskListener;
 })
 @Messages("CTL_CSSMinify=Minify CSS")
 public final class CSSMinify implements ActionListener {
-
     private final DataObject context;
 
     public CSSMinify(DataObject context) {
@@ -64,23 +64,27 @@ public final class CSSMinify implements ActionListener {
                 cssMinify(context,content,notify);
             }
         };
+       
         final RequestProcessor.Task theTask = RP.create(runnable);
         final ProgressHandle ph = ProgressHandleFactory.createHandle("Minifying CSS " + context.getPrimaryFile().getName(), theTask);
+        
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
-                //JOptionPane.showMessageDialog(null, "Image Compressed Successfully");
                 ph.finish();
             }
         });
+        
         ph.start();
         theTask.schedule(0);
     }
     private static void cssMinify(DataObject context ,String content, boolean notify) {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         MinifyUtil util = new MinifyUtil();
+        
         try {
             FileObject file = context.getPrimaryFile();
+            
             if(!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionCSS(), minifyProperty.getSeparatorCSS().toString())){ 
                 String inputFilePath = file.getPath();
                 String outputFilePath;
@@ -91,10 +95,10 @@ public final class CSSMinify implements ActionListener {
                     outputFilePath = inputFilePath;
                 }
 
-
                 MinifyFileResult minifyFileResult;
+
                 if (content != null) {
-                    minifyFileResult = util.compressContent(content, "text/css", outputFilePath, minifyProperty);
+                    minifyFileResult = util.compressContent(inputFilePath, content, "text/css", outputFilePath, minifyProperty);
                 } else {
                     minifyFileResult = util.compress(inputFilePath, "text/css", outputFilePath, minifyProperty);
                 }
@@ -105,7 +109,9 @@ public final class CSSMinify implements ActionListener {
                             + "CSS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
                 }
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
     }

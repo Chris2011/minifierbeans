@@ -23,7 +23,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
-import org.mozilla.javascript.EvaluatorException;
+//import org.mozilla.javascript.EvaluatorException;
 import org.openide.cookies.EditorCookie;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
@@ -93,8 +93,8 @@ public final class HTMLMinifyClipboard extends CookieAction{
              JOptionPane.showMessageDialog(null, "Copied as minified HTML Source" , "Copied",JOptionPane.INFORMATION_MESSAGE);
            } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
-        } catch (EvaluatorException ex) {
-               JOptionPane.showMessageDialog(null,  "Invalid HTML Source Selected \n " + ex.getMessage(), "Exception",JOptionPane.ERROR_MESSAGE);
+//        } catch (EvaluatorException ex) {
+//               JOptionPane.showMessageDialog(null,  "Invalid HTML Source Selected \n " + ex.getMessage(), "Exception",JOptionPane.ERROR_MESSAGE);
          } 
         return out.toString();
     }
