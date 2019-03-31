@@ -10,7 +10,7 @@ This plugin remove all unnecessary characters from source code, without changing
 
 Also optimize by compressing image PNG/JPEG (Currently Supported format) and provides other functionality such as image Base64 Encoder/Decoder .
 
-##Compiler used
+## Compiler used
 #### JS - Google Closure Compiler
 #### CSS - YUI Compressor (Unmaintained)
 #### HTML/CML - HTML Compressor
