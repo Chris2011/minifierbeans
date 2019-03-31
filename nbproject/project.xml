@@ -192,8 +192,8 @@
             </module-dependencies>
             <public-packages/>
             <class-path-extension>
-                <runtime-relative-path>ext/yuicompressor-2.4.8.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/yuicompressor-2.4.8.jar</binary-origin>
+                <runtime-relative-path>ext/code-minify.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/code-minify.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/htmlcompressor-1.5.3.jar</runtime-relative-path>
@@ -202,6 +202,10 @@
             <class-path-extension>
                 <runtime-relative-path>ext/image-compressor.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/image-compressor.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/closure-compiler-v20190325.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/closure-compiler-v20190325.jar</binary-origin>
             </class-path-extension>
         </data>
     </configuration>
