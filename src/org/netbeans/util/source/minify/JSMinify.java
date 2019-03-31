@@ -44,7 +44,6 @@ import org.openide.util.TaskListener;
 })
 @Messages("CTL_JSMinify=Minify JS")
 public final class JSMinify implements ActionListener {
-
     private final DataObject context;
 
     public JSMinify(DataObject context) {
@@ -54,35 +53,38 @@ public final class JSMinify implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        execute(context,null,true);
+        execute(context, null, true);
     }
-    
-    public static void execute(final DataObject context,final String content, final boolean notify) {
+
+    public static void execute(final DataObject context, final String content, final boolean notify) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                jsMinify(context,content,notify);
+                jsMinify(context, content, notify);
             }
         };
+
         final RequestProcessor.Task theTask = RP.create(runnable);
         final ProgressHandle ph = ProgressHandle.createHandle("Minifying JS " + context.getPrimaryFile().getName(), theTask);
+
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
-                //JOptionPane.showMessageDialog(null, "Image Compressed Successfully");
                 ph.finish();
             }
         });
+
         ph.start();
         theTask.schedule(0);
     }
 
-    private static void jsMinify(DataObject context ,String content, boolean notify) {
+    private static void jsMinify(DataObject context, String content, boolean notify) {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         MinifyUtil util = new MinifyUtil();
+
         try {
             FileObject file = context.getPrimaryFile();
-            if(!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionJS(), minifyProperty.getSeparatorJS().toString())){ 
+            if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionJS(), minifyProperty.getSeparatorJS().toString())) {
                 String inputFilePath = file.getPath();
                 String outputFilePath;
 
@@ -93,11 +95,13 @@ public final class JSMinify implements ActionListener {
                 }
 
                 MinifyFileResult minifyFileResult;
+
                 if (content != null) {
-                    minifyFileResult = util.compressContent(content, "text/javascript", outputFilePath, minifyProperty);
+                    minifyFileResult = util.compressContent(inputFilePath, content, "text/javascript", outputFilePath, minifyProperty);
                 } else {
                     minifyFileResult = util.compress(inputFilePath, "text/javascript", outputFilePath, minifyProperty);
                 }
+
                 if (minifyProperty.isEnableOutputLogAlert() && notify) {
                     JOptionPane.showMessageDialog(null, "JS Minified Completed Successfully\n"
                             + "Input JS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"

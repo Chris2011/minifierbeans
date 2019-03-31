@@ -15,6 +15,7 @@
  */
 package org.netbeans.util.source.minify;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -50,7 +51,6 @@ import org.openide.windows.InputOutput;
 })
 @Messages("CTL_Minify=Minify WEB Content")
 public final class Minify implements ActionListener {
-
     private final DataObject context;
 
     public Minify(DataObject context) {
@@ -161,7 +161,9 @@ public final class Minify implements ActionListener {
                         + jsEval + cssEval + htmlEval + xmlEval + jsonEval
                         + "Total Time - " + totalTime + "ms");
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
+            io.getOut().println("Exception: " + ex.toString());
+        } catch (IOException ex) {
             io.getOut().println("Exception: " + ex.toString());
         }
     }
