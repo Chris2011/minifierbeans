@@ -1,24 +1,5 @@
 ### Looking for Contributors (Feel free to contact me if you are interested : christian.lenz@gmx.net)
 
-# ATTENTION
-If you get an error which is similar to this:
-
-```
-...
-[ERROR] in -
-  3:7:syntax error
-[ERROR] in -
-  1:0:Compilation produced 2 syntax errors.
-org.mozilla.javascript.EvaluatorException: Compilation produced 2 syntax errors.
-...
-```
-
-This happens in case that the YUICompressor, which is used to minify JS, can't handle ES6 syntax. Please check your JS code before, on this page: http://refresh-sf.com/
-
-If you got the same or similar error, it is related to the YUICompressor, which was mentioned.
-It would be great to go to the repo of the YUICompressor (https://github.com/yui/yuicompressor/issues) and create or vote for similar tickets there.
-Thx.
-
 # JS CSS Minify Compress [![][license img]][license]
 
 Plugin to minify JS , CSS and HTML for quicker page load times by reducing the size of js/css/html files.
@@ -28,6 +9,13 @@ This plugin remove all unnecessary characters from source code, without changing
 - To minify single js/css/html file , right click on js/css/html file in netbeans and select Minify JS/CSS/HTML option to minify file.
 
 Also optimize by compressing image PNG/JPEG (Currently Supported format) and provides other functionality such as image Base64 Encoder/Decoder .
+
+##Compiler used
+#### JS - Google Closure Compiler
+#### CSS - YUI Compressor (Unmaintained)
+#### HTML/CML - HTML Compressor
+#### JSON - Custom implementation
+#### Images - Image Compressor
 
 ## What does it do?
 
