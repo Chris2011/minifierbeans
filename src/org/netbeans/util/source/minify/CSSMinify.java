@@ -103,6 +103,7 @@ public final class CSSMinify implements ActionListener {
                     minifyFileResult = util.compress(inputFilePath, "text/css", outputFilePath, minifyProperty);
                 }
                 if (minifyProperty.isEnableOutputLogAlert() && notify) {
+                    // TODO: Adding notification to show the successful css minification message.
                     JOptionPane.showMessageDialog(null, "CSS Minified Completed Successfully\n"
                             + "Input CSS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
                             + "After Minifying CSS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"

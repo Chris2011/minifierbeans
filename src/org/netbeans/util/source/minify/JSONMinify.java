@@ -15,9 +15,11 @@
  */
 package org.netbeans.util.source.minify;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
@@ -67,7 +69,6 @@ public final class JSONMinify implements ActionListener {
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
-                //JOptionPane.showMessageDialog(null, "Image Compressed Successfully");
                 ph.finish();
             }
         });
@@ -96,13 +97,16 @@ public final class JSONMinify implements ActionListener {
                     minifyFileResult = util.compress(inputFilePath, "text/x-json", outputFilePath, minifyProperty);
                 }
                 if (minifyProperty.isEnableOutputLogAlert() && notify) {
+                    // TODO: Adding notification to show the successful json minifed message.
                     JOptionPane.showMessageDialog(null, "JSON Minified Completed Successfully\n"
                             + "Input JSON Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
                             + "After Minifying JSON Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
                             + "JSON Space Saved " + minifyFileResult.getSavedPercentage() + "%");
                 }
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
     }

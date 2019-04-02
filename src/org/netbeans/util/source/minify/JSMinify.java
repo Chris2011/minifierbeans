@@ -103,6 +103,7 @@ public final class JSMinify implements ActionListener {
                 }
 
                 if (minifyProperty.isEnableOutputLogAlert() && notify) {
+                    // TODO: Adding notification to show the successful minifed js message.
                     JOptionPane.showMessageDialog(null, "JS Minified Completed Successfully\n"
                             + "Input JS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
                             + "After Minifying JS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"

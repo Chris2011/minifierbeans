@@ -68,7 +68,6 @@ public final class HTMLMinify implements ActionListener {
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
-                //JOptionPane.showMessageDialog(null, "Image Compressed Successfully");
                 ph.finish();
             }
         });
@@ -98,6 +97,7 @@ public final class HTMLMinify implements ActionListener {
                     minifyFileResult = util.compress(inputFilePath, "text/html", outputFilePath, minifyProperty);
                 }
                 if (minifyProperty.isEnableOutputLogAlert() && notify) {
+                    // TODO: Adding notification to show the successful html minify message.
                     JOptionPane.showMessageDialog(null, "HTML Minified Completed Successfully\n"
                             + "Input HTML Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
                             + "After Minifying HTML Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"

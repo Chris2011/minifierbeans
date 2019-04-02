@@ -71,7 +71,6 @@ public final class Minify implements ActionListener {
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
-                //JOptionPane.showMessageDialog(null, "Image Compressed Successfully");
                 ph.finish();
             }
         });
@@ -99,10 +98,12 @@ public final class Minify implements ActionListener {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         InputOutput io = IOProvider.getDefault().getIO(Bundle.CTL_Minify(), false);
         MinifyUtil util = new MinifyUtil();
+        
         try {
             long startTime = new Date().getTime();
             FileObject source = context.getPrimaryFile();
             FileObject target = null;
+            
             if (minifyProperty.isSeparatBuild()) {
                 File sourceFile = FileUtil.toFile(source);
                 File targetFile = getTargetFolder(new File(sourceFile.getParentFile().getPath() + File.separator + sourceFile.getName() + "_BUILD"));
@@ -151,20 +152,25 @@ public final class Minify implements ActionListener {
                         + "JSON Space Saved " + jsonSpaceSaved + "% \n";
             }
             if (minifyProperty.isEnableOutputLogAlert()) {
-                JOptionPane.showMessageDialog(null, "Js Css Minified Completed Successfully \n Logs - \n"
-                        + minifyResult.getDirectories() + " Directories Found \n"
-                        + minifyResult.getJsFiles() + " JS Files Minified \n"
-                        + minifyResult.getCssFiles() + " CSS Files Minified \n"
-                        + minifyResult.getHtmlFiles() + " HTML Files Minified \n"
-                        + minifyResult.getXmlFiles() + " XML Files Minified \n"
-                        + minifyResult.getJsonFiles() + " JSON Files Minified \n"
-                        + jsEval + cssEval + htmlEval + xmlEval + jsonEval
-                        + "Total Time - " + totalTime + "ms");
+                showNotification(minifyResult, jsEval, cssEval, htmlEval, xmlEval, jsonEval, totalTime);
             }
         } catch (HeadlessException ex) {
             io.getOut().println("Exception: " + ex.toString());
         } catch (IOException ex) {
             io.getOut().println("Exception: " + ex.toString());
         }
+    }
+
+    private void showNotification(MinifyResult minifyResult, String jsEval, String cssEval, String htmlEval, String xmlEval, String jsonEval, long totalTime) throws HeadlessException {
+        // TODO: Adding notification to show the successful web component message.
+        JOptionPane.showMessageDialog(null, "Js Css Minified Completed Successfully \n Logs - \n"
+                + minifyResult.getDirectories() + " Directories Found \n"
+                + minifyResult.getJsFiles() + " JS Files Minified \n"
+                + minifyResult.getCssFiles() + " CSS Files Minified \n"
+                + minifyResult.getHtmlFiles() + " HTML Files Minified \n"
+                + minifyResult.getXmlFiles() + " XML Files Minified \n"
+                + minifyResult.getJsonFiles() + " JSON Files Minified \n"
+                + jsEval + cssEval + htmlEval + xmlEval + jsonEval
+                + "Total Time - " + totalTime + "ms");
     }
 }

@@ -88,10 +88,12 @@ public final class CSSMinifyClipboard extends CookieAction {
             
             MinifyUtil minifyUtil = new MinifyUtil();
             minifyUtil.compressCssInternal(new StringReader(sb.toString()), out, minifyProperty);
+            // TODO: Adding notification to show the successful copied minified css message.
             JOptionPane.showMessageDialog(null, "Copied as minified CSS Source", "Copied", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         } catch (EvaluatorException ex) {
+            // TODO: Adding notification to show the invalid css source message.
             JOptionPane.showMessageDialog(null, "Invalid CSS Source Selected \n " + ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
         }
         

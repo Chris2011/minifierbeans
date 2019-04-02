@@ -15,9 +15,11 @@
  */
 package org.netbeans.util.source.minify;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
@@ -66,7 +68,6 @@ public final class XMLMinify implements ActionListener {
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
-                //JOptionPane.showMessageDialog(null, "Image Compressed Successfully");
                 ph.finish();
             }
         });
@@ -96,13 +97,16 @@ public final class XMLMinify implements ActionListener {
                     minifyFileResult = util.compress(inputFilePath, "text/xml-mime", outputFilePath, minifyProperty);
                 }
                 if (minifyProperty.isEnableOutputLogAlert() && notify) {
+                    // TODO: Adding notification to show the successful xml minified message.
                     JOptionPane.showMessageDialog(null, "XML Minified Completed Successfully\n"
                             + "Input XML Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
                             + "After Minifying XML Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
                             + "XML Space Saved " + minifyFileResult.getSavedPercentage() + "%");
                 }
             }
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
     }

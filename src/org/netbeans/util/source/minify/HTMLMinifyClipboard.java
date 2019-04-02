@@ -15,7 +15,7 @@
  */
 package org.netbeans.util.source.minify;
 
-
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
@@ -23,10 +23,9 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
-//import org.mozilla.javascript.EvaluatorException;
+import org.mozilla.javascript.EvaluatorException;
 import org.openide.cookies.EditorCookie;
 import org.openide.nodes.Node;
-import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.CookieAction;
 import org.netbeans.api.lexer.*;
@@ -37,110 +36,95 @@ import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.*;
 
-
 @ActionID(category = "Build",
-id = "org.netbeans.util.source.minify.HTMLMinifyClipboard")
-@ActionRegistration(displayName = "#CTL_HTMLMinifyClipboard")
+        id = "org.netbeans.util.source.minify.HTMLMinifyClipboard")
+@ActionRegistration(displayName = "#CTL_HTMLMinifyClipboard", lazy = true)
 @ActionReferences({
     @ActionReference(path = "Editors/text/html/Popup", position = 400, separatorBefore = 350, separatorAfter = 450)
 })
 @NbBundle.Messages("CTL_HTMLMinifyClipboard=Copy as Minified HTML")
 
-public final class HTMLMinifyClipboard extends CookieAction{
-    
-    
-     private final static RequestProcessor RP = new RequestProcessor("HTMLMinifyClipboard", 1, true);
-     @Override
-    protected final void performAction(final Node[] activatedNodes){
-    htmlMinify(activatedNodes);
+public final class HTMLMinifyClipboard extends CookieAction {
+
+    private final static RequestProcessor RP = new RequestProcessor("HTMLMinifyClipboard", 1, true);
+
+    @Override
+    protected final void performAction(final Node[] activatedNodes) {
+        htmlMinify(activatedNodes);
     }
-    
-  
-    protected final void htmlMinify(final Node[] activatedNodes){
-        final EditorCookie editorCookie = 
-                Utilities.actionsGlobalContext().lookup(EditorCookie.class);
-        
-        for(final JEditorPane pane : editorCookie.getOpenedPanes()){
-            if (pane.isShowing() && 
-                    pane.getSelectionEnd() > pane.getSelectionStart() ){
-                try{
+
+    protected final void htmlMinify(final Node[] activatedNodes) {
+        final EditorCookie editorCookie
+                = Utilities.actionsGlobalContext().lookup(EditorCookie.class);
+
+        for (final JEditorPane pane : editorCookie.getOpenedPanes()) {
+            if (pane.isShowing()
+                    && pane.getSelectionEnd() > pane.getSelectionStart()) {
+                try {
                     StringSelection content = new StringSelection(selectedSourceAsMinify(pane));
                     Toolkit.getDefaultToolkit().getSystemClipboard().
                             setContents(content, content);
                     return;
-                } 
-                catch (final Throwable e){
+                } catch (final HeadlessException e) {
                     org.openide.ErrorManager.getDefault().notify(e);
                 }
             }
         }
     }
-    
-    
-    
-    private String selectedSourceAsMinify(final JEditorPane pane){
-         MinifyProperty minifyProperty = MinifyProperty.getInstance();
-          StringWriter out = new StringWriter();
+
+    private String selectedSourceAsMinify(final JEditorPane pane) {
+        MinifyProperty minifyProperty = MinifyProperty.getInstance();
+        StringWriter out = new StringWriter();
         try {
             final TokenSequence ts = TokenHierarchy.get(pane.getDocument()).tokenSequence();
             final StringBuilder sb = new StringBuilder();
-            ts.move( pane.getSelectionStart() );
-           while(ts.moveNext() && ts.offset() < pane.getSelectionEnd() ){
-                sb.append(ts.token().text().toString() );
+            ts.move(pane.getSelectionStart());
+            while (ts.moveNext() && ts.offset() < pane.getSelectionEnd()) {
+                sb.append(ts.token().text().toString());
             }
-           MinifyUtil minifyUtil = new MinifyUtil();
-           minifyUtil.compressHtmlInternal(new StringReader(sb.toString()), out,minifyProperty);
-             JOptionPane.showMessageDialog(null, "Copied as minified HTML Source" , "Copied",JOptionPane.INFORMATION_MESSAGE);
-           } catch (IOException ex) {
+            MinifyUtil minifyUtil = new MinifyUtil();
+            minifyUtil.compressHtmlInternal(new StringReader(sb.toString()), out, minifyProperty);
+            // TODO: Adding notification to show the successful minified html message.
+            JOptionPane.showMessageDialog(null, "Copied as minified HTML Source", "Copied", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
-//        } catch (EvaluatorException ex) {
-//               JOptionPane.showMessageDialog(null,  "Invalid HTML Source Selected \n " + ex.getMessage(), "Exception",JOptionPane.ERROR_MESSAGE);
-         } 
+        } catch (EvaluatorException ex) {
+            // TODO: Adding notification to show the invalid html source message.
+            JOptionPane.showMessageDialog(null, "Invalid HTML Source Selected \n " + ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+        }
         return out.toString();
     }
-    
-    
-      
-    
 
- 
     @Override
-    protected final int mode(){
+    protected final int mode() {
         return CookieAction.MODE_EXACTLY_ONE;
     }
 
     @Override
-    public final String getName(){
+    public final String getName() {
         return NbBundle.getMessage(JSMinifyClipboard.class, "CTL_HTMLMinifyClipboard");
     }
 
     @Override
-    protected final Class[] cookieClasses(){
+    protected final Class[] cookieClasses() {
         return new Class[]{
-                    EditorCookie.class
-                };
+            EditorCookie.class
+        };
     }
 
     @Override
-    protected final void initialize(){
+    protected final void initialize() {
         super.initialize();
         putValue("noIconInMenu", Boolean.TRUE);
     }
 
     @Override
-    public final HelpCtx getHelpCtx(){
+    public final HelpCtx getHelpCtx() {
         return HelpCtx.DEFAULT_HELP;
     }
 
     @Override
-    protected final boolean asynchronous(){
+    protected final boolean asynchronous() {
         return false;
     }
 }
-
-
-
-
-
-
-

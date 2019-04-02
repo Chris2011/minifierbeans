@@ -19,7 +19,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
@@ -64,6 +63,7 @@ public final class Base64Decode implements ActionListener {
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
+                // TODO: Adding notification to show the successful decoding image message.
                 //JOptionPane.showMessageDialog(null, "Image Compressed Successfully");
                 ph.finish();
             }
@@ -82,7 +82,8 @@ public final class Base64Decode implements ActionListener {
                 String fileType = file.getName().substring(file.getName().lastIndexOf('.') + 1);
                 imageUtil.decodeToImage(FileUtils.readFileToString(newFile), file.getParent().getPath() + File.separator + file.getName(), fileType);
             } else {
-                JOptionPane.showMessageDialog(null, "Invalid file to decode", "Warning", JOptionPane.WARNING_MESSAGE);
+                // TODO: Adding notification to show invalid file to decode warning.
+//                JOptionPane.showMessageDialog(null, "Invalid file to decode", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         } catch (IOException ex) {
             io.getOut().println("Exception: " + ex.toString());

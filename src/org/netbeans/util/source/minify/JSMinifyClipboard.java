@@ -93,6 +93,7 @@ public final class JSMinifyClipboard extends CookieAction {
             MinifyUtil minifyUtil = new MinifyUtil();
             oldContent = sb.toString();
             minifedString = minifyUtil.compressSelectedJavaScript(fileObject.getNameExt(), sb.toString(), minifyProperty);
+            // TODO: Adding notification to show the successful copied minifed js message.
             JOptionPane.showMessageDialog(null, "Copied as minified JS Source", "Copied", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);

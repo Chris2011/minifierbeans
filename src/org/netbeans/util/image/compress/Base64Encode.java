@@ -51,6 +51,7 @@ public final class Base64Encode implements ActionListener {
 
     private final static RequestProcessor RP = new RequestProcessor("Base64Encode", 1, true);
 
+    @Override
     public void actionPerformed(ActionEvent ev) {
         Runnable runnable = new Runnable() {
             @Override
@@ -63,10 +64,12 @@ public final class Base64Encode implements ActionListener {
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
+                // TODO: Adding notification to show the successful encoding image message.
                 //JOptionPane.showMessageDialog(null, "Image Compressed Successfully");
                 ph.finish();
             }
         });
+
         ph.start();
         theTask.schedule(0);
     }
@@ -85,5 +88,4 @@ public final class Base64Encode implements ActionListener {
             io.getOut().println("Exception: " + ex.toString());
         }
     }
-
 }

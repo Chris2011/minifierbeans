@@ -79,6 +79,7 @@ public class ImageUtil {
         } else if (fileType.equalsIgnoreCase("PNG")) {
             compressPNG(inputFilePath, outputFilePath, fileType);
         } else {
+            // TODO: Adding notification to which image types are supported or change the behaviour.
             JOptionPane.showMessageDialog(null, "Currently only JPG/PNG File Compression is supported", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }

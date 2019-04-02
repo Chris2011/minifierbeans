@@ -23,7 +23,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
-//import org.mozilla.javascript.EvaluatorException;import
+import org.mozilla.javascript.EvaluatorException;
 import org.netbeans.api.lexer.TokenHierarchy;
 import org.netbeans.api.lexer.TokenSequence;
 import org.netbeans.minify.ui.MinifyProperty;
@@ -44,7 +44,7 @@ import org.openide.util.actions.CookieAction;
     category = "Build",
     id = "org.netbeans.util.source.minify.XMLMinifyClipboard"
 )
-@ActionRegistration(displayName = "#CTL_XMLMinifyClipboard", lazy = false)
+@ActionRegistration(displayName = "#CTL_XMLMinifyClipboard", lazy = true)
 @ActionReferences({
     @ActionReference(path = "Editors/text/xml/Popup", position = 400, separatorBefore = 350, separatorAfter = 450)
 })
@@ -88,11 +88,13 @@ public final class XMLMinifyClipboard extends CookieAction {
             }
             MinifyUtil minifyUtil = new MinifyUtil();
             minifyUtil.compressXmlInternal(new StringReader(sb.toString()), out, minifyProperty);
+            // TODO: Adding notification to show the successfull copied minifed xml message.
             JOptionPane.showMessageDialog(null, "Copied as minified XML Source", "Copied", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
-//        } catch (EvaluatorException ex) {
-//            JOptionPane.showMessageDialog(null, "Invalid XML Source Selected \n " + ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+        } catch (EvaluatorException ex) {
+            // TODO: Adding notification to show the invalid xml source message.
+            JOptionPane.showMessageDialog(null, "Invalid XML Source Selected \n " + ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
         }
 
         return out.toString();

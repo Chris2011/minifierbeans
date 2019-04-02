@@ -59,6 +59,7 @@ public final class ImageCompress implements ActionListener {
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
+                // TODO: Adding notification to show the successful image compression message.
                 //JOptionPane.showMessageDialog(null, "Image Compressed Successfully");
                 ph.finish();
             }
