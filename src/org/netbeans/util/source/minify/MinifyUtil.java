@@ -20,6 +20,7 @@ import com.google.javascript.jscomp.CompilationLevel;
 import com.google.javascript.jscomp.CompilerOptions;
 import com.google.javascript.jscomp.Compiler;
 import com.google.javascript.jscomp.SourceFile;
+import com.google.javascript.jscomp.parsing.Config;
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 import com.googlecode.htmlcompressor.compressor.XmlCompressor;
 import com.yahoo.platform.yui.compressor.CssCompressor;
@@ -43,10 +44,11 @@ import org.openide.filesystems.FileObject;
 import org.openide.util.Exceptions;
 
 public class MinifyUtil {
+
     MinifyResult minify(FileObject parentFile, MinifyProperty minifyProperty) {
         int directory = 0, cssFile = 0, jsFile = 0, htmlFile = 0, xmlFile = 0, jsonFile = 0;
         MinifyResult minifyResult = new MinifyResult();
-        
+
         for (FileObject file : parentFile.getChildren()) {
             if (file.isFolder()) {
                 directory++;
@@ -57,7 +59,7 @@ public class MinifyUtil {
                 htmlFile = htmlFile + preMinifyResult.getHtmlFiles();
                 xmlFile = xmlFile + preMinifyResult.getXmlFiles();
                 jsonFile = jsonFile + preMinifyResult.getJsonFiles();
-                
+
                 minifyResult.setInputJsFilesSize(minifyResult.getInputJsFilesSize() + preMinifyResult.getInputJsFilesSize());
                 minifyResult.setOutputJsFilesSize(minifyResult.getOutputJsFilesSize() + preMinifyResult.getOutputJsFilesSize());
                 minifyResult.setInputCssFilesSize(minifyResult.getInputCssFilesSize() + preMinifyResult.getInputCssFilesSize());
@@ -220,6 +222,12 @@ public class MinifyUtil {
         Compiler compiler = new Compiler();
         CompilerOptions options = new CompilerOptions();
 
+        compiler.initOptions(options);
+
+        options.setStrictModeInput(false);
+        options.setEmitUseStrict(false);
+        options.setTrustedStrings(true);
+
         CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 
         List<SourceFile> inputs = new ArrayList<SourceFile>();
@@ -270,6 +278,13 @@ public class MinifyUtil {
         Compiler compiler = new Compiler();
         CompilerOptions options = new CompilerOptions();
 
+//        options.setLanguageOut(CompilerOptions.LanguageMode.ECMASCRIPT3);
+        compiler.initOptions(options);
+
+//        options.setStrictModeInput(false);
+        options.setEmitUseStrict(false);
+        options.setTrustedStrings(true);
+
         CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 
         List<SourceFile> inputs = new ArrayList<SourceFile>();
@@ -295,7 +310,6 @@ public class MinifyUtil {
                 }
             } else if (mimeType.equals("text/javascript")) {
                 compiler.compile(CommandLineRunner.getDefaultExterns(), inputs, options);
-                
 
                 if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
                     out.write(compiler.toSource());
@@ -309,7 +323,7 @@ public class MinifyUtil {
                 StringWriter outputWriter = new StringWriter();
                 compressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
                 outputWriter.flush();
-                if(StringUtils.isBlank(MinifyProperty.getInstance().getHeaderCSS())) {
+                if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderCSS())) {
                     out.write(outputWriter.toString());
                 } else {
                     out.write(MinifyProperty.getInstance().getHeaderCSS() + "\n" + outputWriter.toString());
@@ -318,7 +332,7 @@ public class MinifyUtil {
             } else if (mimeType.equals("text/x-json")) {
                 JSONMinifyUtil compressor = new JSONMinifyUtil();
                 output = compressor.minify(content);
-                if(StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJSON())) {
+                if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJSON())) {
                     out.write(output);
                 } else {
                     out.write(MinifyProperty.getInstance().getHeaderJSON() + "\n" + output);
@@ -329,7 +343,7 @@ public class MinifyUtil {
                 compressor.setRemoveComments(true);
                 compressor.setEnabled(true);
                 output = compressor.compress(content);
-                if(StringUtils.isBlank(MinifyProperty.getInstance().getHeaderXML())) {
+                if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderXML())) {
                     out.write(output);
                 } else {
                     out.write(MinifyProperty.getInstance().getHeaderXML() + "\n" + output);
@@ -349,6 +363,12 @@ public class MinifyUtil {
         MinifyFileResult minifyFileResult = new MinifyFileResult();
         Compiler compiler = new Compiler();
         CompilerOptions options = new CompilerOptions();
+        
+        compiler.initOptions(options);
+        
+        options.setEmitUseStrict(false);
+        options.setTrustedStrings(true);
+        
         CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 
         List<SourceFile> inputs = new ArrayList<SourceFile>();
@@ -373,7 +393,7 @@ public class MinifyUtil {
                 out.write(MinifyProperty.getInstance().getHeaderHTML() + "\n" + output);
             } else if (mimeType.equals("text/javascript")) {
                 compiler.compile(CommandLineRunner.getDefaultExterns(), inputs, options);
-                
+
                 if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
                     out.write(compiler.toSource());
                 } else {
@@ -384,13 +404,13 @@ public class MinifyUtil {
                 StringWriter outputWriter = new StringWriter();
                 compressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
                 outputWriter.flush();
-                
+
                 if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
                     out.write(outputWriter.toString());
                 } else {
                     out.write(MinifyProperty.getInstance().getHeaderCSS() + "\n" + outputWriter.toString());
                 }
-                
+
                 outputWriter.close();
             } else if (mimeType.equals("text/x-json")) {
                 JSONMinifyUtil compressor = new JSONMinifyUtil();
