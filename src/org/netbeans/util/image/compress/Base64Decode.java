@@ -26,6 +26,7 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
 import org.openide.util.NbBundle.Messages;
@@ -35,20 +36,19 @@ import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
 
 @ActionID(category = "Build",
-        id = "org.netbeans.util.image.compress.Base64Decode")
+    id = "org.netbeans.util.image.compress.Base64Decode")
 @ActionRegistration(displayName = "#CTL_Base64Decode")
 @ActionReferences({
     @ActionReference(path = "Loaders/content/unknown/Actions", position = 300, separatorBefore = 250, separatorAfter = 350)
 })
 @Messages("CTL_Base64Decode=Base64 Decode")
 public final class Base64Decode implements ActionListener {
-
     private final DataObject context;
+    private final static RequestProcessor RP = new RequestProcessor("Base64Decode", 1, true);
 
     public Base64Decode(DataObject context) {
         this.context = context;
     }
-    private final static RequestProcessor RP = new RequestProcessor("Base64Decode", 1, true);
 
     @Override
     public void actionPerformed(ActionEvent ev) {
@@ -58,16 +58,17 @@ public final class Base64Decode implements ActionListener {
                 decode();
             }
         };
+
         final RequestProcessor.Task theTask = RP.create(runnable);
         final ProgressHandle ph = ProgressHandleFactory.createHandle("Base64 Decoding Image " + context.getPrimaryFile().getName(), theTask);
+
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
-                // TODO: Adding notification to show the successful decoding image message.
-                //JOptionPane.showMessageDialog(null, "Image Compressed Successfully");
                 ph.finish();
             }
         });
+
         ph.start();
         theTask.schedule(0);
     }
@@ -75,15 +76,19 @@ public final class Base64Decode implements ActionListener {
     void decode() {
         InputOutput io = IOProvider.getDefault().getIO(Bundle.CTL_Base64Encode(), false);
         ImageUtil imageUtil = new ImageUtil();
+
         try {
             FileObject file = context.getPrimaryFile();
+
             if (file.getExt().equalsIgnoreCase("ENCODE")) {
                 File newFile = new File(file.getPath());
                 String fileType = file.getName().substring(file.getName().lastIndexOf('.') + 1);
+
                 imageUtil.decodeToImage(FileUtils.readFileToString(newFile), file.getParent().getPath() + File.separator + file.getName(), fileType);
+
+                NotificationDisplayer.getDefault().notify("Image decoded Successfully", NotificationDisplayer.Priority.NORMAL.getIcon(), "The decoding of the image was successful.", null);
             } else {
-                // TODO: Adding notification to show invalid file to decode warning.
-//                JOptionPane.showMessageDialog(null, "Invalid file to decode", "Warning", JOptionPane.WARNING_MESSAGE);
+                NotificationDisplayer.getDefault().notify("Invalid file to decode", NotificationDisplayer.Priority.HIGH.getIcon(), String.format("The file '%s' is invalid. File must have an '.encode' extension.", file.getParent().getPath() + File.separator + file.getNameExt()), null);
             }
         } catch (IOException ex) {
             io.getOut().println("Exception: " + ex.toString());
