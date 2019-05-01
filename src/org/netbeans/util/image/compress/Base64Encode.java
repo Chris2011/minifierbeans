@@ -26,6 +26,7 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
 import org.openide.util.NbBundle.Messages;
@@ -35,14 +36,13 @@ import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
 
 @ActionID(category = "Build",
-        id = "org.netbeans.util.image.compress.Base64Encode")
+    id = "org.netbeans.util.image.compress.Base64Encode")
 @ActionRegistration(displayName = "#CTL_Base64Encode")
 @ActionReferences({
     @ActionReference(path = "Loaders/image/png-gif-jpeg-bmp/Actions", position = 300, separatorBefore = 250, separatorAfter = 350)
 })
 @Messages("CTL_Base64Encode=Base64 Encode")
 public final class Base64Encode implements ActionListener {
-
     private final DataObject context;
 
     public Base64Encode(DataObject context) {
@@ -64,8 +64,8 @@ public final class Base64Encode implements ActionListener {
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
-                // TODO: Adding notification to show the successful encoding image message.
-                //JOptionPane.showMessageDialog(null, "Image Compressed Successfully");
+                NotificationDisplayer.getDefault().notify("Image encoded successfully", NotificationDisplayer.Priority.NORMAL.getIcon(), "The encoding of the image was successful.", null);
+                
                 ph.finish();
             }
         });
@@ -77,11 +77,12 @@ public final class Base64Encode implements ActionListener {
     void encode() {
         InputOutput io = IOProvider.getDefault().getIO(Bundle.CTL_Base64Encode(), false);
         ImageUtil imageUtil = new ImageUtil();
+
         try {
             FileObject file = context.getPrimaryFile();
-            String imgstr;
-            imgstr = imageUtil.encodeToString(file.getPath(), file.getExt());
+            String imgstr  = imageUtil.encodeToString(file.getPath(), file.getExt());
             File newFile = new File(file.getParent().getPath() + File.separator + file.getName() + "." + file.getExt() + ".encode");
+            
             FileUtils.writeStringToFile(newFile, imgstr);
             io.getOut().println("Image Base64 Encoding : " + imgstr);
         } catch (IOException ex) {
