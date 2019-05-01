@@ -25,21 +25,20 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
-import javax.swing.JOptionPane;
 import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
 import java.util.Base64;
+import org.openide.awt.NotificationDisplayer;
 
 /**
  *
  * @author SERVO006
  */
 public class ImageUtil {
-
     public BufferedImage decodeToImage(String imageString, String filePath, String fileType) {
-
         BufferedImage image = null;
         byte[] imageByte;
+        
         try {
             Base64.Decoder decoder = Base64.getDecoder();
             imageByte = decoder.decode(imageString);
@@ -52,6 +51,7 @@ public class ImageUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return image;
     }
 
@@ -70,6 +70,7 @@ public class ImageUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return imageString;
     }
 
@@ -79,8 +80,7 @@ public class ImageUtil {
         } else if (fileType.equalsIgnoreCase("PNG")) {
             compressPNG(inputFilePath, outputFilePath, fileType);
         } else {
-            // TODO: Adding notification to which image types are supported or change the behaviour.
-            JOptionPane.showMessageDialog(null, "Currently only JPG/PNG File Compression is supported", "Warning", JOptionPane.WARNING_MESSAGE);
+            NotificationDisplayer.getDefault().notify("Image type not supported", NotificationDisplayer.Priority.HIGH.getIcon(), "Currently only JPG/PNG File Compression is supported.", null);
         }
     }
 
@@ -103,23 +103,29 @@ public class ImageUtil {
             InputStream is = new FileInputStream(imageFile);
             OutputStream os = new FileOutputStream(compressedImageFile);
             float quality = 0.5f;
+            
             // create a BufferedImage as the result of decoding the supplied InputStream
             BufferedImage image = ImageIO.read(is);
+            
             // get all image writers for JPG format
             Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(fileType);
 
             if (!writers.hasNext()) {
                 throw new IllegalStateException("No writers found");
             }
+            
             ImageWriter writer = writers.next();
             ImageOutputStream ios = ImageIO.createImageOutputStream(os);
             writer.setOutput(ios);
             ImageWriteParam param = writer.getDefaultWriteParam();
+
             param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
             param.setCompressionQuality(quality);
+            
             // appends a complete image stream containing a single image and
             //associated stream and image metadata and thumbnails to the output
             writer.write(null, new IIOImage(image, null, null), param);
+
             is.close();
             os.close();
             ios.close();

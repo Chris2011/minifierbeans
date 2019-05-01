@@ -86,7 +86,7 @@ public final class Base64Decode implements ActionListener {
 
                 imageUtil.decodeToImage(FileUtils.readFileToString(newFile), file.getParent().getPath() + File.separator + file.getName(), fileType);
 
-                NotificationDisplayer.getDefault().notify("Image decoded Successfully", NotificationDisplayer.Priority.NORMAL.getIcon(), "The decoding of the image was successful.", null);
+                NotificationDisplayer.getDefault().notify("Image decoded successfully", NotificationDisplayer.Priority.NORMAL.getIcon(), "The decoding of the image was successful.", null);
             } else {
                 NotificationDisplayer.getDefault().notify("Invalid file to decode", NotificationDisplayer.Priority.HIGH.getIcon(), String.format("The file '%s' is invalid. File must have an '.encode' extension.", file.getParent().getPath() + File.separator + file.getNameExt()), null);
             }
