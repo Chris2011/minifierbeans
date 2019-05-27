@@ -54,7 +54,7 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
             public void focusLost(FocusEvent fe) {
                 String text = headerEditorPaneJS1.getText();
                 if (text == null || text.trim().isEmpty()) {
-                    text = null;
+                    text = "";
                     headerEditorPaneJS1.setText("");
                 } else {
                     text = text.trim();
@@ -178,7 +178,7 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
             public void focusLost(FocusEvent fe) {
                 String text = headerEditorPaneCSS1.getText();
                 if (text == null || text.trim().isEmpty()) {
-                    text = null;
+                    text = "";
                     headerEditorPaneCSS1.setText("");
                 } else {
                     text = text.trim();
@@ -292,7 +292,7 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
             public void focusLost(FocusEvent fe) {
                 String text = headerEditorPaneHTML.getText();
                 if (text == null || text.trim().isEmpty()) {
-                    text = null;
+                    text = "";
                     headerEditorPaneHTML.setText("");
                 } else {
                     text = text.trim();
@@ -446,7 +446,7 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
             public void focusLost(FocusEvent fe) {
                 String text = headerEditorPaneXML.getText();
                 if (text == null || text.trim().isEmpty()) {
-                    text = null;
+                    text = "";
                     headerEditorPaneXML.setText("");
                 } else {
                     text = text.trim();
@@ -563,7 +563,7 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
             public void focusLost(FocusEvent fe) {
                 String text = headerEditorPaneJSON.getText();
                 if (text == null || text.trim().isEmpty()) {
-                    text = null;
+                    text = "";
                     headerEditorPaneJSON.setText("");
                 } else {
                     text = text.trim();
