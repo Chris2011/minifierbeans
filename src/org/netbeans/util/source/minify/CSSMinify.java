@@ -37,55 +37,56 @@ import org.openide.util.RequestProcessor;
 import org.openide.util.TaskListener;
 
 @ActionID(category = "Build",
-        id = "org.netbeans.util.source.minify.CSSMinify")
+    id = "org.netbeans.util.source.minify.CSSMinify")
 @ActionRegistration(iconBase = "org/netbeans/util/source/minify/compress.png",
-        displayName = "#CTL_CSSMinify")
+    displayName = "#CTL_CSSMinify")
 @ActionReferences({
     @ActionReference(path = "Loaders/text/css/Actions", position = 300, separatorBefore = 250, separatorAfter = 350)
 })
 @Messages("CTL_CSSMinify=Minify CSS")
 public final class CSSMinify implements ActionListener {
     private final DataObject context;
+    private final static RequestProcessor RP = new RequestProcessor("CSSMinify", 1, true);
 
     public CSSMinify(DataObject context) {
         this.context = context;
     }
-    private final static RequestProcessor RP = new RequestProcessor("CSSMinify", 1, true);
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-         execute(context,null,true);
+        execute(context, null, true);
     }
 
-    public static void execute(final DataObject context,final String content, final boolean notify) {
-       Runnable runnable = new Runnable() {
+    public static void execute(final DataObject context, final String content, final boolean notify) {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                cssMinify(context,content,notify);
+                cssMinify(context, content, notify);
             }
         };
-       
+
         final RequestProcessor.Task theTask = RP.create(runnable);
         final ProgressHandle ph = ProgressHandleFactory.createHandle("Minifying CSS " + context.getPrimaryFile().getName(), theTask);
-        
+
         theTask.addTaskListener(new TaskListener() {
             @Override
             public void taskFinished(org.openide.util.Task task) {
                 ph.finish();
             }
         });
-        
+
         ph.start();
         theTask.schedule(0);
     }
-    private static void cssMinify(DataObject context ,String content, boolean notify) {
+
+    private static void cssMinify(DataObject context, String content, boolean notify) {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         MinifyUtil util = new MinifyUtil();
-        
+
         try {
             FileObject file = context.getPrimaryFile();
-            
-            if(!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionCSS(), minifyProperty.getSeparatorCSS().toString())){ 
+
+            if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionCSS(), minifyProperty.getSeparatorCSS().toString())) {
                 String inputFilePath = file.getPath();
                 String outputFilePath;
 
@@ -102,6 +103,7 @@ public final class CSSMinify implements ActionListener {
                 } else {
                     minifyFileResult = util.compress(inputFilePath, "text/css", outputFilePath, minifyProperty);
                 }
+                
                 if (minifyProperty.isEnableOutputLogAlert() && notify) {
                     // TODO: Adding notification to show the successful css minification message.
                     JOptionPane.showMessageDialog(null, "CSS Minified Completed Successfully\n"
