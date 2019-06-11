@@ -2,6 +2,9 @@
 
 [![][license img]][license] ![Version](https://img.shields.io/badge/version-1.5.0-green.svg) ![Contributors](https://img.shields.io/github/contributors/chris2011/readmeinprojectview.svg) ![Downloads](https://img.shields.io/github/downloads/chris2011/readmeinprojectview/total.svg)
 
+
+## Description
+
 Plugin to minify JS , CSS and HTML for quicker page load times by reducing the size of js/css/html files.
 This plugin remove all unnecessary characters from source code, without changing its functionality. These unnecessary characters usually include white space characters, new line characters, comments, and sometimes block delimiters, which are used to add readability to the code but are not required for it to execute.
 
@@ -10,12 +13,15 @@ This plugin remove all unnecessary characters from source code, without changing
 
 Also optimize by compressing image PNG/JPEG (Currently Supported format) and provides other functionality such as image Base64 Encoder/Decoder .
 
+
 ## Compiler used
+
 #### JS - Google Closure Compiler
 #### CSS - YUI Compressor (Unmaintained)
 #### HTML/CML - HTML Compressor
 #### JSON - Custom implementation
 #### Images - Image Compressor
+
 
 ## What does it do?
 
@@ -33,22 +39,17 @@ Also optimize by compressing image PNG/JPEG (Currently Supported format) and pro
 ##### 12- Image Base64 Encoder/Decoder
 ##### 13- Image PNG/JPEG Compress (Currently Supported format)
 
-
 <img src="http://plugins.netbeans.org/data/images/1385563254_Final.png">
 
-## Communication
 
-- Email : [christian.lenz@gmx.net](mailto:christian.lenz@gmx.net)
-- Twitter: [@Chrizzly42](https://twitter.com/Chrizzly42)
-- [GitHub Issues](https://github.com/Chris2011/js-css-minify-compress/issues)
+## Changelog
 
-
-## Bugs and Feedback
-
-For bugs, questions and discussions please use the [Github Issues](https://github.com/Chris2011/js-css-minify-compress/issues).
+See [Changelog](./Changelog.md) for all information  
 
 
-#### If you like:heart: this project, don't forget:blush: to give us a star:star2: on GitHub!
+## NetBeans Compatibility
 
-[license]:LICENSE
-[license img]:https://img.shields.io/badge/License-Apache%202-blue.svg
+Version < 2.3.0 is compatible to NetBeans 8.2  
+Version >= 2.5.1 is compatible to Apache NetBeans >= 9.0  
+  
+Plugin is available at http://plugins.netbeans.org/plugin/49666/minifierbeans
