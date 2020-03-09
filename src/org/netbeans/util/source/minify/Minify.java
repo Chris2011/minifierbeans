@@ -33,6 +33,7 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
@@ -98,12 +99,12 @@ public final class Minify implements ActionListener {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         InputOutput io = IOProvider.getDefault().getIO(Bundle.CTL_Minify(), false);
         MinifyUtil util = new MinifyUtil();
-        
+
         try {
             long startTime = new Date().getTime();
             FileObject source = context.getPrimaryFile();
             FileObject target = null;
-            
+
             if (minifyProperty.isSeparatBuild()) {
                 File sourceFile = FileUtil.toFile(source);
                 File targetFile = getTargetFolder(new File(sourceFile.getParentFile().getPath() + File.separator + sourceFile.getName() + "_BUILD"));
@@ -162,15 +163,13 @@ public final class Minify implements ActionListener {
     }
 
     private void showNotification(MinifyResult minifyResult, String jsEval, String cssEval, String htmlEval, String xmlEval, String jsonEval, long totalTime) throws HeadlessException {
-        // TODO: Adding notification to show the successful web component message.
-        JOptionPane.showMessageDialog(null, "Js Css Minified Completed Successfully \n Logs - \n"
-                + minifyResult.getDirectories() + " Directories Found \n"
-                + minifyResult.getJsFiles() + " JS Files Minified \n"
-                + minifyResult.getCssFiles() + " CSS Files Minified \n"
-                + minifyResult.getHtmlFiles() + " HTML Files Minified \n"
-                + minifyResult.getXmlFiles() + " XML Files Minified \n"
-                + minifyResult.getJsonFiles() + " JSON Files Minified \n"
+        NotificationDisplayer.getDefault().notify("Successful JS & CSS minification", NotificationDisplayer.Priority.NORMAL.getIcon(), String.format("%s Directories Found \n"
+                + "%s JS Files Minified \n"
+                + "%s CSS Files Minified \n"
+                + "%s HTML Files Minified \n"
+                + "%s XML Files Minified \n"
+                + "%s JSON Files Minified \n"
                 + jsEval + cssEval + htmlEval + xmlEval + jsonEval
-                + "Total Time - " + totalTime + "ms");
+                + "Total Time - %s ms", minifyResult.getDirectories(), minifyResult.getJsFiles(), minifyResult.getCssFiles(), minifyResult.getHtmlFiles(), minifyResult.getXmlFiles(), minifyResult.getJsonFiles(), totalTime), null);
     }
 }

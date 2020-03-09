@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import javax.swing.JEditorPane;
-import javax.swing.JOptionPane;
 import org.mozilla.javascript.EvaluatorException;
 import org.openide.cookies.EditorCookie;
 import org.openide.nodes.Node;
@@ -34,6 +33,7 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.util.*;
 
 @ActionID(category = "Build",
@@ -45,9 +45,6 @@ import org.openide.util.*;
 @NbBundle.Messages("CTL_HTMLMinifyClipboard=Copy as Minified HTML")
 
 public final class HTMLMinifyClipboard extends CookieAction {
-
-    private final static RequestProcessor RP = new RequestProcessor("HTMLMinifyClipboard", 1, true);
-
     @Override
     protected final void performAction(final Node[] activatedNodes) {
         htmlMinify(activatedNodes);
@@ -84,13 +81,12 @@ public final class HTMLMinifyClipboard extends CookieAction {
             }
             MinifyUtil minifyUtil = new MinifyUtil();
             minifyUtil.compressHtmlInternal(new StringReader(sb.toString()), out, minifyProperty);
-            // TODO: Adding notification to show the successful minified html message.
-            JOptionPane.showMessageDialog(null, "Copied as minified HTML Source", "Copied", JOptionPane.INFORMATION_MESSAGE);
+
+            NotificationDisplayer.getDefault().notify("Successful copied", NotificationDisplayer.Priority.NORMAL.getIcon(), "Copied as minified HTML source.", null);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         } catch (EvaluatorException ex) {
-            // TODO: Adding notification to show the invalid html source message.
-            JOptionPane.showMessageDialog(null, "Invalid HTML Source Selected \n " + ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+            NotificationDisplayer.getDefault().notify("Error: Copy process failed", NotificationDisplayer.Priority.HIGH.getIcon(), String.format("Invalid HTML Source Selected: \n %s", ex.getMessage()), null);
         }
         return out.toString();
     }

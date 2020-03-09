@@ -15,13 +15,13 @@
  */
 package org.netbeans.util.source.minify;
 
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import javax.swing.JEditorPane;
-import javax.swing.JOptionPane;
 import org.mozilla.javascript.EvaluatorException;
 import org.netbeans.api.lexer.TokenHierarchy;
 import org.netbeans.api.lexer.TokenSequence;
@@ -30,6 +30,7 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.cookies.EditorCookie;
 import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
@@ -48,7 +49,6 @@ import org.openide.util.actions.CookieAction;
 @NbBundle.Messages("CTL_JSONMinifyClipboard=Copy as Minified JSON")
 
 public final class JSONMinifyClipboard extends CookieAction {
-
     private final static RequestProcessor RP = new RequestProcessor("JSONMinifyClipboard", 1, true);
 
     @Override
@@ -68,7 +68,7 @@ public final class JSONMinifyClipboard extends CookieAction {
                     Toolkit.getDefaultToolkit().getSystemClipboard().
                             setContents(content, content);
                     return;
-                } catch (final Throwable e) {
+                } catch (final HeadlessException e) {
                     org.openide.ErrorManager.getDefault().notify(e);
                 }
             }
@@ -87,13 +87,12 @@ public final class JSONMinifyClipboard extends CookieAction {
             }
             MinifyUtil minifyUtil = new MinifyUtil();
             minifyUtil.compressJsonInternal(new StringReader(sb.toString()), out, minifyProperty);
-            // TODO: Adding notification to show the successful copied minifed json message.
-            JOptionPane.showMessageDialog(null, "Copied as minified JSON Source", "Copied", JOptionPane.INFORMATION_MESSAGE);
+
+            NotificationDisplayer.getDefault().notify("Successful copied", NotificationDisplayer.Priority.NORMAL.getIcon(), "Copied as minified JSON source", null);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         } catch (EvaluatorException ex) {
-            // TODO: Adding notification to show the invalid json source message.
-            JOptionPane.showMessageDialog(null, "Invalid JSON Source Selected \n " + ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+            NotificationDisplayer.getDefault().notify("Error: Copy process failed", NotificationDisplayer.Priority.HIGH.getIcon(), String.format("Invalid JSON Source Selected: \n %s", ex.getMessage()), null);
         }
         return out.toString();
     }
