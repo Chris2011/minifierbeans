@@ -20,7 +20,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.minify.ui.MinifyProperty;
@@ -28,6 +27,7 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
 import org.openide.util.Exceptions;
@@ -44,7 +44,6 @@ import org.openide.util.TaskListener;
 })
 @Messages("CTL_XMLMinify=Minify XML")
 public final class XMLMinify implements ActionListener {
-
     private final DataObject context;
 
     public XMLMinify(DataObject context) {
@@ -54,13 +53,14 @@ public final class XMLMinify implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-       execute(context,null,true);
+        execute(context, null, true);
     }
-    public static void execute(final DataObject context,final String content, final boolean notify) {
-         Runnable runnable = new Runnable() {
+
+    public static void execute(final DataObject context, final String content, final boolean notify) {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                xmlMinify(context,content,notify);
+                xmlMinify(context, content, notify);
             }
         };
         final RequestProcessor.Task theTask = RP.create(runnable);
@@ -75,12 +75,12 @@ public final class XMLMinify implements ActionListener {
         theTask.schedule(0);
     }
 
-    private static void xmlMinify(DataObject context ,String content, boolean notify) {
+    private static void xmlMinify(DataObject context, String content, boolean notify) {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         MinifyUtil util = new MinifyUtil();
         try {
             FileObject file = context.getPrimaryFile();
-            if(!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionXML(), minifyProperty.getSeparatorXML().toString())){
+            if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionXML(), minifyProperty.getSeparatorXML().toString())) {
                 String inputFilePath = file.getPath();
                 String outputFilePath;
 
@@ -97,11 +97,9 @@ public final class XMLMinify implements ActionListener {
                     minifyFileResult = util.compress(inputFilePath, "text/xml-mime", outputFilePath, minifyProperty);
                 }
                 if (minifyProperty.isEnableOutputLogAlert() && notify) {
-                    // TODO: Adding notification to show the successful xml minified message.
-                    JOptionPane.showMessageDialog(null, "XML Minified Completed Successfully\n"
-                            + "Input XML Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
-                            + "After Minifying XML Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
-                            + "XML Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+                    NotificationDisplayer.getDefault().notify("Successful XML minification", NotificationDisplayer.Priority.NORMAL.getIcon(), String.format("Input XML Files Size: %s Bytes \n"
+                            + "After Minifying XML Files Size: %s Bytes \n"
+                            + "XML Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
                 }
             }
         } catch (HeadlessException ex) {

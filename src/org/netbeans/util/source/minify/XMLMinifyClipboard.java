@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import javax.swing.JEditorPane;
-import javax.swing.JOptionPane;
 import org.mozilla.javascript.EvaluatorException;
 import org.netbeans.api.lexer.TokenHierarchy;
 import org.netbeans.api.lexer.TokenSequence;
@@ -31,18 +30,18 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.cookies.EditorCookie;
 import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
-import org.openide.util.RequestProcessor;
 import org.openide.util.Utilities;
 import org.openide.util.actions.CookieAction;
 
 @ActionID(
-    category = "Build",
-    id = "org.netbeans.util.source.minify.XMLMinifyClipboard"
+        category = "Build",
+        id = "org.netbeans.util.source.minify.XMLMinifyClipboard"
 )
 @ActionRegistration(displayName = "#CTL_XMLMinifyClipboard", lazy = true)
 @ActionReferences({
@@ -50,8 +49,6 @@ import org.openide.util.actions.CookieAction;
 })
 @NbBundle.Messages("CTL_XMLMinifyClipboard=Copy as Minified XML")
 public final class XMLMinifyClipboard extends CookieAction {
-    private final static RequestProcessor RP = new RequestProcessor("XMLMinifyClipboard", 1, true);
-
     @Override
     protected final void performAction(final Node[] activatedNodes) {
         xmlMinify(activatedNodes);
@@ -88,13 +85,12 @@ public final class XMLMinifyClipboard extends CookieAction {
             }
             MinifyUtil minifyUtil = new MinifyUtil();
             minifyUtil.compressXmlInternal(new StringReader(sb.toString()), out, minifyProperty);
-            // TODO: Adding notification to show the successfull copied minifed xml message.
-            JOptionPane.showMessageDialog(null, "Copied as minified XML Source", "Copied", JOptionPane.INFORMATION_MESSAGE);
+
+            NotificationDisplayer.getDefault().notify("Successful copied", NotificationDisplayer.Priority.NORMAL.getIcon(), "Copied as minified XML source.", null);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         } catch (EvaluatorException ex) {
-            // TODO: Adding notification to show the invalid xml source message.
-            JOptionPane.showMessageDialog(null, "Invalid XML Source Selected \n " + ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+            NotificationDisplayer.getDefault().notify("Error: Copy process failed", NotificationDisplayer.Priority.HIGH.getIcon(), String.format("Invalid XML Source Selected: \n %s", ex.getMessage()), null);
         }
 
         return out.toString();

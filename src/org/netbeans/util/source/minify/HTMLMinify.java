@@ -15,10 +15,11 @@
  */
 package org.netbeans.util.source.minify;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import javax.swing.JOptionPane;
+import java.io.IOException;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.minify.ui.MinifyProperty;
@@ -28,6 +29,7 @@ import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
@@ -43,7 +45,6 @@ import org.openide.util.TaskListener;
 })
 @Messages("CTL_HTMLMinify=Minify HTML")
 public final class HTMLMinify implements ActionListener {
-
     private final DataObject context;
 
     public HTMLMinify(DataObject context) {
@@ -53,14 +54,14 @@ public final class HTMLMinify implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-         execute(context,null,true);
+        execute(context, null, true);
     }
-    
-    public static void execute(final DataObject context,final String content, final boolean notify) {
+
+    public static void execute(final DataObject context, final String content, final boolean notify) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                htmlMinify(context,content,notify);
+                htmlMinify(context, content, notify);
             }
         };
         final RequestProcessor.Task theTask = RP.create(runnable);
@@ -75,12 +76,13 @@ public final class HTMLMinify implements ActionListener {
         theTask.schedule(0);
     }
 
-    private static void htmlMinify(DataObject context ,String content, boolean notify) {
+    private static void htmlMinify(DataObject context, String content, boolean notify) {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         MinifyUtil util = new MinifyUtil();
+
         try {
             FileObject file = context.getPrimaryFile();
-            if(!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionHTML(), minifyProperty.getSeparatorHTML().toString())){ 
+            if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionHTML(), minifyProperty.getSeparatorHTML().toString())) {
                 String inputFilePath = file.getPath();
                 String outputFilePath;
 
@@ -97,15 +99,14 @@ public final class HTMLMinify implements ActionListener {
                     minifyFileResult = util.compress(inputFilePath, "text/html", outputFilePath, minifyProperty);
                 }
                 if (minifyProperty.isEnableOutputLogAlert() && notify) {
-                    // TODO: Adding notification to show the successful html minify message.
-                    JOptionPane.showMessageDialog(null, "HTML Minified Completed Successfully\n"
-                            + "Input HTML Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
-                            + "After Minifying HTML Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
-                            + "HTML Space Saved " + minifyFileResult.getSavedPercentage() + "%");
-                } 
+                    NotificationDisplayer.getDefault().notify("Successful HTML minification", NotificationDisplayer.Priority.NORMAL.getIcon(), String.format("Input HTML Files Size: %s Bytes \n"
+                            + "After Minifying HTML Files Size: %s Bytes \n"
+                            + "HTML Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
+                }
             }
-            
-        } catch (Exception ex) {
+        } catch (HeadlessException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
     }

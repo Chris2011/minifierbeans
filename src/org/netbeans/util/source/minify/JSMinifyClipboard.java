@@ -20,7 +20,6 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import javax.swing.JEditorPane;
-import javax.swing.JOptionPane;
 import org.openide.cookies.EditorCookie;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
@@ -34,9 +33,9 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.util.Exceptions;
-import org.openide.util.RequestProcessor;
 import org.openide.util.Utilities;
 
 @ActionID(category = "Build",
@@ -47,9 +46,6 @@ import org.openide.util.Utilities;
 })
 @NbBundle.Messages("CTL_JSMinifyClipboard=Copy as Minified JS")
 public final class JSMinifyClipboard extends CookieAction {
-
-    private final static RequestProcessor RP = new RequestProcessor("JSMinifyClipboard", 1, true);
-
     @Override
     protected final void performAction(final Node[] activatedNodes) {
         jsMinify(activatedNodes);
@@ -93,8 +89,8 @@ public final class JSMinifyClipboard extends CookieAction {
             MinifyUtil minifyUtil = new MinifyUtil();
             oldContent = sb.toString();
             minifedString = minifyUtil.compressSelectedJavaScript(fileObject.getNameExt(), sb.toString(), minifyProperty);
-            // TODO: Adding notification to show the successful copied minifed js message.
-            JOptionPane.showMessageDialog(null, "Copied as minified JS Source", "Copied", JOptionPane.INFORMATION_MESSAGE);
+
+            NotificationDisplayer.getDefault().notify("Successful copied", NotificationDisplayer.Priority.NORMAL.getIcon(), "Copied as minified JS source.", null);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }

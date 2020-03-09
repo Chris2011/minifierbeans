@@ -20,7 +20,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.minify.ui.MinifyProperty;
@@ -30,6 +29,7 @@ import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
@@ -37,9 +37,9 @@ import org.openide.util.RequestProcessor;
 import org.openide.util.TaskListener;
 
 @ActionID(category = "Build",
-    id = "org.netbeans.util.source.minify.CSSMinify")
+        id = "org.netbeans.util.source.minify.CSSMinify")
 @ActionRegistration(iconBase = "org/netbeans/util/source/minify/compress.png",
-    displayName = "#CTL_CSSMinify")
+        displayName = "#CTL_CSSMinify")
 @ActionReferences({
     @ActionReference(path = "Loaders/text/css/Actions", position = 300, separatorBefore = 250, separatorAfter = 350)
 })
@@ -103,13 +103,14 @@ public final class CSSMinify implements ActionListener {
                 } else {
                     minifyFileResult = util.compress(inputFilePath, "text/css", outputFilePath, minifyProperty);
                 }
-                
+
                 if (minifyProperty.isEnableOutputLogAlert() && notify) {
-                    // TODO: Adding notification to show the successful css minification message.
-                    JOptionPane.showMessageDialog(null, "CSS Minified Completed Successfully\n"
-                            + "Input CSS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
-                            + "After Minifying CSS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
-                            + "CSS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+                    NotificationDisplayer.getDefault().notify("Successful CSS minification",
+                            NotificationDisplayer.Priority.NORMAL.getIcon(), String.format(
+                            "Input CSS Files Size: %s Bytes \n"
+                            + "CSS Minified Completed Successfully\n"
+                            + "After Minifying CSS Files Size: %s Bytes \n"
+                            + "CSS Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
                 }
             }
         } catch (HeadlessException ex) {

@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import javax.swing.JEditorPane;
-import javax.swing.JOptionPane;
 import org.mozilla.javascript.EvaluatorException;
 import org.openide.cookies.EditorCookie;
 import org.openide.nodes.Node;
@@ -36,6 +35,7 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.util.*;
 
 @ActionID(category = "Build",
@@ -47,8 +47,6 @@ import org.openide.util.*;
 @NbBundle.Messages("CTL_CSSMinifyClipboard=Copy as Minified CSS")
 
 public final class CSSMinifyClipboard extends CookieAction {
-    private final static RequestProcessor RP = new RequestProcessor("CSSMinifyClipboard", 1, true);
-
     @Override
     protected final void performAction(final Node[] activatedNodes) {
         cssMinify(activatedNodes);
@@ -75,28 +73,27 @@ public final class CSSMinifyClipboard extends CookieAction {
     private String selectedSourceAsMinify(final JEditorPane pane) {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         StringWriter out = new StringWriter();
-        
+
         try {
             final TokenSequence ts = TokenHierarchy.get(pane.getDocument()).tokenSequence();
             final StringBuilder sb = new StringBuilder();
-            
+
             ts.move(pane.getSelectionStart());
-            
+
             while (ts.moveNext() && ts.offset() < pane.getSelectionEnd()) {
                 sb.append(ts.token().text().toString());
             }
-            
+
             MinifyUtil minifyUtil = new MinifyUtil();
             minifyUtil.compressCssInternal(new StringReader(sb.toString()), out, minifyProperty);
-            // TODO: Adding notification to show the successful copied minified css message.
-            JOptionPane.showMessageDialog(null, "Copied as minified CSS Source", "Copied", JOptionPane.INFORMATION_MESSAGE);
+
+            NotificationDisplayer.getDefault().notify("Successful copied", NotificationDisplayer.Priority.NORMAL.getIcon(), "Copied as minified CSS source.", null);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         } catch (EvaluatorException ex) {
-            // TODO: Adding notification to show the invalid css source message.
-            JOptionPane.showMessageDialog(null, "Invalid CSS Source Selected \n " + ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+            NotificationDisplayer.getDefault().notify("Error: Copy process failed", NotificationDisplayer.Priority.HIGH.getIcon(), String.format("Invalid CSS Source Selected: \n %s", ex.getMessage()), null);
         }
-        
+
         return out.toString();
     }
 

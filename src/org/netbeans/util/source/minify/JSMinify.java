@@ -20,7 +20,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.minify.ui.MinifyProperty;
 import org.openide.loaders.DataObject;
@@ -29,6 +28,7 @@ import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
+import org.openide.awt.NotificationDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
@@ -103,11 +103,9 @@ public final class JSMinify implements ActionListener {
                 }
 
                 if (minifyProperty.isEnableOutputLogAlert() && notify) {
-                    // TODO: Adding notification to show the successful minifed js message.
-                    JOptionPane.showMessageDialog(null, "JS Minified Completed Successfully\n"
-                            + "Input JS Files Size : " + minifyFileResult.getInputFileSize() + "Bytes \n"
-                            + "After Minifying JS Files Size : " + minifyFileResult.getOutputFileSize() + "Bytes \n"
-                            + "JS Space Saved " + minifyFileResult.getSavedPercentage() + "%");
+                    NotificationDisplayer.getDefault().notify("Successful JS minification", NotificationDisplayer.Priority.NORMAL.getIcon(), String.format("Input JS Files Size: %s Bytes \n"
+                            + "After Minifying JS Files Size: %s Bytes \n"
+                            + "JS Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
                 }
             }
         } catch (HeadlessException ex) {
