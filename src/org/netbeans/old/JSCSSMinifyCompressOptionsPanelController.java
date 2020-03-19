@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.netbeans.minify.ui;
+package org.netbeans.old;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -23,14 +23,14 @@ import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 
-@NbBundle.Messages({"OptionsCategory_Name_JSCSSMinifyCompress=Minifier", "OptionsCategory_Keywords_JSCSSMinifyCompress=JS CSS Minify Compress"})
-@OptionsPanelController.SubRegistration(
-    location = "Html5",
-    id = "Minifier",
-    displayName = "#OptionsCategory_Name_JSCSSMinifyCompress",
-    keywords = "#OptionsCategory_Keywords_JSCSSMinifyCompress",
-    keywordsCategory = "JSCSSMinifyCompress"
-)
+//@NbBundle.Messages({"OptionsCategory_Name_JSCSSMinifyCompress=Minifier", "OptionsCategory_Keywords_JSCSSMinifyCompress=JS CSS Minify Compress"})
+//@OptionsPanelController.SubRegistration(
+//    location = "Html5",
+//    id = "Minifier",
+//    displayName = "#OptionsCategory_Name_JSCSSMinifyCompress",
+//    keywords = "#OptionsCategory_Keywords_JSCSSMinifyCompress",
+//    keywordsCategory = "JSCSSMinifyCompress"
+//)
 public final class JSCSSMinifyCompressOptionsPanelController extends OptionsPanelController {
 
     private JSCSSMinifyCompressCustomPanel panel;

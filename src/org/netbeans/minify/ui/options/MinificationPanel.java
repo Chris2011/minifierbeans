@@ -1,4 +1,4 @@
-package org.netbeans.minify.ui;
+package org.netbeans.minify.ui.options;
 
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -38,7 +38,7 @@ final class MinificationPanel extends javax.swing.JPanel implements TreeSelectio
 
         //Listen for when the selection changes.
         optionsTree.addTreeSelectionListener(this);
-        optionsTree.setSelectionRow(0);
+        optionsTree.setSelectionRow(1);
     }
 
     @Override
