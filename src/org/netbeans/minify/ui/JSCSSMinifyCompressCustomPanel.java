@@ -19,7 +19,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import org.netbeans.minify.cssnano.ui.options.CssNanoCliOptionsPanel;
 
 public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPanel {
 
@@ -27,9 +26,6 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
 
     JSCSSMinifyCompressCustomPanel(JSCSSMinifyCompressOptionsPanelController controller) {
         super(controller);
-
-        /* New CSSNano Settings */
-        cssNanoPanel.add(new CssNanoCliOptionsPanel());
 
         minifyProperty = MinifyProperty.getInstance();
 
