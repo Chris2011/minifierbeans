@@ -13,12 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.netbeans.minify.ui;
+package org.netbeans.old;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import org.netbeans.minify.ui.MinifyProperty;
 
 public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPanel {
 

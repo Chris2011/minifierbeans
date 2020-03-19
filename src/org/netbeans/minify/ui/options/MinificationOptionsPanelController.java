@@ -1,4 +1,4 @@
-package org.netbeans.minify.ui;
+package org.netbeans.minify.ui.options;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
