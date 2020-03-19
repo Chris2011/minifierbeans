@@ -45,7 +45,6 @@ class JSCSSMinifyCompressPanel extends javax.swing.JPanel {
         headerLabelJS1 = new javax.swing.JLabel();
         headerScrollPaneJS1 = new javax.swing.JScrollPane();
         headerEditorPaneJS1 = new javax.swing.JEditorPane();
-        cssNanoPanel = new javax.swing.JPanel();
         cssTabPanel = new javax.swing.JPanel();
         newCSSFile1 = new javax.swing.JCheckBox();
         preExtensionCSS_Label1 = new javax.swing.JLabel();
@@ -214,19 +213,6 @@ class JSCSSMinifyCompressPanel extends javax.swing.JPanel {
         );
 
         minifierTabPane.addTab(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.javaScriptTabPanel.TabConstraints.tabTitle"), javaScriptTabPanel); // NOI18N
-
-        javax.swing.GroupLayout cssNanoPanelLayout = new javax.swing.GroupLayout(cssNanoPanel);
-        cssNanoPanel.setLayout(cssNanoPanelLayout);
-        cssNanoPanelLayout.setHorizontalGroup(
-            cssNanoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 708, Short.MAX_VALUE)
-        );
-        cssNanoPanelLayout.setVerticalGroup(
-            cssNanoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 404, Short.MAX_VALUE)
-        );
-
-        minifierTabPane.addTab(org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.cssNanoPanel.TabConstraints.tabTitle"), cssNanoPanel); // NOI18N
 
         newCSSFile1.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(newCSSFile1, org.openide.util.NbBundle.getMessage(JSCSSMinifyCompressPanel.class, "JSCSSMinifyCompressPanel.newCSSFile1.text")); // NOI18N
@@ -774,7 +760,6 @@ class JSCSSMinifyCompressPanel extends javax.swing.JPanel {
     public javax.swing.JCheckBox buildJSMinify;
     public javax.swing.JCheckBox buildJSONMinify;
     public javax.swing.JCheckBox buildXMLMinify;
-    protected javax.swing.JPanel cssNanoPanel;
     private javax.swing.JPanel cssTabPanel;
     public javax.swing.JCheckBox enableOutputLogAlert;
     public javax.swing.JCheckBox enableShortKeyAction;
