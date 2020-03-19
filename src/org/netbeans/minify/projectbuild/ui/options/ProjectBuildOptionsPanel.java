@@ -54,113 +54,201 @@ public final class ProjectBuildOptionsPanel extends JPanel implements ChangeList
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        newXMLFile = new javax.swing.JCheckBox();
-        preExtensionXML_Label = new javax.swing.JLabel();
-        preExtensionXML = new javax.swing.JTextField();
-        autoMinifyXML = new javax.swing.JCheckBox();
-        extLabel = new javax.swing.JLabel();
-        headerLabelXML = new javax.swing.JLabel();
-        headerScrollPaneXML = new javax.swing.JScrollPane();
-        headerEditorPaneXML = new javax.swing.JEditorPane();
+        jLayeredPane8 = new javax.swing.JLayeredPane();
+        addLogToFile = new javax.swing.JCheckBox();
+        enableOutputLogAlert = new javax.swing.JCheckBox();
+        jLayeredPane10 = new javax.swing.JLayeredPane();
+        enableShortKeyAction = new javax.swing.JCheckBox();
+        enableShortKeyActionConfirmBox = new javax.swing.JCheckBox();
+        jPanel3 = new javax.swing.JPanel();
+        separatBuild = new javax.swing.JCheckBox();
+        jLabel7 = new javax.swing.JLabel();
+        buildJSMinify = new javax.swing.JCheckBox();
+        buildCSSMinify = new javax.swing.JCheckBox();
+        skipPreExtensionJS = new javax.swing.JCheckBox();
+        skipPreExtensionCSS = new javax.swing.JCheckBox();
+        jLabel6 = new javax.swing.JLabel();
+        buildHTMLMinify = new javax.swing.JCheckBox();
+        skipPreExtensionHTML = new javax.swing.JCheckBox();
+        buildXMLMinify = new javax.swing.JCheckBox();
+        skipPreExtensionXML = new javax.swing.JCheckBox();
+        buildJSONMinify = new javax.swing.JCheckBox();
+        skipPreExtensionJSON = new javax.swing.JCheckBox();
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 32, Short.MAX_VALUE)
-        );
+        jLayeredPane8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.jLayeredPane8.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(102, 102, 102))); // NOI18N
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(762, 86));
+        addLogToFile.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(addLogToFile, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.addLogToFile.text")); // NOI18N
+        addLogToFile.setOpaque(false);
+        jLayeredPane8.add(addLogToFile);
+        addLogToFile.setBounds(10, 20, 280, 24);
 
-        newXMLFile.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(newXMLFile, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "JsOptionsPanel.newJSFile.text")); // NOI18N
-        newXMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "JsOptionsPanel.newJSFile.toolTipText")); // NOI18N
-        newXMLFile.setOpaque(false);
+        enableOutputLogAlert.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(enableOutputLogAlert, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.enableOutputLogAlert.text")); // NOI18N
+        enableOutputLogAlert.setOpaque(false);
+        jLayeredPane8.add(enableOutputLogAlert);
+        enableOutputLogAlert.setBounds(10, 40, 390, 24);
 
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionXML_Label, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "JsOptionsPanel.preExtensionJS_Label.text")); // NOI18N
+        jLayeredPane10.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.jLayeredPane10.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(102, 102, 102))); // NOI18N
 
-        preExtensionXML.setText(org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "JsOptionsPanel.preExtensionJS.text")); // NOI18N
+        enableShortKeyAction.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(enableShortKeyAction, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.enableShortKeyAction.text")); // NOI18N
+        enableShortKeyAction.setOpaque(false);
+        jLayeredPane10.add(enableShortKeyAction);
+        enableShortKeyAction.setBounds(10, 20, 280, 20);
 
-        autoMinifyXML.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyXML, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text")); // NOI18N
-        autoMinifyXML.setOpaque(false);
+        enableShortKeyActionConfirmBox.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(enableShortKeyActionConfirmBox, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.enableShortKeyActionConfirmBox.text")); // NOI18N
+        enableShortKeyActionConfirmBox.setToolTipText(org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.enableShortKeyActionConfirmBox.toolTipText")); // NOI18N
+        enableShortKeyActionConfirmBox.setOpaque(false);
+        jLayeredPane10.add(enableShortKeyActionConfirmBox);
+        enableShortKeyActionConfirmBox.setBounds(10, 40, 343, 20);
 
-        extLabel.setForeground(extLabel.getForeground().darker());
-        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "JsOptionsPanel.extLabel.text")); // NOI18N
+        separatBuild.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(separatBuild, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.separatBuild.text")); // NOI18N
+        separatBuild.setToolTipText(org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.separatBuild.toolTipText")); // NOI18N
+        separatBuild.setActionCommand(org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.separatBuild.actionCommand")); // NOI18N
+        separatBuild.setOpaque(false);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel7, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.jLabel7.text")); // NOI18N
+
+        buildJSMinify.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(buildJSMinify, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.buildJSMinify.text")); // NOI18N
+        buildJSMinify.setOpaque(false);
+
+        buildCSSMinify.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(buildCSSMinify, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.buildCSSMinify.text")); // NOI18N
+        buildCSSMinify.setOpaque(false);
+
+        skipPreExtensionJS.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(skipPreExtensionJS, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.skipPreExtensionJS.text")); // NOI18N
+        skipPreExtensionJS.setToolTipText(org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.skipPreExtensionJS.toolTipText")); // NOI18N
+        skipPreExtensionJS.setOpaque(false);
+
+        skipPreExtensionCSS.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(skipPreExtensionCSS, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.skipPreExtensionCSS.text")); // NOI18N
+        skipPreExtensionCSS.setToolTipText(org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.skipPreExtensionCSS.toolTipText")); // NOI18N
+        skipPreExtensionCSS.setOpaque(false);
+
+        jLabel6.setForeground(new java.awt.Color(102, 102, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.jLabel6.text")); // NOI18N
+
+        buildHTMLMinify.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(buildHTMLMinify, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.buildHTMLMinify.text")); // NOI18N
+        buildHTMLMinify.setOpaque(false);
+
+        skipPreExtensionHTML.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(skipPreExtensionHTML, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.skipPreExtensionHTML.text")); // NOI18N
+        skipPreExtensionHTML.setToolTipText(org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.skipPreExtensionHTML.toolTipText")); // NOI18N
+        skipPreExtensionHTML.setOpaque(false);
+
+        buildXMLMinify.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(buildXMLMinify, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.buildXMLMinify.text")); // NOI18N
+        buildXMLMinify.setOpaque(false);
+
+        skipPreExtensionXML.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(skipPreExtensionXML, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.skipPreExtensionXML.text")); // NOI18N
+        skipPreExtensionXML.setToolTipText(org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.skipPreExtensionXML.toolTipText")); // NOI18N
+        skipPreExtensionXML.setOpaque(false);
+
+        buildJSONMinify.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(buildJSONMinify, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.buildJSONMinify.text")); // NOI18N
+        buildJSONMinify.setOpaque(false);
+
+        skipPreExtensionJSON.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(skipPreExtensionJSON, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.skipPreExtensionJSON.text")); // NOI18N
+        skipPreExtensionJSON.setToolTipText(org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "ProjectBuildOptionsPanel.skipPreExtensionJSON.toolTipText")); // NOI18N
+        skipPreExtensionJSON.setOpaque(false);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(newXMLFile)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(autoMinifyXML, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(preExtensionXML_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(preExtensionXML, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(separatBuild)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(extLabel)))
-                .addContainerGap(474, Short.MAX_VALUE))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(buildJSMinify, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(90, 90, 90)
+                        .addComponent(skipPreExtensionJS, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(buildCSSMinify, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)
+                        .addComponent(skipPreExtensionCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(buildHTMLMinify, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(skipPreExtensionHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(buildXMLMinify)
+                        .addGap(108, 108, 108)
+                        .addComponent(skipPreExtensionXML, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(buildJSONMinify, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(skipPreExtensionJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7))
+                .addContainerGap(236, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(preExtensionXML_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(extLabel)
-                    .addComponent(preExtensionXML, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addComponent(autoMinifyXML)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(newXMLFile)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(separatBuild)
+                    .addComponent(jLabel6))
+                .addGap(16, 16, 16)
+                .addComponent(jLabel7)
+                .addGap(7, 7, 7)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buildJSMinify)
+                    .addComponent(skipPreExtensionJS))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buildCSSMinify)
+                    .addComponent(skipPreExtensionCSS))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buildHTMLMinify)
+                    .addComponent(skipPreExtensionHTML))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buildXMLMinify)
+                    .addComponent(skipPreExtensionXML))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buildJSONMinify)
+                    .addComponent(skipPreExtensionJSON))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        org.openide.awt.Mnemonics.setLocalizedText(headerLabelXML, org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "JsOptionsPanel.headerLabelJS.text")); // NOI18N
-
-        headerEditorPaneXML.setToolTipText(org.openide.util.NbBundle.getMessage(ProjectBuildOptionsPanel.class, "JsOptionsPanel.headerEditorPaneJS.toolTipText")); // NOI18N
-        headerScrollPaneXML.setViewportView(headerEditorPaneXML);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(headerLabelXML)
-                    .addComponent(headerScrollPaneXML, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(429, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLayeredPane8)
+                    .addComponent(jLayeredPane10))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(headerLabelXML)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(headerScrollPaneXML, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLayeredPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLayeredPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -178,16 +266,26 @@ public final class ProjectBuildOptionsPanel extends JPanel implements ChangeList
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JCheckBox autoMinifyXML;
-    private javax.swing.JLabel extLabel;
-    protected javax.swing.JEditorPane headerEditorPaneXML;
-    private javax.swing.JLabel headerLabelXML;
-    private javax.swing.JScrollPane headerScrollPaneXML;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    public javax.swing.JCheckBox newXMLFile;
-    public javax.swing.JTextField preExtensionXML;
-    public javax.swing.JLabel preExtensionXML_Label;
+    public javax.swing.JCheckBox addLogToFile;
+    public javax.swing.JCheckBox buildCSSMinify;
+    public javax.swing.JCheckBox buildHTMLMinify;
+    public javax.swing.JCheckBox buildJSMinify;
+    public javax.swing.JCheckBox buildJSONMinify;
+    public javax.swing.JCheckBox buildXMLMinify;
+    public javax.swing.JCheckBox enableOutputLogAlert;
+    public javax.swing.JCheckBox enableShortKeyAction;
+    public javax.swing.JCheckBox enableShortKeyActionConfirmBox;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLayeredPane jLayeredPane10;
+    private javax.swing.JLayeredPane jLayeredPane8;
+    private javax.swing.JPanel jPanel3;
+    public javax.swing.JCheckBox separatBuild;
+    public javax.swing.JCheckBox skipPreExtensionCSS;
+    public javax.swing.JCheckBox skipPreExtensionHTML;
+    public javax.swing.JCheckBox skipPreExtensionJS;
+    public javax.swing.JCheckBox skipPreExtensionJSON;
+    public javax.swing.JCheckBox skipPreExtensionXML;
     // End of variables declaration//GEN-END:variables
 
     void fireChange() {
