@@ -79,20 +79,20 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
         jPanel2.setPreferredSize(new java.awt.Dimension(762, 86));
 
         newXMLFile.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(newXMLFile, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.newJSFile.text")); // NOI18N
-        newXMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.newJSFile.toolTipText")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(newXMLFile, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.newXMLFile.text")); // NOI18N
+        newXMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.newXMLFile.toolTipText")); // NOI18N
         newXMLFile.setOpaque(false);
 
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionXML_Label, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.preExtensionJS_Label.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(preExtensionXML_Label, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.preExtensionXML_Label.text")); // NOI18N
 
-        preExtensionXML.setText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.preExtensionJS.text")); // NOI18N
+        preExtensionXML.setText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.preExtensionXML.text")); // NOI18N
 
         autoMinifyXML.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyXML, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyXML, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.autoMinifyXML.text")); // NOI18N
         autoMinifyXML.setOpaque(false);
 
         extLabel.setForeground(extLabel.getForeground().darker());
-        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.extLabel.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.extLabel.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -127,9 +127,9 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        org.openide.awt.Mnemonics.setLocalizedText(headerLabelXML, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.headerLabelJS.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(headerLabelXML, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.headerLabelXML.text")); // NOI18N
 
-        headerEditorPaneXML.setToolTipText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.headerEditorPaneJS.toolTipText")); // NOI18N
+        headerEditorPaneXML.setToolTipText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.headerEditorPaneXML.toolTipText")); // NOI18N
         headerScrollPaneXML.setViewportView(headerEditorPaneXML);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

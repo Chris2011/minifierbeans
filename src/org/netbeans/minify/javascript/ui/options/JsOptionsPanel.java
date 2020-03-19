@@ -6,10 +6,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.ChangeSupport;
 
-@OptionsPanelController.Keywords(keywords = {"JavaScript", "Closure Compiler"}, location = "Html5/Minification", tabTitle = "JavaScript")
 public final class JsOptionsPanel extends JPanel implements ChangeListener {
     private static final long serialVersionUID = 1L;
     private final ChangeSupport changeSupport = new ChangeSupport(this);

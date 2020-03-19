@@ -10,13 +10,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.netbeans.minify.css.CssNanoCliExecutable;
 import org.netbeans.minify.css.FileUtils;
-import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.awt.StatusDisplayer;
 import org.openide.filesystems.FileChooserBuilder;
 import org.openide.util.ChangeSupport;
 import org.openide.util.NbBundle;
 
-@OptionsPanelController.Keywords(keywords = {"CSSNano"}, location = "Html5/Minification", tabTitle = "CSSNano CLI")
 public final class CssOptionsPanel extends JPanel implements ChangeListener{
     private static final long serialVersionUID = 1L;
     private final ChangeSupport changeSupport = new ChangeSupport(this);

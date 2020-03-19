@@ -6,10 +6,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.ChangeSupport;
 
-@OptionsPanelController.Keywords(keywords = {"JavaScript", "Closure Compiler"}, location = "Html5/Minification", tabTitle = "JavaScript")
 public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
     private static final long serialVersionUID = 1L;
     private final ChangeSupport changeSupport = new ChangeSupport(this);
@@ -67,7 +65,7 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
         buildInternalCSSMinify = new javax.swing.JCheckBox();
         headerLabelHTML = new javax.swing.JLabel();
         headerScrollPaneHTML = new javax.swing.JScrollPane();
-        headerEditorPaneJS = new javax.swing.JEditorPane();
+        headerEditorPaneHTML = new javax.swing.JEditorPane();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(0, 32));
 
@@ -85,44 +83,24 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
         jPanel2.setPreferredSize(new java.awt.Dimension(762, 86));
 
         newHTMLFile.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(newHTMLFile, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.newJSFile.text")); // NOI18N
-        newHTMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.newJSFile.toolTipText")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(newHTMLFile, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.newHTMLFile.text")); // NOI18N
+        newHTMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.newHTMLFile.toolTipText")); // NOI18N
         newHTMLFile.setOpaque(false);
-        newHTMLFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newHTMLFileActionPerformed(evt);
-            }
-        });
 
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionHTML_Label, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.preExtensionJS_Label.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(preExtensionHTML_Label, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.preExtensionHTML_Label.text")); // NOI18N
 
-        preExtensionHTML.setText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.preExtensionJS.text")); // NOI18N
-        preExtensionHTML.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                preExtensionHTMLActionPerformed(evt);
-            }
-        });
+        preExtensionHTML.setText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.preExtensionHTML.text")); // NOI18N
 
         autoMinifyHTML.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.autoMinifyHTML.text")); // NOI18N
         autoMinifyHTML.setOpaque(false);
-        autoMinifyHTML.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                autoMinifyHTMLActionPerformed(evt);
-            }
-        });
 
         extLabel.setForeground(extLabel.getForeground().darker());
-        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.extLabel.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.extLabel.text")); // NOI18N
 
         buildInternalJSMinify.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(buildInternalJSMinify, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.buildInternalJSMinify.text")); // NOI18N
         buildInternalJSMinify.setOpaque(false);
-        buildInternalJSMinify.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buildInternalJSMinifyActionPerformed(evt);
-            }
-        });
 
         buildInternalCSSMinify.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(buildInternalCSSMinify, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.buildInternalCSSMinify.text")); // NOI18N
@@ -170,10 +148,10 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        org.openide.awt.Mnemonics.setLocalizedText(headerLabelHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.headerLabelJS.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(headerLabelHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.headerLabelHTML.text")); // NOI18N
 
-        headerEditorPaneJS.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.headerEditorPaneJS.toolTipText")); // NOI18N
-        headerScrollPaneHTML.setViewportView(headerEditorPaneJS);
+        headerEditorPaneHTML.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.headerEditorPaneHTML.toolTipText")); // NOI18N
+        headerScrollPaneHTML.setViewportView(headerEditorPaneHTML);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -206,24 +184,6 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-//    @NbBundle.Messages("CssNanoCliOptionsPanel.browse.title=Select CSSNano CLI")
-//    @NbBundle.Messages("CssNanoCliOptionsPanel.executable.notFound=No CSSNano CLI executable found.")
-    private void newHTMLFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newHTMLFileActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_newHTMLFileActionPerformed
-
-    private void preExtensionHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preExtensionHTMLActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_preExtensionHTMLActionPerformed
-
-    private void autoMinifyHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoMinifyHTMLActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_autoMinifyHTMLActionPerformed
-
-    private void buildInternalJSMinifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buildInternalJSMinifyActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buildInternalJSMinifyActionPerformed
-
 //    void load() {
 //        String ngCli = NbPreferences.forModule(CssOptionsPanel.class).get("ngCliExecutableLocation", "");
 //        cssNanoCliPathTextField.setText(ngCli);
@@ -241,7 +201,7 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
     public javax.swing.JCheckBox buildInternalCSSMinify;
     public javax.swing.JCheckBox buildInternalJSMinify;
     private javax.swing.JLabel extLabel;
-    protected javax.swing.JEditorPane headerEditorPaneJS;
+    protected javax.swing.JEditorPane headerEditorPaneHTML;
     private javax.swing.JLabel headerLabelHTML;
     private javax.swing.JScrollPane headerScrollPaneHTML;
     private javax.swing.JPanel jPanel1;
