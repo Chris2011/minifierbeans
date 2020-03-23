@@ -27,136 +27,140 @@ public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPan
 
     JSCSSMinifyCompressCustomPanel(JSCSSMinifyCompressOptionsPanelController controller) {
         super(controller);
+        
+        /*-------- JS ----------*/
 
-        minifyProperty = MinifyProperty.getInstance();
-
-        newJSFile1.setSelected(minifyProperty.isNewJSFile());
-        preExtensionJS1.setEnabled(minifyProperty.isNewJSFile());
-        preExtensionJS_Label1.setEnabled(minifyProperty.isNewJSFile());
-        separatorJS1.setEnabled(minifyProperty.isNewJSFile());
-        separatorJS_Label1.setEnabled(minifyProperty.isNewJSFile());
-        skipPreExtensionJS.setEnabled(minifyProperty.isNewJSFile());
-        preExtensionJS1.setText(minifyProperty.getPreExtensionJS());
-        separatorJS1.setText(minifyProperty.getSeparatorJS().toString());
-
-        if (minifyProperty.isJsObfuscate()) {
-            this.jsObfuscate1.setSelected(Boolean.TRUE);
-        }
-
-        autoMinifyJS1.setSelected(minifyProperty.isAutoMinifyJS());
-        headerEditorPaneJS1.setText(minifyProperty.getHeaderJS());
-
-        headerEditorPaneJS1.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent fe) {
-            }
-
-            @Override
-            public void focusLost(FocusEvent fe) {
-                String text = headerEditorPaneJS1.getText();
-                if (text == null || text.trim().isEmpty()) {
-                    text = "";
-                    headerEditorPaneJS1.setText("");
-                } else {
-                    text = text.trim();
-                }
-                minifyProperty.setHeaderJS(text);
-            }
-        });
-        this.autoMinifyJS1.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    minifyProperty.setAutoMinifyJS(Boolean.TRUE);
-                } else {
-                    minifyProperty.setAutoMinifyJS(Boolean.FALSE);
-                }
-            }
-        });
-
-        this.newJSFile1.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    minifyProperty.setNewJSFile(Boolean.TRUE);
-                    minifyProperty.setPreExtensionJS("min");
-                    preExtensionJS1.setText("min");
-                    minifyProperty.setSeparatorJS('.');
-                    separatorJS1.setText(".");
-                    preExtensionJS1.setEnabled(Boolean.TRUE);
-                    preExtensionJS_Label1.setEnabled(Boolean.TRUE);
-                    separatorJS1.setEnabled(Boolean.TRUE);
-                    separatorJS_Label1.setEnabled(Boolean.TRUE);
-                    if (minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
-                        skipPreExtensionJS.setEnabled(Boolean.TRUE);
-                        minifyProperty.setSkipPreExtensionJS(Boolean.TRUE);
-                        skipPreExtensionJS.setSelected(Boolean.TRUE);
-                    }
-                } else {
-                    minifyProperty.setNewJSFile(Boolean.FALSE);
-                    preExtensionJS1.setEnabled(Boolean.FALSE);
-                    preExtensionJS_Label1.setEnabled(Boolean.FALSE);
-                    separatorJS1.setEnabled(Boolean.FALSE);
-                    separatorJS_Label1.setEnabled(Boolean.FALSE);
-                    skipPreExtensionJS.setEnabled(false);
-                    minifyProperty.setSkipPreExtensionJS(Boolean.FALSE);
-                    skipPreExtensionJS.setSelected(false);
-                }
-            }
-        });
-
-        this.preExtensionJS1.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent fe) {
-            }
-
-            @Override
-            public void focusLost(FocusEvent fe) {
-                String text = preExtensionJS1.getText();
-                if (text == null || text.trim().isEmpty()) {
-                    text = "min";
-                    preExtensionJS1.setText(text);
-                } else {
-                    text = text.trim();
-                }
-                minifyProperty.setPreExtensionJS(text);
-            }
-        });
-
-        this.separatorJS1.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent fe) {
-            }
-
-            @Override
-            public void focusLost(FocusEvent fe) {
-                String text = separatorJS1.getText();
-                if (text == null || text.trim().isEmpty()) {
-                    text = ".";
-                } else {
-                    text = String.valueOf(text.trim().charAt(0));
-                }
-                if (text.equals("<") || text.equals(">")
-                        || text.equals(":") || text.equals("/")
-                        || text.equals("\\") || text.equals("|")
-                        || text.equals("?") || text.equals("*")) {
-                    text = ".";
-                }
-                separatorJS1.setText(text);
-                minifyProperty.setSeparatorJS(text.charAt(0));
-            }
-        });
-
-        this.jsObfuscate1.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    minifyProperty.setJsObfuscate(Boolean.TRUE);
-                } else {
-                    minifyProperty.setJsObfuscate(Boolean.FALSE);
-                }
-            }
-        });
+//        minifyProperty = MinifyProperty.getInstance();
+//
+//        newJSFile1.setSelected(minifyProperty.isNewJSFile());
+//        preExtensionJS1.setEnabled(minifyProperty.isNewJSFile());
+//        preExtensionJS_Label1.setEnabled(minifyProperty.isNewJSFile());
+//        separatorJS1.setEnabled(minifyProperty.isNewJSFile());
+//        separatorJS_Label1.setEnabled(minifyProperty.isNewJSFile());
+//        skipPreExtensionJS.setEnabled(minifyProperty.isNewJSFile());
+//        preExtensionJS1.setText(minifyProperty.getPreExtensionJS());
+//        separatorJS1.setText(minifyProperty.getSeparatorJS().toString());
+//
+//        if (minifyProperty.isJsObfuscate()) {
+//            this.jsObfuscate1.setSelected(Boolean.TRUE);
+//        }
+//
+//        autoMinifyJS1.setSelected(minifyProperty.isAutoMinifyJS());
+//        headerEditorPaneJS1.setText(minifyProperty.getHeaderJS());
+//
+//        headerEditorPaneJS1.addFocusListener(new FocusListener() {
+//            @Override
+//            public void focusGained(FocusEvent fe) {
+//            }
+//
+//            @Override
+//            public void focusLost(FocusEvent fe) {
+//                String text = headerEditorPaneJS1.getText();
+//                if (text == null || text.trim().isEmpty()) {
+//                    text = "";
+//                    headerEditorPaneJS1.setText("");
+//                } else {
+//                    text = text.trim();
+//                }
+//                minifyProperty.setHeaderJS(text);
+//            }
+//        });
+//        this.autoMinifyJS1.addItemListener(new ItemListener() {
+//            @Override
+//            public void itemStateChanged(ItemEvent e) {
+//                if (e.getStateChange() == ItemEvent.SELECTED) {
+//                    minifyProperty.setAutoMinifyJS(Boolean.TRUE);
+//                } else {
+//                    minifyProperty.setAutoMinifyJS(Boolean.FALSE);
+//                }
+//            }
+//        });
+//
+//        this.newJSFile1.addItemListener(new ItemListener() {
+//            @Override
+//            public void itemStateChanged(ItemEvent e) {
+//                if (e.getStateChange() == ItemEvent.SELECTED) {
+//                    minifyProperty.setNewJSFile(Boolean.TRUE);
+//                    minifyProperty.setPreExtensionJS("min");
+//                    preExtensionJS1.setText("min");
+//                    minifyProperty.setSeparatorJS('.');
+//                    separatorJS1.setText(".");
+//                    preExtensionJS1.setEnabled(Boolean.TRUE);
+//                    preExtensionJS_Label1.setEnabled(Boolean.TRUE);
+//                    separatorJS1.setEnabled(Boolean.TRUE);
+//                    separatorJS_Label1.setEnabled(Boolean.TRUE);
+//                    if (minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
+//                        skipPreExtensionJS.setEnabled(Boolean.TRUE);
+//                        minifyProperty.setSkipPreExtensionJS(Boolean.TRUE);
+//                        skipPreExtensionJS.setSelected(Boolean.TRUE);
+//                    }
+//                } else {
+//                    minifyProperty.setNewJSFile(Boolean.FALSE);
+//                    preExtensionJS1.setEnabled(Boolean.FALSE);
+//                    preExtensionJS_Label1.setEnabled(Boolean.FALSE);
+//                    separatorJS1.setEnabled(Boolean.FALSE);
+//                    separatorJS_Label1.setEnabled(Boolean.FALSE);
+//                    skipPreExtensionJS.setEnabled(false);
+//                    minifyProperty.setSkipPreExtensionJS(Boolean.FALSE);
+//                    skipPreExtensionJS.setSelected(false);
+//                }
+//            }
+//        });
+//
+//        this.preExtensionJS1.addFocusListener(new FocusListener() {
+//            @Override
+//            public void focusGained(FocusEvent fe) {
+//            }
+//
+//            @Override
+//            public void focusLost(FocusEvent fe) {
+//                String text = preExtensionJS1.getText();
+//                if (text == null || text.trim().isEmpty()) {
+//                    text = "min";
+//                    preExtensionJS1.setText(text);
+//                } else {
+//                    text = text.trim();
+//                }
+//                minifyProperty.setPreExtensionJS(text);
+//            }
+//        });
+//
+//        this.separatorJS1.addFocusListener(new FocusListener() {
+//            @Override
+//            public void focusGained(FocusEvent fe) {
+//            }
+//
+//            @Override
+//            public void focusLost(FocusEvent fe) {
+//                String text = separatorJS1.getText();
+//                if (text == null || text.trim().isEmpty()) {
+//                    text = ".";
+//                } else {
+//                    text = String.valueOf(text.trim().charAt(0));
+//                }
+//                if (text.equals("<") || text.equals(">")
+//                        || text.equals(":") || text.equals("/")
+//                        || text.equals("\\") || text.equals("|")
+//                        || text.equals("?") || text.equals("*")) {
+//                    text = ".";
+//                }
+//                separatorJS1.setText(text);
+//                minifyProperty.setSeparatorJS(text.charAt(0));
+//            }
+//        });
+//
+//        this.jsObfuscate1.addItemListener(new ItemListener() {
+//            @Override
+//            public void itemStateChanged(ItemEvent e) {
+//                if (e.getStateChange() == ItemEvent.SELECTED) {
+//                    minifyProperty.setJsObfuscate(Boolean.TRUE);
+//                } else {
+//                    minifyProperty.setJsObfuscate(Boolean.FALSE);
+//                }
+//            }
+//        });
+        
+        /*-------- CSS ----------*/
 
         newCSSFile1.setSelected(minifyProperty.isNewCSSFile());
         preExtensionCSS1.setEnabled(minifyProperty.isNewCSSFile());

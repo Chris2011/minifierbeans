@@ -1,14 +1,24 @@
 package org.netbeans.minify.javascript.ui.options;
 
 import java.awt.EventQueue;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import org.netbeans.api.project.Project;
+import org.netbeans.minify.project.ui.options.ProjectOptionsPanel;
+import org.netbeans.minify.ui.MinifyProperty;
 import org.openide.util.ChangeSupport;
 
 public final class JsOptionsPanel extends JPanel implements ChangeListener {
+
+    private MinifyProperty minifyProperty;
+
     private static final long serialVersionUID = 1L;
     private final ChangeSupport changeSupport = new ChangeSupport(this);
 
@@ -21,8 +31,145 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
     }
 
     private void init() {
-        DocumentListener defaultDocumentListener = new DefaultDocumentListener();
+//        DocumentListener defaultDocumentListener = new DefaultDocumentListener();
 //        cssNanoCliPathTextField.getDocument().addDocumentListener(defaultDocumentListener);
+
+        minifyProperty = MinifyProperty.getInstance();
+
+        newJSFile.setSelected(minifyProperty.isNewJSFile());
+        preExtensionJS.setEnabled(minifyProperty.isNewJSFile());
+        preExtensionJS_Label.setEnabled(minifyProperty.isNewJSFile());
+//        separatorJS.setEnabled(minifyProperty.isNewJSFile());
+//        separatorJS_Label.setEnabled(minifyProperty.isNewJSFile());
+        ProjectOptionsPanel.setSkipPreExtensionJsEnabled(minifyProperty.isNewJSFile());
+//        skipPreExtensionJS.setEnabled(minifyProperty.isNewJSFile());
+//        minifyProperty.setSkipPreExtensionJS(minifyProperty.isNewJSFile());
+        preExtensionJS.setText(minifyProperty.getPreExtensionJS());
+//        separatorJS.setText(minifyProperty.getSeparatorJS().toString());
+
+        if (minifyProperty.isJsObfuscate()) {
+            this.jsObfuscate.setSelected(Boolean.TRUE);
+        }
+
+        autoMinifyJS.setSelected(minifyProperty.isAutoMinifyJS());
+        headerEditorPaneJS.setText(minifyProperty.getHeaderJS());
+
+        headerEditorPaneJS.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = headerEditorPaneJS.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = "";
+                    headerEditorPaneJS.setText("");
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setHeaderJS(text);
+            }
+        });
+        this.autoMinifyJS.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setAutoMinifyJS(Boolean.TRUE);
+                } else {
+                    minifyProperty.setAutoMinifyJS(Boolean.FALSE);
+                }
+            }
+        });
+
+        this.newJSFile.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setNewJSFile(Boolean.TRUE);
+                    minifyProperty.setPreExtensionJS(".min");
+                    preExtensionJS.setText(".min");
+//                    minifyProperty.setSeparatorJS('.');
+//                    separatorJS.setText(".");
+                    preExtensionJS.setEnabled(Boolean.TRUE);
+                    preExtensionJS_Label.setEnabled(Boolean.TRUE);
+//                    separatorJS.setEnabled(Boolean.TRUE);
+//                    separatorJS_Label.setEnabled(Boolean.TRUE);
+                    if (minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
+//                        skipPreExtensionJS.setEnabled(Boolean.TRUE);
+                        ProjectOptionsPanel.setSkipPreExtensionJsEnabled(Boolean.TRUE);
+                        minifyProperty.setSkipPreExtensionJS(true);
+//                        skipPreExtensionJS.setSelected(Boolean.TRUE);
+                        ProjectOptionsPanel.setSkipPreExtensionJsSelected(true);
+                    }
+                } else {
+                    minifyProperty.setNewJSFile(Boolean.FALSE);
+                    preExtensionJS.setEnabled(Boolean.FALSE);
+                    preExtensionJS_Label.setEnabled(Boolean.FALSE);
+//                    separatorJS.setEnabled(Boolean.FALSE);
+//                    separatorJS_Label.setEnabled(Boolean.FALSE);
+//                    skipPreExtensionJS.setEnabled(false);
+                    ProjectOptionsPanel.setSkipPreExtensionJsEnabled(false);
+
+                    minifyProperty.setSkipPreExtensionJS(Boolean.FALSE);
+//                    skipPreExtensionJS.setSelected(false);
+                    ProjectOptionsPanel.setSkipPreExtensionJsSelected(false);
+                }
+            }
+        });
+
+        this.preExtensionJS.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = preExtensionJS.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = ".min";
+                    preExtensionJS.setText(text);
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setPreExtensionJS(text);
+            }
+
+        });
+
+//        this.separatorJS.addFocusListener(new FocusListener() {
+//            @Override
+//            public void focusGained(FocusEvent fe) {
+//            }
+//
+//            @Override
+//            public void focusLost(FocusEvent fe) {
+//                String text = separatorJS.getText();
+//                if (text == null || text.trim().isEmpty()) {
+//                    text = ".";
+//                } else {
+//                    text = String.valueOf(text.trim().charAt(0));
+//                }
+//                if (text.equals("<") || text.equals(">")
+//                        || text.equals(":") || text.equals("/")
+//                        || text.equals("\\") || text.equals("|")
+//                        || text.equals("?") || text.equals("*")) {
+//                    text = ".";
+//                }
+//                separatorJS.setText(text);
+//                minifyProperty.setSeparatorJS(text.charAt(0));
+//            }
+//        });
+        this.jsObfuscate.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setJsObfuscate(Boolean.TRUE);
+                } else {
+                    minifyProperty.setJsObfuscate(Boolean.FALSE);
+                }
+            }
+        });
     }
 
     public static JsOptionsPanel create() {
@@ -83,29 +230,14 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
         org.openide.awt.Mnemonics.setLocalizedText(newJSFile, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.newJSFile.text")); // NOI18N
         newJSFile.setToolTipText(org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.newJSFile.toolTipText")); // NOI18N
         newJSFile.setOpaque(false);
-        newJSFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newJSFileActionPerformed(evt);
-            }
-        });
 
         org.openide.awt.Mnemonics.setLocalizedText(preExtensionJS_Label, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.preExtensionJS_Label.text")); // NOI18N
 
         preExtensionJS.setText(org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.preExtensionJS.text")); // NOI18N
-        preExtensionJS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                preExtensionJSActionPerformed(evt);
-            }
-        });
 
         autoMinifyJS.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(autoMinifyJS, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text")); // NOI18N
         autoMinifyJS.setOpaque(false);
-        autoMinifyJS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                autoMinifyJSActionPerformed(evt);
-            }
-        });
 
         extLabel.setForeground(extLabel.getForeground().darker());
         org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.extLabel.text")); // NOI18N
@@ -113,11 +245,6 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
         jsObfuscate.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(jsObfuscate, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.jsObfuscate.text")); // NOI18N
         jsObfuscate.setOpaque(false);
-        jsObfuscate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jsObfuscateActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -195,31 +322,14 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-//    @NbBundle.Messages("CssNanoCliOptionsPanel.browse.title=Select CSSNano CLI")
-//    @NbBundle.Messages("CssNanoCliOptionsPanel.executable.notFound=No CSSNano CLI executable found.")
-    private void newJSFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newJSFileActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_newJSFileActionPerformed
+    void load() {
+        minifyProperty.load();
+    }
 
-    private void preExtensionJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preExtensionJSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_preExtensionJSActionPerformed
+    void store() {
+        minifyProperty.store();
+    }
 
-    private void autoMinifyJSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoMinifyJSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_autoMinifyJSActionPerformed
-
-    private void jsObfuscateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsObfuscateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jsObfuscateActionPerformed
-
-//    void load() {
-//        String ngCli = NbPreferences.forModule(CssOptionsPanel.class).get("ngCliExecutableLocation", "");
-//        cssNanoCliPathTextField.setText(ngCli);
-//    }
-//    void store() {
-//        NbPreferences.forModule(CssOptionsPanel.class).put("ngCliExecutableLocation", cssNanoCliPathTextField.getText());
-//    }
     boolean valid() {
         // TODO check whether form is consistent and complete
         return true;
