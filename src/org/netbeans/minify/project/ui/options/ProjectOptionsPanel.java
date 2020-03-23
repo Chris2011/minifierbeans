@@ -39,20 +39,44 @@ public final class ProjectOptionsPanel extends JPanel implements ChangeListener 
         changeSupport.removeChangeListener(listener);
     }
     
-    public static void setSkipPreExtensionJs(boolean value) {
+    public static void setSkipPreExtensionJsEnabled(boolean value) {
         skipPreExtensionJS.setEnabled(value);
     }
-    public static void setSkipPreExtensionCss(boolean value) {
+    
+    public static void setSkipPreExtensionJsSelected(boolean value) {
+        skipPreExtensionJS.setSelected(value);
+    }
+
+    public static void setSkipPreExtensionCssEnabled(boolean value) {
         skipPreExtensionCSS.setEnabled(value);
     }
-    public static void setSkipPreExtensionHtml(boolean value) {
+
+    public static void setSkipPreExtensionCssSelected(boolean value) {
+        skipPreExtensionCSS.setSelected(value);
+    }
+
+    public static void setSkipPreExtensionHtmlEnabled(boolean value) {
         skipPreExtensionHTML.setEnabled(value);
     }
-    public static void setSkipPreExtensionXml(boolean value) {
+
+    public static void setSkipPreExtensionHtmlSelected(boolean value) {
+        skipPreExtensionHTML.setSelected(value);
+    }
+
+    public static void setSkipPreExtensionXmlEnabled(boolean value) {
         skipPreExtensionXML.setEnabled(value);
     }
-    public static void setSkipPreExtensionJson(boolean value) {
+
+    public static void setSkipPreExtensionXmlSelected(boolean value) {
+        skipPreExtensionXML.setSelected(value);
+    }
+
+    public static void setSkipPreExtensionJsonEnabled(boolean value) {
         skipPreExtensionJSON.setEnabled(value);
+    }
+
+    public static void setSkipPreExtensionJsonSelected(boolean value) {
+        skipPreExtensionJSON.setSelected(value);
     }
 
 //    public String getCssNanoCli() {
