@@ -39,45 +39,45 @@ public final class ProjectOptionsPanel extends JPanel implements ChangeListener 
         changeSupport.removeChangeListener(listener);
     }
     
-    public static void setSkipPreExtensionJsEnabled(boolean value) {
-        skipPreExtensionJS.setEnabled(value);
-    }
-    
-    public static void setSkipPreExtensionJsSelected(boolean value) {
-        skipPreExtensionJS.setSelected(value);
-    }
-
-    public static void setSkipPreExtensionCssEnabled(boolean value) {
-        skipPreExtensionCSS.setEnabled(value);
-    }
-
-    public static void setSkipPreExtensionCssSelected(boolean value) {
-        skipPreExtensionCSS.setSelected(value);
-    }
-
-    public static void setSkipPreExtensionHtmlEnabled(boolean value) {
-        skipPreExtensionHTML.setEnabled(value);
-    }
-
-    public static void setSkipPreExtensionHtmlSelected(boolean value) {
-        skipPreExtensionHTML.setSelected(value);
-    }
-
-    public static void setSkipPreExtensionXmlEnabled(boolean value) {
-        skipPreExtensionXML.setEnabled(value);
-    }
-
-    public static void setSkipPreExtensionXmlSelected(boolean value) {
-        skipPreExtensionXML.setSelected(value);
-    }
-
-    public static void setSkipPreExtensionJsonEnabled(boolean value) {
-        skipPreExtensionJSON.setEnabled(value);
-    }
-
-    public static void setSkipPreExtensionJsonSelected(boolean value) {
-        skipPreExtensionJSON.setSelected(value);
-    }
+//    public static void setSkipPreExtensionJsEnabled(boolean value) {
+//        skipPreExtensionJS.setEnabled(value);
+//    }
+//    
+//    public static void setSkipPreExtensionJsSelected(boolean value) {
+//        skipPreExtensionJS.setSelected(value);
+//    }
+//
+//    public static void setSkipPreExtensionCssEnabled(boolean value) {
+//        skipPreExtensionCSS.setEnabled(value);
+//    }
+//
+//    public static void setSkipPreExtensionCssSelected(boolean value) {
+//        skipPreExtensionCSS.setSelected(value);
+//    }
+//
+//    public static void setSkipPreExtensionHtmlEnabled(boolean value) {
+//        skipPreExtensionHTML.setEnabled(value);
+//    }
+//
+//    public static void setSkipPreExtensionHtmlSelected(boolean value) {
+//        skipPreExtensionHTML.setSelected(value);
+//    }
+//
+//    public static void setSkipPreExtensionXmlEnabled(boolean value) {
+//        skipPreExtensionXML.setEnabled(value);
+//    }
+//
+//    public static void setSkipPreExtensionXmlSelected(boolean value) {
+//        skipPreExtensionXML.setSelected(value);
+//    }
+//
+//    public static void setSkipPreExtensionJsonEnabled(boolean value) {
+//        skipPreExtensionJSON.setEnabled(value);
+//    }
+//
+//    public static void setSkipPreExtensionJsonSelected(boolean value) {
+//        skipPreExtensionJSON.setSelected(value);
+//    }
 
 //    public String getCssNanoCli() {
 //        return cssNanoCliPathTextField.getText();
@@ -142,7 +142,7 @@ public final class ProjectOptionsPanel extends JPanel implements ChangeListener 
         enableShortKeyActionConfirmBox.setToolTipText(org.openide.util.NbBundle.getMessage(ProjectOptionsPanel.class, "ProjectOptionsPanel.enableShortKeyActionConfirmBox.toolTipText")); // NOI18N
         enableShortKeyActionConfirmBox.setOpaque(false);
         jLayeredPane10.add(enableShortKeyActionConfirmBox);
-        enableShortKeyActionConfirmBox.setBounds(10, 40, 337, 20);
+        enableShortKeyActionConfirmBox.setBounds(10, 40, 350, 20);
 
         separatBuild.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(separatBuild, org.openide.util.NbBundle.getMessage(ProjectOptionsPanel.class, "ProjectOptionsPanel.separatBuild.text")); // NOI18N
@@ -206,11 +206,11 @@ public final class ProjectOptionsPanel extends JPanel implements ChangeListener 
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(separatBuild)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(6, 6, 6)
                         .addComponent(jLabel6))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(buildJSMinify, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -233,12 +233,12 @@ public final class ProjectOptionsPanel extends JPanel implements ChangeListener 
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(skipPreExtensionXML, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(skipPreExtensionJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addGap(6, 6, 6))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(separatBuild)
                     .addComponent(jLabel6))
@@ -272,19 +272,19 @@ public final class ProjectOptionsPanel extends JPanel implements ChangeListener 
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLayeredPane8)
                     .addComponent(jLayeredPane10))
-                .addContainerGap())
+                .addGap(6, 6, 6))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(6, 6, 6)
                 .addComponent(jLayeredPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLayeredPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -320,11 +320,11 @@ public final class ProjectOptionsPanel extends JPanel implements ChangeListener 
     private javax.swing.JLayeredPane jLayeredPane8;
     private javax.swing.JPanel jPanel3;
     public javax.swing.JCheckBox separatBuild;
-    public static javax.swing.JCheckBox skipPreExtensionCSS;
-    public static javax.swing.JCheckBox skipPreExtensionHTML;
-    public static javax.swing.JCheckBox skipPreExtensionJS;
-    public static javax.swing.JCheckBox skipPreExtensionJSON;
-    public static javax.swing.JCheckBox skipPreExtensionXML;
+    public javax.swing.JCheckBox skipPreExtensionCSS;
+    public javax.swing.JCheckBox skipPreExtensionHTML;
+    public javax.swing.JCheckBox skipPreExtensionJS;
+    public javax.swing.JCheckBox skipPreExtensionJSON;
+    public javax.swing.JCheckBox skipPreExtensionXML;
     // End of variables declaration//GEN-END:variables
 
     void fireChange() {
