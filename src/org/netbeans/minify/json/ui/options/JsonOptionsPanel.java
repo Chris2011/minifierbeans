@@ -56,14 +56,14 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        newXMLFile = new javax.swing.JCheckBox();
-        preExtensionXML_Label = new javax.swing.JLabel();
-        preExtensionXML = new javax.swing.JTextField();
-        autoMinifyXML = new javax.swing.JCheckBox();
+        newJSONFile = new javax.swing.JCheckBox();
+        preExtensionJSON_Label = new javax.swing.JLabel();
+        preExtensionJSON = new javax.swing.JTextField();
+        autoMinifyJSON = new javax.swing.JCheckBox();
         extLabel = new javax.swing.JLabel();
-        headerLabelXML = new javax.swing.JLabel();
-        headerScrollPaneXML = new javax.swing.JScrollPane();
-        headerEditorPaneXML = new javax.swing.JEditorPane();
+        headerLabelJSON = new javax.swing.JLabel();
+        headerScrollPaneJSON = new javax.swing.JScrollPane();
+        headerEditorPaneJSON = new javax.swing.JEditorPane();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -78,18 +78,18 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
 
         jPanel2.setPreferredSize(new java.awt.Dimension(762, 86));
 
-        newXMLFile.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(newXMLFile, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.newJSFile.text")); // NOI18N
-        newXMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.newJSFile.toolTipText")); // NOI18N
-        newXMLFile.setOpaque(false);
+        newJSONFile.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(newJSONFile, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.newJSFile.text")); // NOI18N
+        newJSONFile.setToolTipText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.newJSFile.toolTipText")); // NOI18N
+        newJSONFile.setOpaque(false);
 
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionXML_Label, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.preExtensionJS_Label.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(preExtensionJSON_Label, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.preExtensionJS_Label.text")); // NOI18N
 
-        preExtensionXML.setText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.preExtensionJS.text")); // NOI18N
+        preExtensionJSON.setText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.preExtensionJS.text")); // NOI18N
 
-        autoMinifyXML.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyXML, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text")); // NOI18N
-        autoMinifyXML.setOpaque(false);
+        autoMinifyJSON.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyJSON, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text")); // NOI18N
+        autoMinifyJSON.setOpaque(false);
 
         extLabel.setForeground(extLabel.getForeground().darker());
         org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.extLabel.text")); // NOI18N
@@ -101,13 +101,13 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(newXMLFile)
+                    .addComponent(newJSONFile)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(autoMinifyXML, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(preExtensionXML_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(autoMinifyJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(preExtensionJSON_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(preExtensionXML, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(preExtensionJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(extLabel)))
                 .addContainerGap(474, Short.MAX_VALUE))
@@ -117,20 +117,20 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(preExtensionXML_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(preExtensionJSON_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(extLabel)
-                    .addComponent(preExtensionXML, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(preExtensionJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
-                .addComponent(autoMinifyXML)
+                .addComponent(autoMinifyJSON)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(newXMLFile)
+                .addComponent(newJSONFile)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        org.openide.awt.Mnemonics.setLocalizedText(headerLabelXML, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.headerLabelJS.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(headerLabelJSON, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.headerLabelJS.text")); // NOI18N
 
-        headerEditorPaneXML.setToolTipText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.headerEditorPaneJS.toolTipText")); // NOI18N
-        headerScrollPaneXML.setViewportView(headerEditorPaneXML);
+        headerEditorPaneJSON.setToolTipText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.headerEditorPaneJS.toolTipText")); // NOI18N
+        headerScrollPaneJSON.setViewportView(headerEditorPaneJSON);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -146,8 +146,8 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(headerLabelXML)
-                    .addComponent(headerScrollPaneXML, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(headerLabelJSON)
+                    .addComponent(headerScrollPaneJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(429, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -158,9 +158,9 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(headerLabelXML)
+                .addComponent(headerLabelJSON)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(headerScrollPaneXML, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(headerScrollPaneJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -178,16 +178,16 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JCheckBox autoMinifyXML;
+    public javax.swing.JCheckBox autoMinifyJSON;
     private javax.swing.JLabel extLabel;
-    protected javax.swing.JEditorPane headerEditorPaneXML;
-    private javax.swing.JLabel headerLabelXML;
-    private javax.swing.JScrollPane headerScrollPaneXML;
+    protected javax.swing.JEditorPane headerEditorPaneJSON;
+    private javax.swing.JLabel headerLabelJSON;
+    private javax.swing.JScrollPane headerScrollPaneJSON;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    public javax.swing.JCheckBox newXMLFile;
-    public javax.swing.JTextField preExtensionXML;
-    public javax.swing.JLabel preExtensionXML_Label;
+    public javax.swing.JCheckBox newJSONFile;
+    public javax.swing.JTextField preExtensionJSON;
+    public javax.swing.JLabel preExtensionJSON_Label;
     // End of variables declaration//GEN-END:variables
 
     void fireChange() {
