@@ -79,57 +79,60 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
         jPanel2.setPreferredSize(new java.awt.Dimension(762, 86));
 
         newXMLFile.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(newXMLFile, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.newXMLFile.text")); // NOI18N
-        newXMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.newXMLFile.toolTipText")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(newXMLFile, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.newJSFile.text")); // NOI18N
+        newXMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.newJSFile.toolTipText")); // NOI18N
         newXMLFile.setOpaque(false);
 
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionXML_Label, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.preExtensionXML_Label.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(preExtensionXML_Label, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.preExtensionJS_Label.text")); // NOI18N
 
-        preExtensionXML.setText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.preExtensionXML.text")); // NOI18N
+        preExtensionXML.setText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.preExtensionJS.text")); // NOI18N
 
         autoMinifyXML.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyXML, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.autoMinifyXML.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyXML, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text")); // NOI18N
         autoMinifyXML.setOpaque(false);
 
         extLabel.setForeground(extLabel.getForeground().darker());
-        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.extLabel.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.extLabel.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(newXMLFile)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(autoMinifyXML, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(preExtensionXML_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(6, 6, 6)
+                        .addComponent(newXMLFile))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(autoMinifyXML, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(preExtensionXML_Label)
+                        .addGap(6, 6, 6)
                         .addComponent(preExtensionXML, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(extLabel)))
-                .addContainerGap(474, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
+                .addComponent(autoMinifyXML)
+                .addGap(6, 6, 6)
+                .addComponent(newXMLFile)
+                .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(preExtensionXML_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(extLabel)
                     .addComponent(preExtensionXML, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addComponent(autoMinifyXML)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(newXMLFile)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        org.openide.awt.Mnemonics.setLocalizedText(headerLabelXML, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.headerLabelXML.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(headerLabelXML, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.headerLabelJS.text")); // NOI18N
 
-        headerEditorPaneXML.setToolTipText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.headerEditorPaneXML.toolTipText")); // NOI18N
+        headerEditorPaneXML.setToolTipText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "JsOptionsPanel.headerEditorPaneJS.toolTipText")); // NOI18N
         headerScrollPaneXML.setViewportView(headerEditorPaneXML);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -137,32 +140,33 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(headerLabelXML)
                     .addComponent(headerScrollPaneXML, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(429, Short.MAX_VALUE))
+                .addGap(6, 6, 6))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(6, 6, 6))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(headerLabelXML)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(headerScrollPaneXML, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel2.getAccessibleContext().setAccessibleName(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.jPanel2.AccessibleContext.accessibleName")); // NOI18N
     }// </editor-fold>//GEN-END:initComponents
 
 //    void load() {
