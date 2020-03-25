@@ -29,8 +29,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="headerLabelXML" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="headerScrollPaneXML" alignment="0" min="-2" pref="339" max="-2" attributes="0"/>
+                  <Component id="headerLabelJSON" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="headerScrollPaneJSON" alignment="0" min="-2" pref="339" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="429" max="32767" attributes="0"/>
           </Group>
@@ -44,9 +44,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="headerLabelXML" min="-2" max="-2" attributes="0"/>
+              <Component id="headerLabelJSON" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="headerScrollPaneXML" min="-2" pref="139" max="-2" attributes="0"/>
+              <Component id="headerScrollPaneJSON" min="-2" pref="139" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -81,14 +81,14 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="newXMLFile" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="newJSONFile" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="autoMinifyXML" min="-2" pref="117" max="-2" attributes="0"/>
-                              <Component id="preExtensionXML_Label" min="-2" pref="156" max="-2" attributes="0"/>
+                              <Component id="autoMinifyJSON" min="-2" pref="117" max="-2" attributes="0"/>
+                              <Component id="preExtensionJSON_Label" min="-2" pref="156" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="preExtensionXML" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="preExtensionJSON" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="extLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -102,21 +102,21 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="preExtensionXML_Label" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="preExtensionJSON_Label" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="extLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="preExtensionXML" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="preExtensionJSON" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                  <Component id="autoMinifyXML" min="-2" max="-2" attributes="0"/>
+                  <Component id="autoMinifyJSON" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="newXMLFile" min="-2" max="-2" attributes="0"/>
+                  <Component id="newJSONFile" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JCheckBox" name="newXMLFile">
+        <Component class="javax.swing.JCheckBox" name="newJSONFile">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -130,13 +130,13 @@
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newXMLFileActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newJSONFileActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="preExtensionXML_Label">
+        <Component class="javax.swing.JLabel" name="preExtensionJSON_Label">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="org/netbeans/minify/css/ui/options/Bundle.properties" key="JsOptionsPanel.preExtensionJS_Label.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
@@ -146,20 +146,20 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="preExtensionXML">
+        <Component class="javax.swing.JTextField" name="preExtensionJSON">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="org/netbeans/minify/css/ui/options/Bundle.properties" key="JsOptionsPanel.preExtensionJS.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="preExtensionXMLActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="preExtensionJSONActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="autoMinifyXML">
+        <Component class="javax.swing.JCheckBox" name="autoMinifyJSON">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -170,7 +170,7 @@
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="autoMinifyXMLActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="autoMinifyJSONActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -188,21 +188,21 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="headerLabelXML">
+    <Component class="javax.swing.JLabel" name="headerLabelJSON">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="org/netbeans/minify/css/ui/options/Bundle.properties" key="JsOptionsPanel.headerLabelJS.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="headerScrollPaneXML">
+    <Container class="javax.swing.JScrollPane" name="headerScrollPaneJSON">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JEditorPane" name="headerEditorPaneXML">
+        <Component class="javax.swing.JEditorPane" name="headerEditorPaneJSON">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="org/netbeans/minify/css/ui/options/Bundle.properties" key="JsOptionsPanel.headerEditorPaneJS.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>

@@ -8,6 +8,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.netbeans.minify.css.ui.options.CssOptionsPanel;
 import org.netbeans.minify.html.ui.options.HtmlOptionsPanel;
 import org.netbeans.minify.javascript.ui.options.JsOptionsPanel;
+import org.netbeans.minify.json.ui.options.JsonOptionsPanel;
 import org.netbeans.minify.project.ui.options.ProjectOptionsPanel;
 import org.netbeans.minify.xml.ui.options.XmlOptionsPanel;
 
@@ -48,6 +49,8 @@ final class MinificationPanel extends javax.swing.JPanel implements TreeSelectio
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) optionsTree.getLastSelectedPathComponent();
 
         final String nodeValue = node.toString().replaceAll("\\s+", "").toLowerCase();
+        
+        contentPanel.removeAll();
 
         if (nodeValue.equals("javascript")) {
             contentPanel.add(JsOptionsPanel.create());
@@ -62,7 +65,7 @@ final class MinificationPanel extends javax.swing.JPanel implements TreeSelectio
             contentPanel.add(XmlOptionsPanel.create());
         }
         else if (nodeValue.equals("json")) {
-            contentPanel.add(JsOptionsPanel.create());
+            contentPanel.add(JsonOptionsPanel.create());
         }
         else if (nodeValue.equals("project")) {
             contentPanel.add(ProjectOptionsPanel.create());
