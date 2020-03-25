@@ -67,6 +67,8 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
         headerScrollPaneHTML = new javax.swing.JScrollPane();
         headerEditorPaneHTML = new javax.swing.JEditorPane();
 
+        setPreferredSize(new java.awt.Dimension(768, 314));
+
         jPanel1.setPreferredSize(new java.awt.Dimension(0, 32));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -83,20 +85,20 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
         jPanel2.setPreferredSize(new java.awt.Dimension(762, 86));
 
         newHTMLFile.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(newHTMLFile, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.newHTMLFile.text")); // NOI18N
-        newHTMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.newHTMLFile.toolTipText")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(newHTMLFile, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.newJSFile.text")); // NOI18N
+        newHTMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.newJSFile.toolTipText")); // NOI18N
         newHTMLFile.setOpaque(false);
 
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionHTML_Label, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.preExtensionHTML_Label.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(preExtensionHTML_Label, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.preExtensionJS_Label.text")); // NOI18N
 
-        preExtensionHTML.setText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.preExtensionHTML.text")); // NOI18N
+        preExtensionHTML.setText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.preExtensionJS.text")); // NOI18N
 
         autoMinifyHTML.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.autoMinifyHTML.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text")); // NOI18N
         autoMinifyHTML.setOpaque(false);
 
         extLabel.setForeground(extLabel.getForeground().darker());
-        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.extLabel.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.extLabel.text")); // NOI18N
 
         buildInternalJSMinify.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(buildInternalJSMinify, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.buildInternalJSMinify.text")); // NOI18N
@@ -111,11 +113,11 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(preExtensionHTML_Label)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(6, 6, 6)
                         .addComponent(preExtensionHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(extLabel))
@@ -123,34 +125,34 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(autoMinifyHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(newHTMLFile))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(6, 6, 6)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(buildInternalJSMinify)
                             .addComponent(buildInternalCSSMinify, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(autoMinifyHTML)
+                    .addComponent(buildInternalJSMinify))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newHTMLFile)
+                    .addComponent(buildInternalCSSMinify))
+                .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(preExtensionHTML_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(preExtensionHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(extLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(autoMinifyHTML)
-                    .addComponent(buildInternalJSMinify))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(newHTMLFile)
-                    .addComponent(buildInternalCSSMinify))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(6, 6, 6))
         );
 
-        org.openide.awt.Mnemonics.setLocalizedText(headerLabelHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.headerLabelHTML.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(headerLabelHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.headerLabelJS.text")); // NOI18N
 
-        headerEditorPaneHTML.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.headerEditorPaneHTML.toolTipText")); // NOI18N
+        headerEditorPaneHTML.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.headerEditorPaneJS.toolTipText")); // NOI18N
         headerScrollPaneHTML.setViewportView(headerEditorPaneHTML);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -158,29 +160,31 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(headerLabelHTML)
-                            .addComponent(headerScrollPaneHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 423, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 762, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(headerScrollPaneHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE))
+                .addGap(6, 6, 6))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(headerLabelHTML)
+                .addGap(6, 6, 6))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
                 .addComponent(headerLabelHTML)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(headerScrollPaneHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(6, 6, 6))
         );
     }// </editor-fold>//GEN-END:initComponents
 
