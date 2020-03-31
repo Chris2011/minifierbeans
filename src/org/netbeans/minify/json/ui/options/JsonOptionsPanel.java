@@ -164,20 +164,20 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
         jPanel2.setPreferredSize(new java.awt.Dimension(762, 86));
 
         newJSONFile.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(newJSONFile, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.newJSFile.text")); // NOI18N
-        newJSONFile.setToolTipText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.newJSFile.toolTipText")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(newJSONFile, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.newJSONFile.text")); // NOI18N
+        newJSONFile.setToolTipText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.newJSONFile.toolTipText")); // NOI18N
         newJSONFile.setOpaque(false);
 
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionJSON_Label, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.preExtensionJS_Label.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(preExtensionJSON_Label, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.preExtensionJSON_Label.text")); // NOI18N
 
-        preExtensionJSON.setText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.preExtensionJS.text")); // NOI18N
+        preExtensionJSON.setText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.preExtensionJSON.text")); // NOI18N
 
         autoMinifyJSON.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyJSON, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyJSON, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.autoMinifyJSON.text")); // NOI18N
         autoMinifyJSON.setOpaque(false);
 
         extLabel.setForeground(extLabel.getForeground().darker());
-        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.extLabel.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.extLabel.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -212,10 +212,10 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
                 .addGap(6, 6, 6))
         );
 
-        headerEditorPaneJSON.setToolTipText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.headerEditorPaneJS.toolTipText")); // NOI18N
+        headerEditorPaneJSON.setToolTipText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.headerEditorPaneJSON.toolTipText")); // NOI18N
         headerScrollPaneJSON.setViewportView(headerEditorPaneJSON);
 
-        org.openide.awt.Mnemonics.setLocalizedText(headerLabelJSON, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsOptionsPanel.headerLabelJS.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(headerLabelJSON, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.headerLabelJSON.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
