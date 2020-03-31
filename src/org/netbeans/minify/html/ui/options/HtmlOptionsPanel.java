@@ -128,7 +128,6 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
                 } else {
                     minifyProperty.setBuildInternalCSSMinify(Boolean.FALSE);
                 }
-                //minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
         this.buildInternalJSMinify.addItemListener(new ItemListener() {
@@ -204,20 +203,20 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
         jPanel2.setPreferredSize(new java.awt.Dimension(762, 86));
 
         newHTMLFile.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(newHTMLFile, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.newJSFile.text")); // NOI18N
-        newHTMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.newJSFile.toolTipText")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(newHTMLFile, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.newHTMLFile.text")); // NOI18N
+        newHTMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.newHTMLFile.toolTipText")); // NOI18N
         newHTMLFile.setOpaque(false);
 
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionHTML_Label, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.preExtensionJS_Label.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(preExtensionHTML_Label, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.preExtensionHTML_Label.text")); // NOI18N
 
-        preExtensionHTML.setText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.preExtensionJS.text")); // NOI18N
+        preExtensionHTML.setText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.preExtensionHTML.text")); // NOI18N
 
         autoMinifyHTML.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.autoMinifyHTML.text")); // NOI18N
         autoMinifyHTML.setOpaque(false);
 
         extLabel.setForeground(extLabel.getForeground().darker());
-        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.extLabel.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.extLabel.text")); // NOI18N
 
         buildInternalJSMinify.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(buildInternalJSMinify, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.buildInternalJSMinify.text")); // NOI18N
@@ -269,9 +268,9 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
                 .addGap(6, 6, 6))
         );
 
-        org.openide.awt.Mnemonics.setLocalizedText(headerLabelHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.headerLabelJS.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(headerLabelHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.headerLabelHTML.text")); // NOI18N
 
-        headerEditorPaneHTML.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "JsOptionsPanel.headerEditorPaneJS.toolTipText")); // NOI18N
+        headerEditorPaneHTML.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.headerEditorPaneHTML.toolTipText")); // NOI18N
         headerScrollPaneHTML.setViewportView(headerEditorPaneHTML);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
