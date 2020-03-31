@@ -15,7 +15,6 @@ import org.netbeans.minify.ui.MinifyProperty;
 import org.openide.util.ChangeSupport;
 
 public final class JsOptionsPanel extends JPanel implements ChangeListener {
-
     private MinifyProperty minifyProperty;
 
     private static final long serialVersionUID = 1L;
@@ -30,21 +29,17 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
     }
 
     private void init() {
-//        DocumentListener defaultDocumentListener = new DefaultDocumentListener();
-//        cssNanoCliPathTextField.getDocument().addDocumentListener(defaultDocumentListener);
+        final ProjectOptionsPanel projectOptionsPanel = new ProjectOptionsPanel();
 
         minifyProperty = MinifyProperty.getInstance();
 
         newJSFile.setSelected(minifyProperty.isNewJSFile());
         preExtensionJS.setEnabled(minifyProperty.isNewJSFile());
         preExtensionJS_Label.setEnabled(minifyProperty.isNewJSFile());
-//        separatorJS.setEnabled(minifyProperty.isNewJSFile());
-//        separatorJS_Label.setEnabled(minifyProperty.isNewJSFile());
-        ProjectOptionsPanel.setSkipPreExtensionJsEnabled(minifyProperty.isNewJSFile());
-//        skipPreExtensionJS.setEnabled(minifyProperty.isNewJSFile());
-//        minifyProperty.setSkipPreExtensionJS(minifyProperty.isNewJSFile());
+
+        projectOptionsPanel.skipPreExtensionJS.setEnabled(minifyProperty.isNewJSFile());
+        minifyProperty.setSkipPreExtensionJS(minifyProperty.isNewJSFile());
         preExtensionJS.setText(minifyProperty.getPreExtensionJS());
-//        separatorJS.setText(minifyProperty.getSeparatorJS().toString());
 
         if (minifyProperty.isJsObfuscate()) {
             this.jsObfuscate.setSelected(Boolean.TRUE);
@@ -70,6 +65,7 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
                 minifyProperty.setHeaderJS(text);
             }
         });
+
         this.autoMinifyJS.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -88,31 +84,28 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
                     minifyProperty.setNewJSFile(Boolean.TRUE);
                     minifyProperty.setPreExtensionJS(".min");
                     preExtensionJS.setText(".min");
-//                    minifyProperty.setSeparatorJS('.');
-//                    separatorJS.setText(".");
+
                     preExtensionJS.setEnabled(Boolean.TRUE);
                     preExtensionJS_Label.setEnabled(Boolean.TRUE);
-//                    separatorJS.setEnabled(Boolean.TRUE);
-//                    separatorJS_Label.setEnabled(Boolean.TRUE);
+
                     if (minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
 //                        skipPreExtensionJS.setEnabled(Boolean.TRUE);
-                        ProjectOptionsPanel.setSkipPreExtensionJsEnabled(Boolean.TRUE);
+                        projectOptionsPanel.skipPreExtensionJS.setEnabled(true);
                         minifyProperty.setSkipPreExtensionJS(true);
 //                        skipPreExtensionJS.setSelected(Boolean.TRUE);
-                        ProjectOptionsPanel.setSkipPreExtensionJsSelected(true);
+                        projectOptionsPanel.skipPreExtensionJS.setSelected(true);
                     }
                 } else {
                     minifyProperty.setNewJSFile(Boolean.FALSE);
                     preExtensionJS.setEnabled(Boolean.FALSE);
                     preExtensionJS_Label.setEnabled(Boolean.FALSE);
-//                    separatorJS.setEnabled(Boolean.FALSE);
-//                    separatorJS_Label.setEnabled(Boolean.FALSE);
+
 //                    skipPreExtensionJS.setEnabled(false);
-                    ProjectOptionsPanel.setSkipPreExtensionJsEnabled(false);
+                    projectOptionsPanel.skipPreExtensionJS.setEnabled(false);
 
                     minifyProperty.setSkipPreExtensionJS(Boolean.FALSE);
 //                    skipPreExtensionJS.setSelected(false);
-                    ProjectOptionsPanel.setSkipPreExtensionJsSelected(false);
+                    projectOptionsPanel.skipPreExtensionJS.setSelected(false);
                 }
             }
         });

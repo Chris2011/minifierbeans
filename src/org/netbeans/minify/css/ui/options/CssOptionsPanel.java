@@ -1,6 +1,10 @@
 package org.netbeans.minify.css.ui.options;
 
 import java.awt.EventQueue;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.util.List;
 import javax.swing.JPanel;
@@ -10,12 +14,16 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.netbeans.minify.css.CssNanoCliExecutable;
 import org.netbeans.minify.css.FileUtils;
+import org.netbeans.minify.project.ui.options.ProjectOptionsPanel;
+import org.netbeans.minify.ui.MinifyProperty;
 import org.openide.awt.StatusDisplayer;
 import org.openide.filesystems.FileChooserBuilder;
 import org.openide.util.ChangeSupport;
 import org.openide.util.NbBundle;
 
-public final class CssOptionsPanel extends JPanel implements ChangeListener{
+public final class CssOptionsPanel extends JPanel implements ChangeListener {
+    private MinifyProperty minifyProperty;
+
     private static final long serialVersionUID = 1L;
     private final ChangeSupport changeSupport = new ChangeSupport(this);
 
@@ -30,6 +38,93 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener{
     private void init() {
         DocumentListener defaultDocumentListener = new DefaultDocumentListener();
         cssNanoCliPathTextField.getDocument().addDocumentListener(defaultDocumentListener);
+        
+        final ProjectOptionsPanel projectOptionsPanel = new ProjectOptionsPanel();
+
+        minifyProperty = MinifyProperty.getInstance();
+
+        /*-------- CSS ----------*/
+        newCSSFile.setSelected(minifyProperty.isNewCSSFile());
+        preExtensionCSS.setEnabled(minifyProperty.isNewCSSFile());
+        preExtensionCSS_Label.setEnabled(minifyProperty.isNewCSSFile());
+        projectOptionsPanel.skipPreExtensionCSS.setEnabled(minifyProperty.isNewCSSFile());
+        this.preExtensionCSS.setText(minifyProperty.getPreExtensionCSS());
+
+        autoMinifyCSS.setSelected(minifyProperty.isAutoMinifyCSS());
+        headerEditorPaneCSS.setText(minifyProperty.getHeaderCSS());
+
+        headerEditorPaneCSS.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = headerEditorPaneCSS.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = "";
+                    headerEditorPaneCSS.setText("");
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setHeaderCSS(text);
+            }
+        });
+        this.autoMinifyCSS.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setAutoMinifyCSS(Boolean.TRUE);
+                } else {
+                    minifyProperty.setAutoMinifyCSS(Boolean.FALSE);
+                }
+            }
+        });
+        this.newCSSFile.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setNewCSSFile(Boolean.TRUE);
+                    minifyProperty.setPreExtensionCSS(".min");
+                    preExtensionCSS.setText(".min");
+                    minifyProperty.setSeparatorCSS('.');
+                    preExtensionCSS.setEnabled(Boolean.TRUE);
+                    preExtensionCSS_Label.setEnabled(Boolean.TRUE);
+
+                    if (minifyProperty.isBuildCSSMinify() && minifyProperty.isNewCSSFile()) {
+                        projectOptionsPanel.skipPreExtensionCSS.setEnabled(Boolean.TRUE);
+                        minifyProperty.setSkipPreExtensionCSS(Boolean.TRUE);
+                        projectOptionsPanel.skipPreExtensionCSS.setSelected(Boolean.TRUE);
+                    }
+
+                } else {
+                    minifyProperty.setNewCSSFile(Boolean.FALSE);
+                    preExtensionCSS.setEnabled(Boolean.FALSE);
+                    preExtensionCSS_Label.setEnabled(Boolean.FALSE);
+                    projectOptionsPanel.skipPreExtensionCSS.setEnabled(Boolean.FALSE);
+                    minifyProperty.setSkipPreExtensionCSS(Boolean.FALSE);
+                    projectOptionsPanel.skipPreExtensionCSS.setSelected(Boolean.FALSE);
+                }
+            }
+        });
+
+        this.preExtensionCSS.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = preExtensionCSS.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = ".min";
+                    preExtensionCSS.setText(text);
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setPreExtensionCSS(text);
+            }
+        });
     }
 
     public static CssOptionsPanel create() {
@@ -220,9 +315,9 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener{
     @NbBundle.Messages("CssNanoCliOptionsPanel.browse.title=Select CSSNano CLI")
     private void cssNanoCliFolderBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cssNanoCliFolderBrowseButtonActionPerformed
         File file = new FileChooserBuilder(CssOptionsPanel.class)
-        .setFilesOnly(true)
-        .setTitle("Bundle.CssNanoCliOptionsPanel_browse_title()")
-        .showOpenDialog();
+                .setFilesOnly(true)
+                .setTitle("Bundle.CssNanoCliOptionsPanel_browse_title()")
+                .showOpenDialog();
         if (file != null) {
             cssNanoCliPathTextField.setText(file.getAbsolutePath());
         }
@@ -232,11 +327,9 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener{
 //        String ngCli = NbPreferences.forModule(CssOptionsPanel.class).get("ngCliExecutableLocation", "");
 //        cssNanoCliPathTextField.setText(ngCli);
 //    }
-
 //    void store() {
 //        NbPreferences.forModule(CssOptionsPanel.class).put("ngCliExecutableLocation", cssNanoCliPathTextField.getText());
 //    }
-
     boolean valid() {
         // TODO check whether form is consistent and complete
         return true;

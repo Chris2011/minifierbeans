@@ -1,14 +1,22 @@
 package org.netbeans.minify.xml.ui.options;
 
 import java.awt.EventQueue;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import org.netbeans.minify.project.ui.options.ProjectOptionsPanel;
+import org.netbeans.minify.ui.MinifyProperty;
 import org.openide.util.ChangeSupport;
 
 public final class XmlOptionsPanel extends JPanel implements ChangeListener {
+    private MinifyProperty minifyProperty;
+
     private static final long serialVersionUID = 1L;
     private final ChangeSupport changeSupport = new ChangeSupport(this);
 
@@ -21,8 +29,90 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
     }
 
     private void init() {
-        DocumentListener defaultDocumentListener = new DefaultDocumentListener();
-//        cssNanoCliPathTextField.getDocument().addDocumentListener(defaultDocumentListener);
+        final ProjectOptionsPanel projectOptionsPanel = new ProjectOptionsPanel();
+
+        minifyProperty = MinifyProperty.getInstance();
+
+        newXMLFile.setSelected(minifyProperty.isNewXMLFile());
+        preExtensionXML.setEnabled(minifyProperty.isNewXMLFile());
+        preExtensionXML_Label.setEnabled(minifyProperty.isNewXMLFile());
+        projectOptionsPanel.skipPreExtensionXML.setEnabled(minifyProperty.isNewXMLFile());
+        this.preExtensionXML.setText(minifyProperty.getPreExtensionXML());
+        autoMinifyXML.setSelected(minifyProperty.isAutoMinifyXML());
+        headerEditorPaneXML.setText(minifyProperty.getHeaderXML());
+
+        headerEditorPaneXML.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = headerEditorPaneXML.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = "";
+                    headerEditorPaneXML.setText("");
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setHeaderXML(text);
+            }
+        });
+        this.autoMinifyXML.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setAutoMinifyXML(Boolean.TRUE);
+                } else {
+                    minifyProperty.setAutoMinifyXML(Boolean.FALSE);
+                }
+            }
+        });
+
+        this.newXMLFile.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setNewXMLFile(Boolean.TRUE);
+                    minifyProperty.setPreExtensionXML(".min");
+                    preExtensionXML.setText(".min");
+                    minifyProperty.setSeparatorXML('.');
+                    preExtensionXML.setEnabled(Boolean.TRUE);
+                    preExtensionXML_Label.setEnabled(Boolean.TRUE);
+                    if (minifyProperty.isBuildXMLMinify() && minifyProperty.isNewXMLFile()) {
+                        projectOptionsPanel.skipPreExtensionXML.setEnabled(Boolean.TRUE);
+                        minifyProperty.setSkipPreExtensionXML(Boolean.TRUE);
+                        projectOptionsPanel.skipPreExtensionXML.setSelected(Boolean.TRUE);
+                    }
+
+                } else {
+                    minifyProperty.setNewXMLFile(Boolean.FALSE);
+                    preExtensionXML.setEnabled(Boolean.FALSE);
+                    preExtensionXML_Label.setEnabled(Boolean.FALSE);
+                    projectOptionsPanel.skipPreExtensionXML.setEnabled(Boolean.FALSE);
+                    minifyProperty.setSkipPreExtensionXML(Boolean.FALSE);
+                    projectOptionsPanel.skipPreExtensionXML.setSelected(Boolean.FALSE);
+                }
+            }
+        });
+
+        this.preExtensionXML.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = preExtensionXML.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = ".min";
+                    preExtensionXML.setText(text);
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setPreExtensionXML(text);
+            }
+        });
     }
 
     public static XmlOptionsPanel create() {

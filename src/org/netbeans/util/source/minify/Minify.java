@@ -24,7 +24,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
@@ -130,46 +129,60 @@ public final class Minify implements ActionListener {
             if (!Float.isNaN(jsSpaceSaved)) {
                 jsEval = "Input JS Files Size :  " + minifyResult.getInputJsFilesSize() + " Bytes \n"
                         + "After Minifying JS Files Size :  " + minifyResult.getOutputJsFilesSize() + " Bytes \n"
-                        + "JS Space Saved " + jsSpaceSaved + "% \n";
+                        + "JS Space Saved " + jsSpaceSaved + "% \n\n";
             }
             if (!Float.isNaN(cssSpaceSaved)) {
                 cssEval = "Input CSS Files Size :  " + minifyResult.getInputCssFilesSize() + " Bytes \n"
                         + "After Minifying CSS Files Size :  " + minifyResult.getOutputCssFilesSize() + " Bytes \n"
-                        + "CSS Space Saved " + cssSpaceSaved + "% \n";
+                        + "CSS Space Saved " + cssSpaceSaved + "% \n\n";
             }
             if (!Float.isNaN(htmlSpaceSaved)) {
                 htmlEval = "Input HTML Files Size :  " + minifyResult.getInputHtmlFilesSize() + " Bytes \n"
                         + "After Minifying HTML Files Size :  " + minifyResult.getOutputHtmlFilesSize() + " Bytes \n"
-                        + "HTML Space Saved " + htmlSpaceSaved + "% \n";
+                        + "HTML Space Saved " + htmlSpaceSaved + "% \n\n";
             }
             if (!Float.isNaN(xmlSpaceSaved)) {
                 xmlEval = "Input XML Files Size :  " + minifyResult.getInputXmlFilesSize() + " Bytes \n"
                         + "After Minifying XML Files Size :  " + minifyResult.getOutputXmlFilesSize() + " Bytes \n"
-                        + "XML Space Saved " + xmlSpaceSaved + "% \n";
+                        + "XML Space Saved " + xmlSpaceSaved + "% \n\n";
             }
             if (!Float.isNaN(jsonSpaceSaved)) {
                 jsonEval = "Input JSON Files Size :  " + minifyResult.getInputJsonFilesSize() + " Bytes \n"
                         + "After Minifying JSON Files Size :  " + minifyResult.getOutputJsonFilesSize() + " Bytes \n"
-                        + "JSON Space Saved " + jsonSpaceSaved + "% \n";
+                        + "JSON Space Saved " + jsonSpaceSaved + "% \n\n";
             }
             if (minifyProperty.isEnableOutputLogAlert()) {
                 showNotification(minifyResult, jsEval, cssEval, htmlEval, xmlEval, jsonEval, totalTime);
             }
-        } catch (HeadlessException ex) {
-            io.getOut().println("Exception: " + ex.toString());
-        } catch (IOException ex) {
+        } catch (HeadlessException | IOException ex) {
             io.getOut().println("Exception: " + ex.toString());
         }
     }
 
     private void showNotification(MinifyResult minifyResult, String jsEval, String cssEval, String htmlEval, String xmlEval, String jsonEval, long totalTime) throws HeadlessException {
-        NotificationDisplayer.getDefault().notify("Successful JS & CSS minification", NotificationDisplayer.Priority.NORMAL.getIcon(), String.format("%s Directories Found \n"
+        final String message = "%s Directories Found \n"
                 + "%s JS Files Minified \n"
                 + "%s CSS Files Minified \n"
                 + "%s HTML Files Minified \n"
                 + "%s XML Files Minified \n"
-                + "%s JSON Files Minified \n"
-                + jsEval + cssEval + htmlEval + xmlEval + jsonEval
-                + "Total Time - %s ms", minifyResult.getDirectories(), minifyResult.getJsFiles(), minifyResult.getCssFiles(), minifyResult.getHtmlFiles(), minifyResult.getXmlFiles(), minifyResult.getJsonFiles(), totalTime), null);
+                + "%s JSON Files Minified \n\n"
+                + "%s%s%s%s%s \n\n"
+                + "Total Time - %d ms";
+
+        NotificationDisplayer.getDefault().notify("Successful JS & CSS minification",
+                NotificationDisplayer.Priority.NORMAL.getIcon(),
+                String.format(message,
+                        minifyResult.getDirectories(),
+                        minifyResult.getJsFiles(),
+                        minifyResult.getCssFiles(),
+                        minifyResult.getHtmlFiles(),
+                        minifyResult.getXmlFiles(),
+                        minifyResult.getJsonFiles(),
+                        jsEval,
+                        cssEval,
+                        htmlEval,
+                        xmlEval,
+                        jsonEval,
+                        totalTime), null);
     }
 }
