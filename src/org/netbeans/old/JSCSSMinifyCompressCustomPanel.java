@@ -19,7 +19,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import org.netbeans.minify.ui.MinifyProperty;
+import org.netbeans.minifierbeans.ui.MinifyProperty;
 
 public final class JSCSSMinifyCompressCustomPanel extends JSCSSMinifyCompressPanel {
 

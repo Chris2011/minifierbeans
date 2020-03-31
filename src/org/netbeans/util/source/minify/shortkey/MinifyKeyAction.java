@@ -15,7 +15,7 @@ package org.netbeans.util.source.minify.shortkey;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import org.netbeans.minify.ui.MinifyProperty;
+import org.netbeans.minifierbeans.ui.MinifyProperty;
 import org.netbeans.util.source.minify.CSSMinify;
 import org.netbeans.util.source.minify.HTMLMinify;
 import org.netbeans.util.source.minify.JSMinify;

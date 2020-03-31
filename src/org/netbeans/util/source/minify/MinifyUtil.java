@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.netbeans.minify.ui.MinifyProperty;
+import org.netbeans.minifierbeans.ui.MinifyProperty;
 import org.openide.filesystems.FileObject;
 import org.openide.util.Exceptions;
 
