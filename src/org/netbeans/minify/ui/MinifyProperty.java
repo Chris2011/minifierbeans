@@ -106,9 +106,7 @@ public class MinifyProperty implements Serializable {
                 } else if (field.getType() == int.class) {
                     prefs.putInt(field.getName(), field.getInt(this));
                 }
-            } catch (IllegalArgumentException ex) {
-                Exceptions.printStackTrace(ex);
-            } catch (IllegalAccessException ex) {
+            } catch (IllegalArgumentException | IllegalAccessException ex) {
                 Exceptions.printStackTrace(ex);
             }
 
@@ -129,26 +127,20 @@ public class MinifyProperty implements Serializable {
             if (field.getType() == boolean.class) {
                 try {
                     field.setBoolean(this, prefs.getBoolean(field.getName(), field.getBoolean(this)));
-                } catch (IllegalArgumentException ex) {
-                    Exceptions.printStackTrace(ex);
-                } catch (IllegalAccessException ex) {
+                } catch (IllegalArgumentException | IllegalAccessException ex) {
                     Exceptions.printStackTrace(ex);
                 }
             } else if (field.getType() == String.class) {
                 try {
                     field.set(this, prefs.get(field.getName(), (String) field.get(this)));
-                } catch (IllegalArgumentException ex) {
-                    Exceptions.printStackTrace(ex);
-                } catch (IllegalAccessException ex) {
+                } catch (IllegalArgumentException | IllegalAccessException ex) {
                     Exceptions.printStackTrace(ex);
                 }
             } else if (field.getType() == int.class) {
                 try {
                     prefs.putInt(field.getName(), field.getInt(this));
                     field.setInt(this, prefs.getInt(field.getName(), field.getInt(this)));
-                } catch (IllegalArgumentException ex) {
-                    Exceptions.printStackTrace(ex);
-                } catch (IllegalAccessException ex) {
+                } catch (IllegalArgumentException | IllegalAccessException ex) {
                     Exceptions.printStackTrace(ex);
                 }
             }

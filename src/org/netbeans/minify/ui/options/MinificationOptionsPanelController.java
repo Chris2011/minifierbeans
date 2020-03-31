@@ -16,16 +16,17 @@ import org.openide.util.Lookup;
 )
 @org.openide.util.NbBundle.Messages({"AdvancedOption_DisplayName_Minification=Minification", "AdvancedOption_Keywords_Minification=Minification, JS, CSS, HTML, XML, JSON"})
 public final class MinificationOptionsPanelController extends OptionsPanelController {
-
     private MinificationPanel panel;
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private boolean changed;
 
+    @Override
     public void update() {
         getPanel().load();
         changed = false;
     }
 
+    @Override
     public void applyChanges() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -36,30 +37,37 @@ public final class MinificationOptionsPanelController extends OptionsPanelContro
         });
     }
 
+    @Override
     public void cancel() {
         // need not do anything special, if no changes have been persisted yet
     }
 
+    @Override
     public boolean isValid() {
         return getPanel().valid();
     }
 
+    @Override
     public boolean isChanged() {
         return changed;
     }
 
+    @Override
     public HelpCtx getHelpCtx() {
         return null; // new HelpCtx("...ID") if you have a help set
     }
 
+    @Override
     public JComponent getComponent(Lookup masterLookup) {
         return getPanel();
     }
 
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }

@@ -1,14 +1,22 @@
 package org.netbeans.minify.html.ui.options;
 
 import java.awt.EventQueue;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import org.netbeans.minify.project.ui.options.ProjectOptionsPanel;
+import org.netbeans.minify.ui.MinifyProperty;
 import org.openide.util.ChangeSupport;
 
 public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
+    private MinifyProperty minifyProperty;
+
     private static final long serialVersionUID = 1L;
     private final ChangeSupport changeSupport = new ChangeSupport(this);
 
@@ -21,8 +29,119 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
     }
 
     private void init() {
-        DocumentListener defaultDocumentListener = new DefaultDocumentListener();
-//        cssNanoCliPathTextField.getDocument().addDocumentListener(defaultDocumentListener);
+        final ProjectOptionsPanel projectOptionsPanel = new ProjectOptionsPanel();
+
+        minifyProperty = MinifyProperty.getInstance();
+
+        newHTMLFile.setSelected(minifyProperty.isNewHTMLFile());
+        preExtensionHTML.setEnabled(minifyProperty.isNewHTMLFile());
+        preExtensionHTML_Label.setEnabled(minifyProperty.isNewHTMLFile());
+        projectOptionsPanel.skipPreExtensionHTML.setEnabled(minifyProperty.isNewHTMLFile());
+        this.preExtensionHTML.setText(minifyProperty.getPreExtensionHTML());
+        autoMinifyHTML.setSelected(minifyProperty.isAutoMinifyHTML());
+        headerEditorPaneHTML.setText(minifyProperty.getHeaderHTML());
+        headerEditorPaneHTML.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = headerEditorPaneHTML.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = "";
+                    headerEditorPaneHTML.setText("");
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setHeaderHTML(text);
+            }
+        });
+        this.autoMinifyHTML.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setAutoMinifyHTML(Boolean.TRUE);
+                } else {
+                    minifyProperty.setAutoMinifyHTML(Boolean.FALSE);
+                }
+            }
+        });
+        this.newHTMLFile.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setNewHTMLFile(Boolean.TRUE);
+                    minifyProperty.setPreExtensionHTML(".min");
+                    preExtensionHTML.setText(".min");
+                    minifyProperty.setSeparatorHTML('.');
+                    preExtensionHTML.setEnabled(Boolean.TRUE);
+                    preExtensionHTML_Label.setEnabled(Boolean.TRUE);
+                    if (minifyProperty.isBuildHTMLMinify() && minifyProperty.isNewHTMLFile()) {
+                        projectOptionsPanel.skipPreExtensionHTML.setEnabled(Boolean.TRUE);
+                        minifyProperty.setSkipPreExtensionHTML(Boolean.TRUE);
+                        projectOptionsPanel.skipPreExtensionHTML.setSelected(Boolean.TRUE);
+                    }
+
+                } else {
+                    minifyProperty.setNewHTMLFile(Boolean.FALSE);
+                    preExtensionHTML.setEnabled(Boolean.FALSE);
+                    preExtensionHTML_Label.setEnabled(Boolean.FALSE);
+                    projectOptionsPanel.skipPreExtensionHTML.setEnabled(Boolean.FALSE);
+                    minifyProperty.setSkipPreExtensionHTML(Boolean.FALSE);
+                    projectOptionsPanel.skipPreExtensionHTML.setSelected(Boolean.FALSE);
+
+                }
+            }
+        });
+
+        this.preExtensionHTML.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent fe) {
+                String text = preExtensionHTML.getText();
+                if (text == null || text.trim().isEmpty()) {
+                    text = ".min";
+                    preExtensionHTML.setText(text);
+                } else {
+                    text = text.trim();
+                }
+                minifyProperty.setPreExtensionHTML(text);
+            }
+        });
+
+        if (minifyProperty.isBuildInternalCSSMinify()) {
+            this.buildInternalCSSMinify.setSelected(Boolean.TRUE);
+        }
+
+        if (minifyProperty.isBuildInternalJSMinify()) {
+            this.buildInternalJSMinify.setSelected(Boolean.TRUE);
+        }
+        this.buildInternalCSSMinify.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setBuildInternalCSSMinify(Boolean.TRUE);
+                } else {
+                    minifyProperty.setBuildInternalCSSMinify(Boolean.FALSE);
+                }
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
+            }
+        });
+        this.buildInternalJSMinify.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    minifyProperty.setBuildInternalJSMinify(Boolean.TRUE);
+                } else {
+                    minifyProperty.setBuildInternalJSMinify(Boolean.FALSE);
+                }
+                //minifyPropertyController.writeMinifyProperty(minifyProperty);
+            }
+        });
     }
 
     public static HtmlOptionsPanel create() {
