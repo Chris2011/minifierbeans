@@ -26,7 +26,7 @@ import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.CookieAction;
 import org.netbeans.api.lexer.*;
-import org.netbeans.minify.ui.MinifyProperty;
+import org.netbeans.minifierbeans.ui.MinifyProperty;
 import org.netbeans.modules.editor.NbEditorUtilities;
 import org.openide.ErrorManager;
 import org.openide.awt.ActionID;

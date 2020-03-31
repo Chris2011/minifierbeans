@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
-import org.netbeans.minify.ui.MinifyProperty;
+import org.netbeans.minifierbeans.ui.MinifyProperty;
 import org.openide.loaders.DataObject;
 
 import org.openide.awt.ActionRegistration;

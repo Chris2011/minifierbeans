@@ -25,7 +25,7 @@ import javax.swing.JEditorPane;
 import org.mozilla.javascript.EvaluatorException;
 import org.netbeans.api.lexer.TokenHierarchy;
 import org.netbeans.api.lexer.TokenSequence;
-import org.netbeans.minify.ui.MinifyProperty;
+import org.netbeans.minifierbeans.ui.MinifyProperty;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
