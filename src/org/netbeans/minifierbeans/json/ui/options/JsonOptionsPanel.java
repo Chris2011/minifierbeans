@@ -76,7 +76,6 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
                     minifyProperty.setNewJSONFile(Boolean.TRUE);
                     minifyProperty.setPreExtensionJSON(".min");
                     preExtensionJSON.setText(".min");
-                    minifyProperty.setSeparatorJSON('.');
                     preExtensionJSON.setEnabled(Boolean.TRUE);
                     preExtensionJSON_Label.setEnabled(Boolean.TRUE);
                     if (minifyProperty.isBuildJSONMinify() && minifyProperty.isNewJSONFile()) {

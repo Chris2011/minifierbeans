@@ -76,7 +76,6 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
                     minifyProperty.setNewXMLFile(Boolean.TRUE);
                     minifyProperty.setPreExtensionXML(".min");
                     preExtensionXML.setText(".min");
-                    minifyProperty.setSeparatorXML('.');
                     preExtensionXML.setEnabled(Boolean.TRUE);
                     preExtensionXML_Label.setEnabled(Boolean.TRUE);
                     if (minifyProperty.isBuildXMLMinify() && minifyProperty.isNewXMLFile()) {

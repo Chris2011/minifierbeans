@@ -86,12 +86,12 @@ public final class CSSMinify implements ActionListener {
         try {
             FileObject file = context.getPrimaryFile();
 
-            if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionCSS(), minifyProperty.getSeparatorCSS().toString())) {
+            if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionCSS())) {
                 String inputFilePath = file.getPath();
                 String outputFilePath;
 
                 if (minifyProperty.isNewCSSFile() && minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty()) {
-                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorCSS() + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
+                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
                 } else {
                     outputFilePath = inputFilePath;
                 }
@@ -113,9 +113,7 @@ public final class CSSMinify implements ActionListener {
                             + "CSS Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
                 }
             }
-        } catch (HeadlessException ex) {
-            Exceptions.printStackTrace(ex);
-        } catch (IOException ex) {
+        } catch (HeadlessException | IOException ex) {
             Exceptions.printStackTrace(ex);
         }
     }

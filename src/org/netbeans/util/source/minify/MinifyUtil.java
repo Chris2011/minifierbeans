@@ -79,13 +79,13 @@ public class MinifyUtil {
 
                     if (minifyProperty.isSkipPreExtensionJS() && minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
                         if (minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()
-                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getSeparatorJS() + minifyProperty.getPreExtensionJS()))) {
+                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getPreExtensionJS()))) {
                             allow = false;
                         }
                     }
                     if (allow) {
                         if (minifyProperty.isNewJSFile() && minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()) {
-                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorJS() + minifyProperty.getPreExtensionJS() + "." + file.getExt();
+                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionJS() + "." + file.getExt();
                         } else {
                             outputFilePath = inputFilePath;
                         }
@@ -106,13 +106,13 @@ public class MinifyUtil {
 
                     if (minifyProperty.isSkipPreExtensionCSS() && minifyProperty.isBuildCSSMinify() && minifyProperty.isNewCSSFile()) {
                         if (minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty()
-                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getSeparatorCSS() + minifyProperty.getPreExtensionCSS()))) {
+                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getPreExtensionCSS()))) {
                             allow = false;
                         }
                     }
                     if (allow) {
                         if (minifyProperty.isNewCSSFile() && minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty()) {
-                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorCSS() + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
+                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
                         } else {
                             outputFilePath = inputFilePath;
                         }
@@ -133,13 +133,13 @@ public class MinifyUtil {
 
                     if (minifyProperty.isSkipPreExtensionHTML() && minifyProperty.isBuildHTMLMinify() && minifyProperty.isNewHTMLFile()) {
                         if (minifyProperty.getPreExtensionHTML() != null && !minifyProperty.getPreExtensionHTML().trim().isEmpty()
-                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getSeparatorHTML() + minifyProperty.getPreExtensionHTML()))) {
+                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getPreExtensionHTML()))) {
                             allow = false;
                         }
                     }
                     if (allow) {
                         if (minifyProperty.isNewHTMLFile() && minifyProperty.getPreExtensionHTML() != null && !minifyProperty.getPreExtensionHTML().trim().isEmpty()) {
-                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorHTML() + minifyProperty.getPreExtensionHTML() + "." + file.getExt();
+                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionHTML() + "." + file.getExt();
                         } else {
                             outputFilePath = inputFilePath;
                         }
@@ -160,13 +160,13 @@ public class MinifyUtil {
 
                     if (minifyProperty.isSkipPreExtensionXML() && minifyProperty.isBuildXMLMinify() && minifyProperty.isNewXMLFile()) {
                         if (minifyProperty.getPreExtensionXML() != null && !minifyProperty.getPreExtensionXML().trim().isEmpty()
-                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getSeparatorXML() + minifyProperty.getPreExtensionXML()))) {
+                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getPreExtensionXML()))) {
                             allow = false;
                         }
                     }
                     if (allow) {
                         if (minifyProperty.isNewXMLFile() && minifyProperty.getPreExtensionXML() != null && !minifyProperty.getPreExtensionXML().trim().isEmpty()) {
-                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorXML() + minifyProperty.getPreExtensionXML() + "." + file.getExt();
+                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionXML() + "." + file.getExt();
                         } else {
                             outputFilePath = inputFilePath;
                         }
@@ -187,13 +187,13 @@ public class MinifyUtil {
 
                     if (minifyProperty.isSkipPreExtensionJSON() && minifyProperty.isBuildJSONMinify() && minifyProperty.isNewJSONFile()) {
                         if (minifyProperty.getPreExtensionJSON() != null && !minifyProperty.getPreExtensionJSON().trim().isEmpty()
-                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getSeparatorJSON() + minifyProperty.getPreExtensionJSON()))) {
+                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getPreExtensionJSON()))) {
                             allow = false;
                         }
                     }
                     if (allow) {
                         if (minifyProperty.isNewJSONFile() && minifyProperty.getPreExtensionJSON() != null && !minifyProperty.getPreExtensionJSON().trim().isEmpty()) {
-                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorJSON() + minifyProperty.getPreExtensionJSON() + "." + file.getExt();
+                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionJSON() + "." + file.getExt();
                         } else {
                             outputFilePath = inputFilePath;
                         }
@@ -475,13 +475,28 @@ public class MinifyUtil {
         }
     }
 
-    public Boolean isMinifiedFile(String fileName, String ext, String seperator) {
-        String[] namePaths = fileName.split("\\" + seperator);
-        return (namePaths.length > 1 && namePaths[namePaths.length - 1].equals(ext));
+    public Boolean isMinifiedFile(String fileName, String preExt) {
+        String extension = "";
+
+        int extIndex = fileName.lastIndexOf(".");
+        int p = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
+
+        if (extIndex > p) {
+            extension = fileName.substring(extIndex+1);
+            preExt = preExt + "." + extension;
+        }
+        
+        extIndex = fileName.lastIndexOf(preExt);
+        
+        return extIndex > p;
+        
+        // HINT: Old code.
+//        String[] namePaths = fileName.split("\\" + preExt);
+//        return (namePaths.length > 1 && namePaths[namePaths.length - 1].equals(preExt));
     }
 
     public static String fromStream(Reader in) throws IOException {
-        StringBuffer srcsb = new StringBuffer();
+        StringBuilder srcsb = new StringBuilder();
         int c;
         while ((c = in.read()) != -1) {
             srcsb.append((char) c);

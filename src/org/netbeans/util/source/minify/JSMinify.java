@@ -84,12 +84,12 @@ public final class JSMinify implements ActionListener {
 
         try {
             FileObject file = context.getPrimaryFile();
-            if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionJS(), minifyProperty.getSeparatorJS().toString())) {
+            if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionJS())) {
                 String inputFilePath = file.getPath();
                 String outputFilePath;
 
                 if (minifyProperty.isNewJSFile() && minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()) {
-                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorJS() + minifyProperty.getPreExtensionJS() + "." + file.getExt();
+                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionJS() + "." + file.getExt();
                 } else {
                     outputFilePath = inputFilePath;
                 }
@@ -108,9 +108,7 @@ public final class JSMinify implements ActionListener {
                             + "JS Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
                 }
             }
-        } catch (HeadlessException ex) {
-            Exceptions.printStackTrace(ex);
-        } catch (IOException ex) {
+        } catch (HeadlessException | IOException ex) {
             Exceptions.printStackTrace(ex);
         }
     }

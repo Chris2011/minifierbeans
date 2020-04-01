@@ -142,10 +142,10 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/netbeans/minify/css/ui/options/Bundle.properties" key="JsOptionsPanel.newJSFile.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="org/netbeans/minifierbeans/css/ui/options/Bundle.properties" key="JsOptionsPanel.newJSFile.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/netbeans/minify/css/ui/options/Bundle.properties" key="JsOptionsPanel.newJSFile.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="org/netbeans/minifierbeans/css/ui/options/Bundle.properties" key="JsOptionsPanel.newJSFile.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
@@ -156,7 +156,7 @@
         <Component class="javax.swing.JLabel" name="preExtensionHTML_Label">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/netbeans/minify/css/ui/options/Bundle.properties" key="JsOptionsPanel.preExtensionJS_Label.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="org/netbeans/minifierbeans/css/ui/options/Bundle.properties" key="JsOptionsPanel.preExtensionJS_Label.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -166,7 +166,7 @@
         <Component class="javax.swing.JTextField" name="preExtensionHTML">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/netbeans/minify/css/ui/options/Bundle.properties" key="JsOptionsPanel.preExtensionJS.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="org/netbeans/minifierbeans/css/ui/options/Bundle.properties" key="JsOptionsPanel.preExtensionJS.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -179,7 +179,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/netbeans/minify/css/ui/options/Bundle.properties" key="JsOptionsPanel.autoMinifyJS.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="org/netbeans/minifierbeans/css/ui/options/Bundle.properties" key="JsOptionsPanel.autoMinifyJS.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
@@ -193,7 +193,7 @@
               <Connection code="extLabel.getForeground().darker()" type="code"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/netbeans/minify/css/ui/options/Bundle.properties" key="JsOptionsPanel.extLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="org/netbeans/minifierbeans/css/ui/options/Bundle.properties" key="JsOptionsPanel.extLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
         </Component>
@@ -203,7 +203,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/netbeans/minify/html/ui/options/Bundle.properties" key="HtmlOptionsPanel.buildInternalJSMinify.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="org/netbeans/minifierbeans/html/ui/options/Bundle.properties" key="HtmlOptionsPanel.buildInternalJSMinify.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
@@ -217,7 +217,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/netbeans/minify/html/ui/options/Bundle.properties" key="HtmlOptionsPanel.buildInternalCSSMinify.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="org/netbeans/minifierbeans/html/ui/options/Bundle.properties" key="HtmlOptionsPanel.buildInternalCSSMinify.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
@@ -230,7 +230,7 @@
     <Component class="javax.swing.JLabel" name="headerLabelHTML">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/netbeans/minify/css/ui/options/Bundle.properties" key="JsOptionsPanel.headerLabelJS.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="org/netbeans/minifierbeans/css/ui/options/Bundle.properties" key="JsOptionsPanel.headerLabelJS.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
@@ -244,7 +244,7 @@
         <Component class="javax.swing.JEditorPane" name="headerEditorPaneHTML">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="org/netbeans/minify/css/ui/options/Bundle.properties" key="JsOptionsPanel.headerEditorPaneJS.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="org/netbeans/minifierbeans/css/ui/options/Bundle.properties" key="JsOptionsPanel.headerEditorPaneJS.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <AuxValues>
