@@ -74,7 +74,6 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
                     minifyProperty.setNewHTMLFile(Boolean.TRUE);
                     minifyProperty.setPreExtensionHTML(".min");
                     preExtensionHTML.setText(".min");
-                    minifyProperty.setSeparatorHTML('.');
                     preExtensionHTML.setEnabled(Boolean.TRUE);
                     preExtensionHTML_Label.setEnabled(Boolean.TRUE);
                     if (minifyProperty.isBuildHTMLMinify() && minifyProperty.isNewHTMLFile()) {

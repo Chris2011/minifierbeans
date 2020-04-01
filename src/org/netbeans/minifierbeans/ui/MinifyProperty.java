@@ -39,21 +39,16 @@ public class MinifyProperty implements Serializable {
     private String preExtensionJS = "min";
     private boolean jsObfuscate = true;//munge
     private boolean preserveSemicolon = false;
-    private Character separatorJS = '.';
     private boolean newCSSFile = true;
     private String preExtensionCSS = "min";
-    private Character separatorCSS = '.';
     private boolean newHTMLFile = true;
     private String preExtensionHTML = "min";
-    private Character separatorHTML = '.';
     private boolean buildInternalJSMinify = true;
     private boolean buildInternalCSSMinify = true;
     private boolean newXMLFile = true;
     private String preExtensionXML = "min";
-    private Character separatorXML = '.';
     private boolean newJSONFile = true;
     private String preExtensionJSON = "min";
-    private Character separatorJSON = '.';
 
     private boolean separatBuild = false;
     private boolean buildJSMinify = true;
@@ -89,11 +84,11 @@ public class MinifyProperty implements Serializable {
 
     public void store() {
         Preferences prefs = NbPreferences.forModule(DummyCorePreference.class);
-        prefs.put("separatorJS", separatorJS != null ? separatorJS.toString() : null);
-        prefs.put("separatorCSS", separatorCSS != null ? separatorCSS.toString() : null);
-        prefs.put("separatorHTML", separatorHTML != null ? separatorHTML.toString() : null);
-        prefs.put("separatorXML", separatorXML != null ? separatorXML.toString() : null);
-        prefs.put("separatorJSON", separatorJSON != null ? separatorJSON.toString() : null);
+//        prefs.put("separatorJS", separatorJS != null ? separatorJS.toString() : null);
+//        prefs.put("separatorCSS", separatorCSS != null ? separatorCSS.toString() : null);
+//        prefs.put("separatorHTML", separatorHTML != null ? separatorHTML.toString() : null);
+//        prefs.put("separatorXML", separatorXML != null ? separatorXML.toString() : null);
+//        prefs.put("separatorJSON", separatorJSON != null ? separatorJSON.toString() : null);
 
         Class<?> clazz = this.getClass();
 
@@ -117,11 +112,11 @@ public class MinifyProperty implements Serializable {
     public void load() {
         Preferences prefs = NbPreferences.forModule(DummyCorePreference.class);
         Class<?> clazz = this.getClass();
-        separatorJS = prefs.get("separatorJS", separatorJS.toString()).toCharArray()[0];
-        separatorCSS = prefs.get("separatorCSS", separatorCSS.toString()).toCharArray()[0];
-        separatorHTML = prefs.get("separatorHTML", separatorHTML.toString()).toCharArray()[0];
-        separatorXML = prefs.get("separatorXML", getSeparatorXML().toString()).toCharArray()[0];
-        separatorJSON = prefs.get("separatorJSON", getSeparatorJSON().toString()).toCharArray()[0];
+//        separatorJS = prefs.get("separatorJS", separatorJS.toString()).toCharArray()[0];
+//        separatorCSS = prefs.get("separatorCSS", separatorCSS.toString()).toCharArray()[0];
+//        separatorHTML = prefs.get("separatorHTML", separatorHTML.toString()).toCharArray()[0];
+//        separatorXML = prefs.get("separatorXML", getSeparatorXML().toString()).toCharArray()[0];
+//        separatorJSON = prefs.get("separatorJSON", getSeparatorJSON().toString()).toCharArray()[0];
 
         for (Field field : clazz.getDeclaredFields()) {
             if (field.getType() == boolean.class) {
@@ -364,30 +359,30 @@ public class MinifyProperty implements Serializable {
     /**
      * @return the separatorJS
      */
-    public Character getSeparatorJS() {
-        return separatorJS;
-    }
+//    public Character getSeparatorJS() {
+//        return separatorJS;
+//    }
 
     /**
      * @param separatorJS the separatorJS to set
      */
-    public void setSeparatorJS(Character separatorJS) {
-        this.separatorJS = separatorJS;
-    }
+//    public void setSeparatorJS(Character separatorJS) {
+//        this.separatorJS = separatorJS;
+//    }
 
     /**
      * @return the separatorCSS
      */
-    public Character getSeparatorCSS() {
-        return separatorCSS;
-    }
+//    public Character getSeparatorCSS() {
+//        return separatorCSS;
+//    }
 
     /**
      * @param separatorCSS the separatorCSS to set
      */
-    public void setSeparatorCSS(Character separatorCSS) {
-        this.separatorCSS = separatorCSS;
-    }
+//    public void setSeparatorCSS(Character separatorCSS) {
+//        this.separatorCSS = separatorCSS;
+//    }
 
     /**
      * @return the newHTMLFile
@@ -420,16 +415,16 @@ public class MinifyProperty implements Serializable {
     /**
      * @return the separatorHTML
      */
-    public Character getSeparatorHTML() {
-        return separatorHTML;
-    }
+//    public Character getSeparatorHTML() {
+//        return separatorHTML;
+//    }
 
     /**
      * @param separatorHTML the separatorHTML to set
      */
-    public void setSeparatorHTML(Character separatorHTML) {
-        this.separatorHTML = separatorHTML;
-    }
+//    public void setSeparatorHTML(Character separatorHTML) {
+//        this.separatorHTML = separatorHTML;
+//    }
 
     /**
      * @return the buildHTMLMinify
@@ -575,16 +570,16 @@ public class MinifyProperty implements Serializable {
     /**
      * @return the separatorXML
      */
-    public Character getSeparatorXML() {
-        return separatorXML;
-    }
+//    public Character getSeparatorXML() {
+//        return separatorXML;
+//    }
 
     /**
      * @param separatorXML the separatorXML to set
      */
-    public void setSeparatorXML(Character separatorXML) {
-        this.separatorXML = separatorXML;
-    }
+//    public void setSeparatorXML(Character separatorXML) {
+//        this.separatorXML = separatorXML;
+//    }
 
     /**
      * @return the newJSONFile
@@ -617,16 +612,16 @@ public class MinifyProperty implements Serializable {
     /**
      * @return the separatorJSON
      */
-    public Character getSeparatorJSON() {
-        return separatorJSON;
-    }
+//    public Character getSeparatorJSON() {
+//        return separatorJSON;
+//    }
 
     /**
      * @param separatorJSON the separatorJSON to set
      */
-    public void setSeparatorJSON(Character separatorJSON) {
-        this.separatorJSON = separatorJSON;
-    }
+//    public void setSeparatorJSON(Character separatorJSON) {
+//        this.separatorJSON = separatorJSON;
+//    }
 
     /**
      * @return the buildXMLMinify

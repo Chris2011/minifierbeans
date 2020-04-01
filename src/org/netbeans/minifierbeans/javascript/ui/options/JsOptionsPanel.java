@@ -89,10 +89,8 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
                     preExtensionJS_Label.setEnabled(Boolean.TRUE);
 
                     if (minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
-//                        skipPreExtensionJS.setEnabled(Boolean.TRUE);
                         projectOptionsPanel.skipPreExtensionJS.setEnabled(true);
                         minifyProperty.setSkipPreExtensionJS(true);
-//                        skipPreExtensionJS.setSelected(Boolean.TRUE);
                         projectOptionsPanel.skipPreExtensionJS.setSelected(true);
                     }
                 } else {
@@ -100,11 +98,9 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
                     preExtensionJS.setEnabled(Boolean.FALSE);
                     preExtensionJS_Label.setEnabled(Boolean.FALSE);
 
-//                    skipPreExtensionJS.setEnabled(false);
                     projectOptionsPanel.skipPreExtensionJS.setEnabled(false);
 
                     minifyProperty.setSkipPreExtensionJS(Boolean.FALSE);
-//                    skipPreExtensionJS.setSelected(false);
                     projectOptionsPanel.skipPreExtensionJS.setSelected(false);
                 }
             }

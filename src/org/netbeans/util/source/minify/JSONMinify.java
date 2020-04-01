@@ -80,12 +80,12 @@ public final class JSONMinify implements ActionListener {
         MinifyUtil util = new MinifyUtil();
         try {
             FileObject file = context.getPrimaryFile();
-            if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionJSON(), minifyProperty.getSeparatorJSON().toString())) {
+            if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionJSON())) {
                 String inputFilePath = file.getPath();
                 String outputFilePath;
 
                 if (minifyProperty.isNewJSONFile() && minifyProperty.getPreExtensionJSON() != null && !minifyProperty.getPreExtensionJSON().trim().isEmpty()) {
-                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorJSON() + minifyProperty.getPreExtensionJSON() + "." + file.getExt();
+                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionJSON() + "." + file.getExt();
                 } else {
                     outputFilePath = inputFilePath;
                 }
@@ -102,9 +102,7 @@ public final class JSONMinify implements ActionListener {
                             + "JSON Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
                 }
             }
-        } catch (HeadlessException ex) {
-            Exceptions.printStackTrace(ex);
-        } catch (IOException ex) {
+        } catch (HeadlessException | IOException ex) {
             Exceptions.printStackTrace(ex);
         }
     }

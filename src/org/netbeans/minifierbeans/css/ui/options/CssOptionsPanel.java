@@ -87,7 +87,6 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
                     minifyProperty.setNewCSSFile(Boolean.TRUE);
                     minifyProperty.setPreExtensionCSS(".min");
                     preExtensionCSS.setText(".min");
-                    minifyProperty.setSeparatorCSS('.');
                     preExtensionCSS.setEnabled(Boolean.TRUE);
                     preExtensionCSS_Label.setEnabled(Boolean.TRUE);
 

@@ -82,12 +82,12 @@ public final class HTMLMinify implements ActionListener {
 
         try {
             FileObject file = context.getPrimaryFile();
-            if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionHTML(), minifyProperty.getSeparatorHTML().toString())) {
+            if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionHTML())) {
                 String inputFilePath = file.getPath();
                 String outputFilePath;
 
                 if (minifyProperty.isNewHTMLFile() && minifyProperty.getPreExtensionHTML() != null && !minifyProperty.getPreExtensionHTML().trim().isEmpty()) {
-                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getSeparatorHTML() + minifyProperty.getPreExtensionHTML() + "." + file.getExt();
+                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionHTML() + "." + file.getExt();
                 } else {
                     outputFilePath = inputFilePath;
                 }
@@ -104,9 +104,7 @@ public final class HTMLMinify implements ActionListener {
                             + "HTML Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
                 }
             }
-        } catch (HeadlessException ex) {
-            Exceptions.printStackTrace(ex);
-        } catch (IOException ex) {
+        } catch (HeadlessException | IOException ex) {
             Exceptions.printStackTrace(ex);
         }
     }
