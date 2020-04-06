@@ -251,8 +251,20 @@
                 <binary-origin>release/modules/ext/htmlcompressor-1.5.3.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
+                <runtime-relative-path>ext/openapi-7.0.3.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/openapi-7.0.3.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/extensions-7.0.3.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/extensions-7.0.3.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
                 <runtime-relative-path>ext/image-compressor.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/image-compressor.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/trove-3.0.3.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/trove-3.0.3.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/closure-compiler-v20190325.jar</runtime-relative-path>
