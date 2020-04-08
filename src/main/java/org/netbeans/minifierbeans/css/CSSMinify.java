@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.netbeans.minifierbeans.util.source.minify;
+package org.netbeans.minifierbeans.css;
 
 import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
@@ -23,6 +23,8 @@ import java.io.IOException;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.minifierbeans.ui.MinifyProperty;
+import org.netbeans.minifierbeans.util.source.minify.MinifyFileResult;
+import org.netbeans.minifierbeans.util.source.minify.MinifyUtil;
 import org.openide.loaders.DataObject;
 
 import org.openide.awt.ActionRegistration;

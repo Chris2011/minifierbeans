@@ -21,7 +21,7 @@ import javax.swing.text.Document;
 import org.netbeans.minifierbeans.ui.MinifyProperty;
 import org.netbeans.modules.editor.NbEditorUtilities;
 import org.netbeans.spi.editor.document.OnSaveTask;
-import org.netbeans.minifierbeans.util.source.minify.CSSMinify;
+import org.netbeans.minifierbeans.css.CSSMinify;
 import org.netbeans.minifierbeans.util.source.minify.HTMLMinify;
 import org.netbeans.minifierbeans.util.source.minify.JSMinify;
 import org.netbeans.minifierbeans.util.source.minify.JSONMinify;

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.netbeans.minifierbeans.util.source.minify;
+package org.netbeans.minifierbeans.css;
 
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -30,6 +30,8 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.CookieAction;
 import org.netbeans.api.lexer.*;
 import org.netbeans.minifierbeans.ui.MinifyProperty;
+import org.netbeans.minifierbeans.util.source.minify.JSMinifyClipboard;
+import org.netbeans.minifierbeans.util.source.minify.MinifyUtil;
 import org.openide.ErrorManager;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
