@@ -13,7 +13,6 @@ import org.netbeans.api.extexecution.ExecutionDescriptor;
 import org.netbeans.api.project.Project;
 import org.netbeans.api.project.ProjectUtils;
 import org.netbeans.minifierbeans.ExternalExecutable;
-import org.netbeans.minifierbeans.validators.ValidationResult;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.NbBundle;
@@ -58,7 +57,7 @@ public class CssNanoCliExecutable {
         assert project != null;
 
         String projectName = ProjectUtils.getInformation(project).getDisplayName();
-        Future<Integer> task = getExecutable("Bundle.CssNanoCliExecutable_generate(projectName)")
+        Future<Integer> task = getExecutable(Bundle.CssNanoCliExecutable_generate(projectName))
                 .additionalParameters(getGenerateParams(target, less))
                 .run(getDescriptor());
 
@@ -104,25 +103,15 @@ public class CssNanoCliExecutable {
 
     private List<String> getGenerateParams(FileObject target, boolean less) {
         List<String> params = new ArrayList<String>(3);
-//        params.add(FORCE_PARAM);
         params.add(FileUtil.toFile(target).getAbsolutePath());
+
         return getParams(params);
     }
 
     List<String> getParams(List<String> params) {
         assert params != null;
-        return params;
-    }
 
-    @CheckForNull
-    private static String validateResult(ValidationResult result) {
-        if (result.isFaultless()) {
-            return null;
-        }
-        if (result.hasErrors()) {
-            return result.getFirstErrorMessage();
-        }
-        return result.getFirstWarningMessage();
+        return params;
     }
 
     //~ Inner classes
