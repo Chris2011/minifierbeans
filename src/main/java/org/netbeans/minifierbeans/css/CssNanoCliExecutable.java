@@ -10,12 +10,9 @@ import java.util.concurrent.Future;
 import org.netbeans.api.annotations.common.CheckForNull;
 import org.netbeans.api.annotations.common.NullAllowed;
 import org.netbeans.api.extexecution.ExecutionDescriptor;
-import org.netbeans.api.options.OptionsDisplayer;
 import org.netbeans.api.project.Project;
 import org.netbeans.api.project.ProjectUtils;
 import org.netbeans.minifierbeans.ExternalExecutable;
-import org.netbeans.minifierbeans.css.options.CssNanoCliOptions;
-import org.netbeans.minifierbeans.css.validator.CssNanoCliOptionsValidator;
 import org.netbeans.minifierbeans.validators.ValidationResult;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
@@ -23,23 +20,12 @@ import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
 
 public class CssNanoCliExecutable {
-    public static final String CSS_NANO_CLI_NAME;
+    public static final String POST_CSS_CLI_NAME = "\\src\\main\\resources\\org\\netbeans\\minifierbeans\\packages\\node_modules\\postcss-cli\\bin\\postcss";
 
-//    private static final String FORCE_PARAM = "--force"; // NOI18N
-//    private static final String CSS_PARAM = "--css"; // NOI18N
-//    private static final String LESS_PARAM = "less"; // NOI18N
     protected final Project project;
     protected final String cssNanoCliPath;
 
     private static final String OPTIONS_PATH = "HTML5/Minifier";
-
-    static {
-        if (Utilities.isWindows()) {
-            CSS_NANO_CLI_NAME = "cssnano.cmd"; // NOI18N
-        } else {
-            CSS_NANO_CLI_NAME = "cssnano"; // NOI18N
-        }
-    }
 
     CssNanoCliExecutable(String cssNanoCliPath, @NullAllowed Project project) {
         assert cssNanoCliPath != null;
@@ -50,18 +36,7 @@ public class CssNanoCliExecutable {
 
     @CheckForNull
     public static CssNanoCliExecutable getDefault(@NullAllowed Project project, boolean showOptions) {
-        ValidationResult result = new CssNanoCliOptionsValidator()
-                .validateCssNanoCli()
-                .getResult();
-        if (validateResult(result) != null) {
-            if (showOptions) {
-                OptionsDisplayer.getDefault().open(OPTIONS_PATH);
-            }
-
-            return null;
-        }
-
-        return createExecutable(CssNanoCliOptions.getInstance().getCssNanoCli(), project);
+        return createExecutable(POST_CSS_CLI_NAME, project);
     }
 
     private static CssNanoCliExecutable createExecutable(String cssNanoCli, Project project) {
