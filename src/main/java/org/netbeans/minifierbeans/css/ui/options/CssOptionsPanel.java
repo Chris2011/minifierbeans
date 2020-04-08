@@ -36,9 +36,6 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
     }
 
     private void init() {
-        DocumentListener defaultDocumentListener = new DefaultDocumentListener();
-        cssNanoCliPathTextField.getDocument().addDocumentListener(defaultDocumentListener);
-        
         final ProjectOptionsPanel projectOptionsPanel = new ProjectOptionsPanel();
 
         minifyProperty = MinifyProperty.getInstance();
@@ -140,14 +137,6 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
         changeSupport.removeChangeListener(listener);
     }
 
-    public String getCssNanoCli() {
-        return cssNanoCliPathTextField.getText();
-    }
-
-    public void setCssNanoCli(String cssNanoCli) {
-        cssNanoCliPathTextField.setText(cssNanoCli);
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -158,9 +147,6 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
 
         jPanel1 = new javax.swing.JPanel();
         cssNanoLabel = new javax.swing.JLabel();
-        cssNanoCliPathTextField = new javax.swing.JTextField();
-        cssNanoCliFolderBrowseButton = new javax.swing.JButton();
-        cssNanoCliPathBrowseButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         preExtensionCSS_Label = new javax.swing.JLabel();
         extLabel = new javax.swing.JLabel();
@@ -173,22 +159,6 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
 
         org.openide.awt.Mnemonics.setLocalizedText(cssNanoLabel, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.cssNanoLabel.text")); // NOI18N
 
-        cssNanoCliPathTextField.setText(org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.cssNanoCliPathTextField.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(cssNanoCliFolderBrowseButton, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.cssNanoCliFolderBrowseButton.text")); // NOI18N
-        cssNanoCliFolderBrowseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cssNanoCliFolderBrowseButtonActionPerformed(evt);
-            }
-        });
-
-        org.openide.awt.Mnemonics.setLocalizedText(cssNanoCliPathBrowseButton, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.cssNanoCliPathBrowseButton.text")); // NOI18N
-        cssNanoCliPathBrowseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cssNanoCliPathBrowseButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -196,21 +166,11 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cssNanoLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cssNanoCliPathTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cssNanoCliFolderBrowseButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cssNanoCliPathBrowseButton)
-                .addContainerGap())
+                .addContainerGap(182, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(cssNanoLabel)
-                .addComponent(cssNanoCliPathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(cssNanoCliFolderBrowseButton)
-                .addComponent(cssNanoCliPathBrowseButton))
+            .addComponent(cssNanoLabel)
         );
 
         org.openide.awt.Mnemonics.setLocalizedText(preExtensionCSS_Label, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.preExtensionCSS_Label.text")); // NOI18N
@@ -297,28 +257,6 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    @NbBundle.Messages("CssNanoCliOptionsPanel.executable.notFound=No CSSNano CLI executable found.")
-    private void cssNanoCliPathBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cssNanoCliPathBrowseButtonActionPerformed
-        List<String> cssNanoCliPaths = FileUtils.findFileOnUsersPath(CssNanoCliExecutable.CSS_NANO_CLI_NAME);
-
-        if (cssNanoCliPaths.isEmpty()) {
-            StatusDisplayer.getDefault().setStatusText(Bundle.CssNanoCliOptionsPanel_executable_notFound());
-        } else {
-            cssNanoCliPathTextField.setText(cssNanoCliPaths.get(0));
-        }
-    }//GEN-LAST:event_cssNanoCliPathBrowseButtonActionPerformed
-
-    @NbBundle.Messages("CssNanoCliOptionsPanel.browse.title=Select CSSNano CLI")
-    private void cssNanoCliFolderBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cssNanoCliFolderBrowseButtonActionPerformed
-        File file = new FileChooserBuilder(CssOptionsPanel.class)
-                .setFilesOnly(true)
-                .setTitle("Bundle.CssNanoCliOptionsPanel_browse_title()")
-                .showOpenDialog();
-        if (file != null) {
-            cssNanoCliPathTextField.setText(file.getAbsolutePath());
-        }
-    }//GEN-LAST:event_cssNanoCliFolderBrowseButtonActionPerformed
-
 //    void load() {
 //        String ngCli = NbPreferences.forModule(CssOptionsPanel.class).get("ngCliExecutableLocation", "");
 //        cssNanoCliPathTextField.setText(ngCli);
@@ -333,9 +271,6 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox autoMinifyCSS;
-    private javax.swing.JButton cssNanoCliFolderBrowseButton;
-    private javax.swing.JButton cssNanoCliPathBrowseButton;
-    private javax.swing.JTextField cssNanoCliPathTextField;
     private javax.swing.JLabel cssNanoLabel;
     private javax.swing.JLabel extLabel;
     protected javax.swing.JEditorPane headerEditorPaneCSS;
