@@ -3,7 +3,7 @@ package org.netbeans.minifierbeans.util.source.minify.shortkey;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.netbeans.minifierbeans.ui.MinifyProperty;
-import org.netbeans.minifierbeans.util.source.minify.CSSMinify;
+import org.netbeans.minifierbeans.css.CSSMinify;
 import org.netbeans.minifierbeans.util.source.minify.HTMLMinify;
 import org.netbeans.minifierbeans.util.source.minify.JSMinify;
 import org.netbeans.minifierbeans.util.source.minify.Minify;
