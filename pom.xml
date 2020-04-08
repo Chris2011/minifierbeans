@@ -7,6 +7,14 @@
     <version>3.0.0-SNAPSHOT</version>
     <packaging>nbm</packaging>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/packages/node_modules/**</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.netbeans.utilities</groupId>
@@ -31,6 +39,39 @@
                     <archive>
                         <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.8.0</version>
+                <executions>
+                    <execution>
+                        <id>install node and yarn</id>
+                        <goals>
+                            <goal>install-node-and-yarn</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>yarn install</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                    </execution>
+<!--                    <execution>
+                        <id>yarn run build</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run build-prod</arguments>
+                        </configuration>
+                    </execution>-->
+                </executions>
+                <configuration>
+                    <nodeVersion>v10.16.0</nodeVersion>
+                    <yarnVersion>v1.16.0</yarnVersion>
+                    <workingDirectory>src/main/resources/org/chrisle/netbeans/plugins/nbscratchfile/ui</workingDirectory>
                 </configuration>
             </plugin>
         </plugins>
