@@ -39,7 +39,9 @@ Also optimize by compressing image PNG/JPEG (Currently Supported format) and pro
 ##### 12- Image Base64 Encoder/Decoder
 ##### 13- Image PNG/JPEG Compress (Currently Supported format)
 
-<img src="http://plugins.netbeans.org/data/images/1385563254_Final.png">
+![Minifierbeans Final](./screenshots/minifierbeans-final.jpg)
+
+![Minifierbeans all tabs](./screenshots/minifierbeans-all-tabs.png)
 
 
 ## Changelog
