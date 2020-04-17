@@ -11,62 +11,75 @@ import org.netbeans.api.annotations.common.CheckForNull;
 import org.netbeans.api.annotations.common.NullAllowed;
 import org.netbeans.api.extexecution.ExecutionDescriptor;
 import org.netbeans.api.project.Project;
-import org.netbeans.api.project.ProjectUtils;
 import org.netbeans.minifierbeans.ExternalExecutable;
-import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
 
-public class CssNanoCliExecutable {
-    public static final String POST_CSS_CLI_NAME = "\\src\\main\\resources\\org\\netbeans\\minifierbeans\\packages\\node_modules\\postcss-cli\\bin\\postcss";
+public class PostCssCliExecutable {
+    public static final String POST_CSS_CLI_NAME;
+    
+    private static final String OUTPUT_FILE_PARAM = "-o"; // NOI18N
 
     protected final Project project;
-    protected final String cssNanoCliPath;
+    protected final String postCssPath;
+    
+    static {
+        if (Utilities.isWindows()) {
+//            POST_CSS_CLI_NAME = "/org/netbeans/minifierbeans/packages/postcss.cmd"; // NOI18N
+            POST_CSS_CLI_NAME = "C:/Projekte/NetBeans Plugins/Minifierbeans/src/main/resources/org/netbeans/minifierbeans/packages/postcss.cmd"; // NOI18N
+        } else {
+            POST_CSS_CLI_NAME = "/org/netbeans/minifierbeans/packages/postcss"; // NOI18N
+        }
+    }
 
     private static final String OPTIONS_PATH = "HTML5/Minifier";
 
-    CssNanoCliExecutable(String cssNanoCliPath, @NullAllowed Project project) {
-        assert cssNanoCliPath != null;
+    PostCssCliExecutable(String postCssCliPath, @NullAllowed Project project) {
+        assert postCssCliPath != null;
 
-        this.cssNanoCliPath = cssNanoCliPath;
+        this.postCssPath = postCssCliPath;
         this.project = project;
     }
 
     @CheckForNull
-    public static CssNanoCliExecutable getDefault(@NullAllowed Project project, boolean showOptions) {
+    public static PostCssCliExecutable getDefault(@NullAllowed Project project) {
         return createExecutable(POST_CSS_CLI_NAME, project);
     }
 
-    private static CssNanoCliExecutable createExecutable(String cssNanoCli, Project project) {
+    private static PostCssCliExecutable createExecutable(String cssNanoCli, Project project) {
         if (Utilities.isMac()) {
-            return new CssNanoCliExecutable.MacCssNanoCliExecutable(cssNanoCli, project);
+            return new PostCssCliExecutable.MacCssNanoCliExecutable(cssNanoCli, project);
         }
-        return new CssNanoCliExecutable(cssNanoCli, project);
+        return new PostCssCliExecutable(cssNanoCli, project);
     }
 
     String getCommand() {
-        return cssNanoCliPath;
+        return postCssPath;
     }
 
     @NbBundle.Messages({
         "# {0} - project name",
         "CssNanoCliExecutable.generate=CSSNano CLI ({0})",})
-    public Future<Integer> generate(FileObject target, boolean less) {
+    public Future<Integer> generate(File inputFile, File outputFile) {
         assert !EventQueue.isDispatchThread();
         assert project != null;
 
-        String projectName = ProjectUtils.getInformation(project).getDisplayName();
-        Future<Integer> task = getExecutable(Bundle.CssNanoCliExecutable_generate(projectName))
-                .additionalParameters(getGenerateParams(target, less))
-                .run(getDescriptor());
+//        String projectName = ProjectUtils.getInformation(project).getDisplayName();
+//        Future<Integer> task = getExecutable(Bundle.CssNanoCliExecutable_generate(projectName))
 
-        assert task != null : cssNanoCliPath;
+        Future<Integer> task = getExecutable("I do smth")
+                .additionalParameters(getGenerateParams(inputFile, outputFile))
+                .run(getDescriptor());
+        
+
+        assert task != null : postCssPath;
         return task;
     }
 
     private ExternalExecutable getExecutable(String title) {
         assert title != null;
+
         return new ExternalExecutable(getCommand())
                 .workDir(getWorkDir())
                 .displayName(title)
@@ -76,17 +89,18 @@ public class CssNanoCliExecutable {
 
     private ExecutionDescriptor getDescriptor() {
         assert project != null;
+
         return ExternalExecutable.DEFAULT_EXECUTION_DESCRIPTOR
                 .showSuspended(true)
                 .optionsPath(OPTIONS_PATH)
                 .outLineBased(true)
-                .errLineBased(true)
-                .postExecution(new Runnable() {
-                    @Override
-                    public void run() {
-                        project.getProjectDirectory().refresh();
-                    }
-                });
+                .errLineBased(true);
+//                .postExecution(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        project.getProjectDirectory().refresh();
+//                    }
+//                });
     }
 
     private File getWorkDir() {
@@ -101,9 +115,12 @@ public class CssNanoCliExecutable {
         return workDir;
     }
 
-    private List<String> getGenerateParams(FileObject target, boolean less) {
-        List<String> params = new ArrayList<String>(3);
-        params.add(FileUtil.toFile(target).getAbsolutePath());
+    private List<String> getGenerateParams(File inputFile, File outputFile) {
+        List<String> params = new ArrayList<>(3);
+
+        params.add(inputFile.getAbsolutePath());
+        params.add(OUTPUT_FILE_PARAM);
+        params.add(outputFile.getAbsolutePath());
 
         return getParams(params);
     }
@@ -115,7 +132,7 @@ public class CssNanoCliExecutable {
     }
 
     //~ Inner classes
-    private static final class MacCssNanoCliExecutable extends CssNanoCliExecutable {
+    private static final class MacCssNanoCliExecutable extends PostCssCliExecutable {
 
         private static final String BASH_COMMAND = "/bin/bash -lc"; // NOI18N
 
@@ -132,7 +149,7 @@ public class CssNanoCliExecutable {
         List<String> getParams(List<String> params) {
             StringBuilder sb = new StringBuilder(200);
             sb.append("\""); // NOI18N
-            sb.append(cssNanoCliPath);
+            sb.append(postCssPath);
             sb.append("\" \""); // NOI18N
             sb.append(StringUtils.implode(super.getParams(params), "\" \"")); // NOI18N
             sb.append("\""); // NOI18N

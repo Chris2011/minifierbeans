@@ -10,9 +10,9 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <excludes>
+<!--                <excludes>
                     <exclude>**/packages/node_modules/**</exclude>
-                </excludes>
+                </excludes>-->
             </resource>
         </resources>
         <plugins>
@@ -71,7 +71,7 @@
                 <configuration>
                     <nodeVersion>v10.16.0</nodeVersion>
                     <yarnVersion>v1.16.0</yarnVersion>
-                    <workingDirectory>src/main/resources/org/chrisle/netbeans/plugins/nbscratchfile/ui</workingDirectory>
+                    <workingDirectory>src/main/resources/org/netbeans/minifierbeans/packages</workingDirectory>
                 </configuration>
             </plugin>
         </plugins>

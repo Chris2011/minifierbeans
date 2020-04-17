@@ -12,7 +12,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import org.netbeans.minifierbeans.css.CssNanoCliExecutable;
+import org.netbeans.minifierbeans.css.PostCssCliExecutable;
 import org.netbeans.minifierbeans.css.FileUtils;
 import org.netbeans.minifierbeans.project.ui.options.ProjectOptionsPanel;
 import org.netbeans.minifierbeans.ui.MinifyProperty;
