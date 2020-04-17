@@ -1,6 +1,6 @@
 # MinifierBeans 
 
-[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Version](https://img.shields.io/badge/version-1.5.0-green.svg) ![Contributors](https://img.shields.io/github/contributors/chris2011/readmeinprojectview.svg) ![Downloads](https://img.shields.io/github/downloads/chris2011/readmeinprojectview/total.svg)
+[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Version](https://img.shields.io/badge/version-2.6.0-green.svg) ![Contributors](https://img.shields.io/github/contributors/chris2011/readmeinprojectview.svg) ![Downloads](https://img.shields.io/github/downloads/chris2011/readmeinprojectview/total.svg)
 
 
 ## Description
@@ -39,7 +39,9 @@ Also optimize by compressing image PNG/JPEG (Currently Supported format) and pro
 ##### 12- Image Base64 Encoder/Decoder
 ##### 13- Image PNG/JPEG Compress (Currently Supported format)
 
-<img src="http://plugins.netbeans.org/data/images/1385563254_Final.png">
+![Minifierbeans Final](./screenshots/minifierbeans-final.jpg)
+
+![Minifierbeans all tabs](./screenshots/minifierbeans-all-tabs.png)
 
 
 ## Changelog
