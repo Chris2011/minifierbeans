@@ -1,6 +1,6 @@
 # MinifierBeans 
 
-[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Version](https://img.shields.io/badge/version-2.6.0-green.svg) ![Contributors](https://img.shields.io/github/contributors/chris2011/readmeinprojectview.svg) ![Downloads](https://img.shields.io/github/downloads/chris2011/readmeinprojectview/total.svg)
+[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Version](https://img.shields.io/badge/version-2.5.1-green.svg) ![Contributors](https://img.shields.io/github/contributors/chris2011/readmeinprojectview.svg) ![Downloads](https://img.shields.io/github/downloads/chris2011/readmeinprojectview/total.svg)
 
 
 ## Description
@@ -51,7 +51,7 @@ See [Changelog](./Changelog.md) for all information
 
 ## NetBeans Compatibility
 
-Version < 2.3.0 is compatible to NetBeans 8.2  
+Version < 2.3.0 is compatible to NetBeans 8.2 (Which is not supported anymore)
 Version >= 2.5.1 is compatible to Apache NetBeans >= 9.0  
   
 Plugin is available at http://plugins.netbeans.org/plugin/49666/minifierbeans
