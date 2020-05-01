@@ -1,5 +1,5 @@
 /nbproject/private/
 /build/
 /target/
-/src/main/resources/org/netbeans/minifierbeans/packages/node_modules
-/src/main/resources/org/netbeans/minifierbeans/packages/node
+/custom-packages/node_modules
+/custom-packages/node
