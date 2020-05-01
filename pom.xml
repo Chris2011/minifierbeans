@@ -71,7 +71,7 @@
                 <configuration>
                     <nodeVersion>v10.16.0</nodeVersion>
                     <yarnVersion>v1.16.0</yarnVersion>
-                    <workingDirectory>src/main/resources/org/netbeans/minifierbeans/packages</workingDirectory>
+                    <workingDirectory>custom-packages</workingDirectory>
                 </configuration>
             </plugin>
         </plugins>
