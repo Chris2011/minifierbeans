@@ -18,16 +18,12 @@ package org.netbeans.minifierbeans.css;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import javax.swing.JOptionPane;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.api.project.FileOwnerQuery;
@@ -58,7 +54,6 @@ import org.openide.windows.TopComponent;
 })
 @Messages("CTL_CSSMinify=Minify CSS")
 public final class CSSMinify implements ActionListener {
-
     private final DataObject context;
     private final static RequestProcessor RP = new RequestProcessor("CSSMinify", 1, true);
 
@@ -93,30 +88,6 @@ public final class CSSMinify implements ActionListener {
         theTask.schedule(0);
     }
 
-//    private class ProcessLaunch implements Callable<Process> {
-//
-//        private final File folder;
-//        private final String projectName;
-//
-//        public ProcessLaunch(File folder, String projectName) {
-//            this.folder = folder;
-//            this.projectName = projectName;
-//        }
-//
-//        @Override
-//        public Process call() throws Exception {
-//            final String appPath = PostCssCliExecutable.POST_CSS_CLI_NAME;
-//            ProcessBuilder pb = new ProcessBuilder(appPath, "new", projectName);
-//
-//            System.out.println(String.format("Execute \"%s\" new %s in \"%s\"", appPath, projectName, folder));
-//
-//            pb.directory(folder); //NOI18N
-//            pb.redirectErrorStream(true);
-////            pb.redirectOutput(ProcessBuilder.Redirect.)
-//
-//            return pb.start();
-//        }
-//    }
     private static void cssMinify(DataObject context, String content, boolean notify) {
         Project project = TopComponent.getRegistry().getActivated().getLookup().lookup(Project.class);
         FileObject file = context.getPrimaryFile();
@@ -135,41 +106,25 @@ public final class CSSMinify implements ActionListener {
             } else {
                 outputFilePath = inputFilePath;
             }
-            //                if (content != null) {
-////                    minifyFileResult = util.compressContent(inputFilePath, content, "text/css", outputFilePath, minifyProperty);
-//                } else {
-////                    minifyFileResult = util.compress(inputFilePath, "text/css", outputFilePath, minifyProperty);
-//                }
+
             File inputFile = new File(inputFilePath);
             File outputFile = new File(outputFilePath);
             minifyFileResult.setInputFileSize(inputFile.length());
-//                out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
-//                CssCompressor compressor = new CssCompressor(in);
+
             StringWriter outputWriter = new StringWriter();
-//                compressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
+
             outputWriter.flush();
-//                if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderCSS())) {
-//                    out.write(outputWriter.toString());
-//                } else {
-//                    out.write(MinifyProperty.getInstance().getHeaderCSS() + "\n" + outputWriter.toString());
-//                }
-//                outputWriter.close();
+
             if (project == null) {
                 project = FileOwnerQuery.getOwner(file);
 
                 PostCssCliExecutable postCssCliExecutable = PostCssCliExecutable.getDefault(project);
-
                 Future<Integer> task = postCssCliExecutable.generate(inputFile, outputFile);
 
                 try {
                     task.get(1, TimeUnit.MINUTES);
 
                     minifyFileResult.setOutputFileSize(outputFile.length());
-                    if (minifyProperty.isAppendLogToFile()) {
-//                            out.append("\n<!--Size: " + minifyFileResult.getInputFileSize() + "=>"
-//                                    + minifyFileResult.getOutputFileSize() + "Bytes "
-//                                    + "\n Saved " + minifyFileResult.getSavedPercentage() + "%-->");
-                    }
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 } catch (ExecutionException | TimeoutException ex) {
@@ -185,131 +140,5 @@ public final class CSSMinify implements ActionListener {
                         + "CSS Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-//        try {
-//        } catch (HeadlessException | IOException ex) {
-//            Exceptions.printStackTrace(ex);
-//        }
-//        return () -> {
-        //            final ProgressHandle ph = ProgressHandle.createHandle("Creating project via angular-cli...");
-        //
-        //            try {
-        //                ph.start();
-        //
-        //                File dirF = FileUtil.normalizeFile(parentLocation);
-        //
-        //                ExecutionDescriptor descriptor = new ExecutionDescriptor()
-        //                        .controllable(true)
-        //                        .frontWindow(true)
-        //                        // disable rerun
-        //                        .rerunCondition(new ExecutionDescriptor.RerunCondition() {
-        //                            @Override
-        //                            public void addChangeListener(ChangeListener cl) {
-        //                            }
-        //
-        //                            @Override
-        //                            public void removeChangeListener(ChangeListener cl) {
-        //                            }
-        //
-        //                            @Override
-        //                            public boolean isRerunPossible() {
-        //                                return false;
-        //                            }
-        //                        })
-        //                        // we handle the progress ourself
-        //                        .showProgress(false);
-        //
-        //                // integrate as subtask in the same progress bar
-        //                ph.progress(String.format("Executing 'ng new %s'", projectName));
-        //
-        //                ExecutionService exeService = ExecutionService.newService(new ProcessLaunch(parentLocation, projectName),
-        //                        descriptor, String.format("Executing 'ng new %s'", projectName));
-        //                Integer exitCode = null;
-        //
-        //                // this will run the process
-        //                Future<Integer> processFuture = exeService.run();
-        //
-        //                try {
-        //                    // wait for end of execution of shell command
-        //                    exitCode = processFuture.get();
-        //                } catch (InterruptedException | ExecutionException ex) {
-        //                    NotificationDisplayer.getDefault().notify("Angular CLI execution was aborted", NotificationDisplayer.Priority.HIGH.getIcon(), String.format("The execution of 'ng new %s' was aborted. Please see the IDE Log.", projectName), null);
-        //
-        //                    return;
-        //                } catch (CancellationException ex) {
-        //                    NotificationDisplayer.getDefault().notify("Angular CLI execution was canceled", NotificationDisplayer.Priority.HIGH.getIcon(), String.format("The execution of 'ng new %s' was canceled by the user.", projectName), null);
-        //
-        //                    return;
-        //                }
-        //
-        //                if (exitCode != null && exitCode != 0) {
-        //                    NotificationDisplayer.getDefault().notify("Angular CLI execution was aborted", NotificationDisplayer.Priority.HIGH.getIcon(), String.format("The execution of 'ng new %s' was aborted. Please see the IDE Log.", projectName), null);
-        //
-        //                    return;
-        //                }
-        //
-        //                if (exitCode != null && exitCode == 0) {
-        //                    NotificationDisplayer.getDefault().notify(String.format("Project %s was successfully created", projectName), NotificationDisplayer.Priority.HIGH.getIcon(), String.format("The execution of 'ng new %s' was canceled by the user.", projectName), null);
-        //
-        //                    ph.progress("Opening project");
-        //
-        //                    FileObject dir = FileUtil.toFileObject(projectDir);
-        //                    dir.refresh();
-        //                    // TODO show error and abort if generation failed (f.e. missing package.json whatever)
-        //
-        //                    Project p = FileOwnerQuery.getOwner(dir);
-        //
-        //                    if (null != p) {
-        //                        OpenProjects.getDefault().open(new Project[]{p}, true, true);
-        //                    } else {
-        //                        // TODO show error and abort if no project found (can happen when JS plugins are disabled)
-        //                    }
-        //                }
-        //            } finally {
-        //                ph.finish();
-        //            }
-        //        };
     }
 }

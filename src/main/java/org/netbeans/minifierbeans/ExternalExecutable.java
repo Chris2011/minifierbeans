@@ -89,15 +89,10 @@ public final class ExternalExecutable {
      * @param command command to parse, can be {@code null}.
      */
     public ExternalExecutable(String command) {
-        JOptionPane.showMessageDialog(null, command);
         Pair<String, List<String>> parsedCommand = parseCommand(command);
         executable = parsedCommand.first();
         parameters = parsedCommand.second();
         this.command = command.trim();
-        
-        JOptionPane.showMessageDialog(null, executable);
-        JOptionPane.showMessageDialog(null, parameters);
-        JOptionPane.showMessageDialog(null, this.command);
     }
 
     public static Pair<String, List<String>> parseCommand(String command) {

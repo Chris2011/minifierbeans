@@ -36,19 +36,19 @@ public class MinifyProperty implements Serializable {
     private String headerJSON = "";
 
     private boolean newJSFile = true;
-    private String preExtensionJS = "min";
+    private String preExtensionJS = ".min";
     private boolean jsObfuscate = true;//munge
     private boolean preserveSemicolon = false;
     private boolean newCSSFile = true;
-    private String preExtensionCSS = "min";
+    private String preExtensionCSS = ".min";
     private boolean newHTMLFile = true;
-    private String preExtensionHTML = "min";
+    private String preExtensionHTML = ".min";
     private boolean buildInternalJSMinify = true;
     private boolean buildInternalCSSMinify = true;
     private boolean newXMLFile = true;
-    private String preExtensionXML = "min";
+    private String preExtensionXML = ".min";
     private boolean newJSONFile = true;
-    private String preExtensionJSON = "min";
+    private String preExtensionJSON = ".min";
 
     private boolean separatBuild = false;
     private boolean buildJSMinify = true;
@@ -85,7 +85,6 @@ public class MinifyProperty implements Serializable {
     public void store() {
         Preferences prefs = NbPreferences.forModule(DummyCorePreference.class);
 //        prefs.put("separatorJS", separatorJS != null ? separatorJS.toString() : null);
-//        prefs.put("separatorCSS", separatorCSS != null ? separatorCSS.toString() : null);
 //        prefs.put("separatorHTML", separatorHTML != null ? separatorHTML.toString() : null);
 //        prefs.put("separatorXML", separatorXML != null ? separatorXML.toString() : null);
 //        prefs.put("separatorJSON", separatorJSON != null ? separatorJSON.toString() : null);
@@ -113,7 +112,6 @@ public class MinifyProperty implements Serializable {
         Preferences prefs = NbPreferences.forModule(DummyCorePreference.class);
         Class<?> clazz = this.getClass();
 //        separatorJS = prefs.get("separatorJS", separatorJS.toString()).toCharArray()[0];
-//        separatorCSS = prefs.get("separatorCSS", separatorCSS.toString()).toCharArray()[0];
 //        separatorHTML = prefs.get("separatorHTML", separatorHTML.toString()).toCharArray()[0];
 //        separatorXML = prefs.get("separatorXML", getSeparatorXML().toString()).toCharArray()[0];
 //        separatorJSON = prefs.get("separatorJSON", getSeparatorJSON().toString()).toCharArray()[0];
