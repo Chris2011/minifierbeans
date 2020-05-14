@@ -20,16 +20,17 @@ public class PostCssCliExecutable {
     public static final String POST_CSS_CLI_NAME;
     
     private static final String OUTPUT_FILE_PARAM = "-o"; // NOI18N
+    private static final String CONFIG_DIR_PARAM = "--config"; // NOI18N
+    private static final String CONFIG_DIR = System.getProperty("user.home") + "/.netbeans/minifierbeans/custom-packages";
 
     protected final Project project;
     protected final String postCssPath;
     
     static {
         if (Utilities.isWindows()) {
-//            POST_CSS_CLI_NAME = "/org/netbeans/minifierbeans/packages/postcss.cmd"; // NOI18N
-            POST_CSS_CLI_NAME = "C:/Projekte/NetBeans Plugins/Minifierbeans/src/main/resources/org/netbeans/minifierbeans/packages/postcss.cmd"; // NOI18N
+            POST_CSS_CLI_NAME = CONFIG_DIR + "/postcss.cmd"; // NOI18N
         } else {
-            POST_CSS_CLI_NAME = "/org/netbeans/minifierbeans/packages/postcss"; // NOI18N
+            POST_CSS_CLI_NAME = CONFIG_DIR + "/postcss"; // NOI18N
         }
     }
 
@@ -68,7 +69,7 @@ public class PostCssCliExecutable {
 //        String projectName = ProjectUtils.getInformation(project).getDisplayName();
 //        Future<Integer> task = getExecutable(Bundle.CssNanoCliExecutable_generate(projectName))
 
-        Future<Integer> task = getExecutable("I do smth")
+        Future<Integer> task = getExecutable("Minification in progress")
                 .additionalParameters(getGenerateParams(inputFile, outputFile))
                 .run(getDescriptor());
         
@@ -94,13 +95,13 @@ public class PostCssCliExecutable {
                 .showSuspended(true)
                 .optionsPath(OPTIONS_PATH)
                 .outLineBased(true)
-                .errLineBased(true);
-//                .postExecution(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        project.getProjectDirectory().refresh();
-//                    }
-//                });
+                .errLineBased(true)
+                .postExecution(new Runnable() {
+                    @Override
+                    public void run() {
+                        project.getProjectDirectory().refresh();
+                    }
+                });
     }
 
     private File getWorkDir() {
@@ -118,9 +119,11 @@ public class PostCssCliExecutable {
     private List<String> getGenerateParams(File inputFile, File outputFile) {
         List<String> params = new ArrayList<>(3);
 
-        params.add(inputFile.getAbsolutePath());
+        params.add(CONFIG_DIR_PARAM);
+        params.add(CONFIG_DIR);
+        params.add(inputFile.getAbsolutePath().replace("\\", "/"));
         params.add(OUTPUT_FILE_PARAM);
-        params.add(outputFile.getAbsolutePath());
+        params.add(outputFile.getAbsolutePath().replace("\\", "/"));
 
         return getParams(params);
     }

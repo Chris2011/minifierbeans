@@ -5,21 +5,14 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.File;
-import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import org.netbeans.minifierbeans.css.PostCssCliExecutable;
-import org.netbeans.minifierbeans.css.FileUtils;
 import org.netbeans.minifierbeans.project.ui.options.ProjectOptionsPanel;
 import org.netbeans.minifierbeans.ui.MinifyProperty;
-import org.openide.awt.StatusDisplayer;
-import org.openide.filesystems.FileChooserBuilder;
 import org.openide.util.ChangeSupport;
-import org.openide.util.NbBundle;
 
 public final class CssOptionsPanel extends JPanel implements ChangeListener {
     private MinifyProperty minifyProperty;
