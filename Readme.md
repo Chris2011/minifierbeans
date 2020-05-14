@@ -39,7 +39,9 @@ Also optimize by compressing image PNG/JPEG (Currently Supported format) and pro
 ##### 12- Image Base64 Encoder/Decoder
 ##### 13- Image PNG/JPEG Compress (Currently Supported format)
 
-<img src="http://plugins.netbeans.org/data/images/1385563254_Final.png">
+![Minifierbeans Final](./screenshots/minifierbeans-final.jpg)
+
+![Minifierbeans all tabs](./screenshots/minifierbeans-all-tabs.png)
 
 
 ## Changelog
@@ -49,7 +51,7 @@ See [Changelog](./Changelog.md) for all information
 
 ## NetBeans Compatibility
 
-Version < 2.3.0 is compatible to NetBeans 8.2  
+Version < 2.3.0 is compatible to NetBeans 8.2 (Which is not supported anymore)  
 Version >= 2.5.1 is compatible to Apache NetBeans >= 9.0  
   
 Plugin is available at http://plugins.netbeans.org/plugin/49666/minifierbeans
