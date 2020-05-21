@@ -1,5 +1,19 @@
 # Changelog
 
+## Updates in 3.0.0
+
+### General
+1 - Changed UI from tabs to a tree view.
+2 - Switched from Ant to Maven.
+
+### Fixes
+1 - [#16](https://github.com/Chris2011/minifierbeans/issues/16): Avoid remove spacing for css calc().
+
+### Features
+1 - [#45](https://github.com/Chris2011/minifierbeans/issues/45): Switch from YUICompressor for NPM CSS Nano.
+2 - [#47](https://github.com/Chris2011/minifierbeans/issues/47): Change result behaviour from dialog to notifications.
+
+
 ## Updates in 2.5.1
 
 ### Fixes
