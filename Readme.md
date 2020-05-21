@@ -1,6 +1,9 @@
 # MinifierBeans 
 
-[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Version](https://img.shields.io/badge/version-2.6.0-green.svg) ![Contributors](https://img.shields.io/github/contributors/chris2011/readmeinprojectview.svg) ![Downloads](https://img.shields.io/github/downloads/chris2011/readmeinprojectview/total.svg)
+![License](https://img.shields.io/github/license/Chris2011/minifierbeans.svg)
+![Release](https://img.shields.io/github/release/Chris2011/minifierbeans.svg)
+![Contributors](https://img.shields.io/github/contributors/chris2011/minifierbeans.svg)
+![Downloads](https://img.shields.io/github/downloads/chris2011/minifierbeans/total.svg)
 
 
 ## Description
