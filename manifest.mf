@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
 AutoUpdate-Show-In-Client: true
-OpenIDE-Module: org.netbeans.minifierbeans/2
+OpenIDE-Module: io.github.chris2011.netbeans.minifierbeans/2
 OpenIDE-Module-Implementation-Version: 0
-OpenIDE-Module-Localizing-Bundle: org/netbeans/minifierbeans/Bundle.properties
+OpenIDE-Module-Localizing-Bundle: io/github/chris2011/netbeans/minifierbeans/Bundle.properties
