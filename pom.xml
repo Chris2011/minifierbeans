@@ -294,5 +294,4 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <netbeans.version>RELEASE90</netbeans.version>
     </properties>
-    <name>Minifierbeans</name>
 </project>
