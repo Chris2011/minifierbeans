@@ -15,6 +15,7 @@
  */
 package io.github.chris2011.netbeans.minifierbeans.util.source.minify;
 
+import io.github.chris2011.netbeans.minifierbeans.json.JSONMinifyUtil;
 import com.google.javascript.jscomp.CommandLineRunner;
 import com.google.javascript.jscomp.CompilationLevel;
 import com.google.javascript.jscomp.CompilerOptions;
@@ -43,7 +44,6 @@ import org.openide.filesystems.FileObject;
 import org.openide.util.Exceptions;
 
 public class MinifyUtil {
-
     MinifyResult minify(FileObject parentFile, MinifyProperty minifyProperty) {
         int directory = 0, cssFile = 0, jsFile = 0, htmlFile = 0, xmlFile = 0, jsonFile = 0;
         MinifyResult minifyResult = new MinifyResult();
@@ -259,7 +259,6 @@ public class MinifyUtil {
             compressor.setRemoveIntertagSpaces(true);
             compressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
             compressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());
-            compressor.setYuiJsNoMunge(!minifyProperty.isJsObfuscate());
             String output = compressor.compress(fromStream(in));//out, minifyProperty.getLineBreakPosition());
             in.close();
             in = null;
@@ -286,7 +285,7 @@ public class MinifyUtil {
 
         CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 
-        List<SourceFile> inputs = new ArrayList<SourceFile>();
+        List<SourceFile> inputs = new ArrayList<>();
         inputs.add(SourceFile.fromCode(inputFilename, content));
 
         try {
@@ -294,59 +293,79 @@ public class MinifyUtil {
             out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
 
             String output;
-            if (mimeType.equals("text/html")) {
-                HtmlCompressor compressor = new HtmlCompressor();
-                compressor.setRemoveIntertagSpaces(true);
-                compressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
-                compressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
-                compressor.setYuiJsNoMunge(!minifyProperty.isJsObfuscate());
-                output = compressor.compress(content);
+            switch (mimeType) {
+                case "text/html":
+                    HtmlCompressor htmlCompressor = new HtmlCompressor();
 
-                if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderHTML())) {
-                    out.write(output);
-                } else {
-                    out.write(MinifyProperty.getInstance().getHeaderHTML() + "\n" + output);
-                }
-            } else if (mimeType.equals("text/javascript")) {
-                compiler.compile(CommandLineRunner.getDefaultExterns(), inputs, options);
+                    htmlCompressor.setRemoveIntertagSpaces(true);
+                    htmlCompressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
+                    htmlCompressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
 
-                if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
-                    out.write(compiler.toSource());
-                } else {
-                    out.write(MinifyProperty.getInstance().getHeaderJS() + "\n" + compiler.toSource());
-                }
-            } else if (mimeType.equals("text/css")) {
-                Reader in = new StringReader(content);
-                CssCompressor compressor = new CssCompressor(in);
-                in.close();
-                StringWriter outputWriter = new StringWriter();
-                compressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
-                outputWriter.flush();
-                if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderCSS())) {
-                    out.write(outputWriter.toString());
-                } else {
-                    out.write(MinifyProperty.getInstance().getHeaderCSS() + "\n" + outputWriter.toString());
-                }
-                outputWriter.close();
-            } else if (mimeType.equals("text/x-json")) {
-                JSONMinifyUtil compressor = new JSONMinifyUtil();
-                output = compressor.minify(content);
-                if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJSON())) {
-                    out.write(output);
-                } else {
-                    out.write(MinifyProperty.getInstance().getHeaderJSON() + "\n" + output);
-                }
-            } else if (mimeType.equals("text/xml-mime")) {
-                XmlCompressor compressor = new XmlCompressor();
-                compressor.setRemoveIntertagSpaces(true);
-                compressor.setRemoveComments(true);
-                compressor.setEnabled(true);
-                output = compressor.compress(content);
-                if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderXML())) {
-                    out.write(output);
-                } else {
-                    out.write(MinifyProperty.getInstance().getHeaderXML() + "\n" + output);
-                }
+                    output = htmlCompressor.compress(content);
+
+                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderHTML())) {
+                        out.write(output);
+                    } else {
+                        out.write(MinifyProperty.getInstance().getHeaderHTML() + "\n" + output);
+                    }
+
+                    break;
+                case "text/javascript":
+                    // TODO: Change to Google Closure Compiler.
+                    compiler.compile(CommandLineRunner.getDefaultExterns(), inputs, options);
+
+                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
+                        out.write(compiler.toSource());
+                    } else {
+                        out.write(MinifyProperty.getInstance().getHeaderJS() + "\n" + compiler.toSource());
+                    }
+                    
+                    break;
+                case "text/css":
+                    // TODO: Change to CSSNano.
+                    Reader in = new StringReader(content);
+                    CssCompressor cssCompressor = new CssCompressor(in);
+                    in.close();
+                    StringWriter outputWriter = new StringWriter();
+                    cssCompressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
+                    outputWriter.flush();
+                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderCSS())) {
+                        out.write(outputWriter.toString());
+                    } else {
+                        out.write(MinifyProperty.getInstance().getHeaderCSS() + "\n" + outputWriter.toString());
+                    }
+                    outputWriter.close();
+
+                    break;
+                case "text/x-json":
+                    JSONMinifyUtil jsonCompressor = new JSONMinifyUtil();
+                    output = jsonCompressor.minify(content);
+
+                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJSON())) {
+                        out.write(output);
+                    } else {
+                        out.write(MinifyProperty.getInstance().getHeaderJSON() + "\n" + output);
+                    }
+
+                    break;
+                case "text/xml-mime":
+                    XmlCompressor xmlCompressor = new XmlCompressor();
+
+                    xmlCompressor.setRemoveIntertagSpaces(true);
+                    xmlCompressor.setRemoveComments(true);
+                    xmlCompressor.setEnabled(true);
+
+                    output = xmlCompressor.compress(content);
+
+                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderXML())) {
+                        out.write(output);
+                    } else {
+                        out.write(MinifyProperty.getInstance().getHeaderXML() + "\n" + output);
+                    }
+                    
+                    break;
+                default:
+                    break;
             }
 
             out.flush();
@@ -370,7 +389,7 @@ public class MinifyUtil {
         
         CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 
-        List<SourceFile> inputs = new ArrayList<SourceFile>();
+        List<SourceFile> inputs = new ArrayList<>();
         inputs.add(SourceFile.fromFile(inputFilename));
 
         try {
@@ -381,47 +400,63 @@ public class MinifyUtil {
             out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
             String output;
 
-            if (mimeType.equals("text/html")) {
-                HtmlCompressor compressor = new HtmlCompressor();
-                compressor.setRemoveIntertagSpaces(true);
-                compressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
-                compressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
-                compressor.setYuiJsNoMunge(!minifyProperty.isJsObfuscate());
+            switch (mimeType) {
+                case "text/html":
+                    HtmlCompressor htmlCompressor = new HtmlCompressor();
+                    htmlCompressor.setRemoveIntertagSpaces(true);
+                    htmlCompressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
+                    htmlCompressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
 
-                output = compressor.compress(fromStream(in));
-                out.write(MinifyProperty.getInstance().getHeaderHTML() + "\n" + output);
-            } else if (mimeType.equals("text/javascript")) {
-                compiler.compile(CommandLineRunner.getDefaultExterns(), inputs, options);
+                    output = htmlCompressor.compress(fromStream(in));
+                    out.write(MinifyProperty.getInstance().getHeaderHTML() + "\n" + output);
 
-                if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
-                    out.write(compiler.toSource());
-                } else {
-                    out.write(MinifyProperty.getInstance().getHeaderJS() + "\n" + compiler.toSource());
-                }
-            } else if (mimeType.equals("text/css")) {
-                CssCompressor compressor = new CssCompressor(in);
-                StringWriter outputWriter = new StringWriter();
-                compressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
-                outputWriter.flush();
+                    break;
+                case "text/javascript":
+                    // TODO: Change to Google Closure Compiler.
+                    compiler.compile(CommandLineRunner.getDefaultExterns(), inputs, options);
 
-                if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
-                    out.write(outputWriter.toString());
-                } else {
-                    out.write(MinifyProperty.getInstance().getHeaderCSS() + "\n" + outputWriter.toString());
-                }
+                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
+                        out.write(compiler.toSource());
+                    } else {
+                        out.write(MinifyProperty.getInstance().getHeaderJS() + "\n" + compiler.toSource());
+                    }
+                    
+                    break;
+                case "text/css":
+                    // TODO: Change to CSSNano.
+                    CssCompressor cssCompressor = new CssCompressor(in);
+                    StringWriter outputWriter = new StringWriter();
 
-                outputWriter.close();
-            } else if (mimeType.equals("text/x-json")) {
-                JSONMinifyUtil compressor = new JSONMinifyUtil();
-                output = compressor.minify(fromStream(in));
-                out.write(MinifyProperty.getInstance().getHeaderJSON() + "\n" + output);
-            } else if (mimeType.equals("text/xml-mime")) {
-                XmlCompressor compressor = new XmlCompressor();
-                compressor.setRemoveIntertagSpaces(true);
-                compressor.setRemoveComments(true);
-                compressor.setEnabled(true);
-                output = compressor.compress(fromStream(in));
-                out.write(MinifyProperty.getInstance().getHeaderXML() + "\n" + output);
+                    cssCompressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
+                    outputWriter.flush();
+                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
+                        out.write(outputWriter.toString());
+                    } else {
+                        out.write(MinifyProperty.getInstance().getHeaderCSS() + "\n" + outputWriter.toString());
+                    }       outputWriter.close();
+
+                    break;
+                case "text/x-json":
+                    JSONMinifyUtil jsonCompressor = new JSONMinifyUtil();
+
+                    output = jsonCompressor.minify(fromStream(in));
+                    out.write(MinifyProperty.getInstance().getHeaderJSON() + "\n" + output);
+
+                    break;
+                case "text/xml-mime":
+                    XmlCompressor xmlCompressor = new XmlCompressor();
+
+                    xmlCompressor.setRemoveIntertagSpaces(true);
+                    xmlCompressor.setRemoveComments(true);
+                    xmlCompressor.setEnabled(true);
+
+                    output = xmlCompressor.compress(fromStream(in));
+
+                    out.write(MinifyProperty.getInstance().getHeaderXML() + "\n" + output);
+
+                    break;
+                default:
+                    break;
             }
 
             in.close();
@@ -488,10 +523,6 @@ public class MinifyUtil {
         extIndex = fileName.lastIndexOf(preExt);
         
         return extIndex > p;
-        
-        // HINT: Old code.
-//        String[] namePaths = fileName.split("\\" + preExt);
-//        return (namePaths.length > 1 && namePaths[namePaths.length - 1].equals(preExt));
     }
 
     public static String fromStream(Reader in) throws IOException {

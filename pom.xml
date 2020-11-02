@@ -5,7 +5,7 @@
     <!-- START Common stuff, can be copied and changed for other plugins -->
     <groupId>io.github.chris2011.netbeans.minifierbeans</groupId>
     <artifactId>Minifierbeans</artifactId>
-    <version>3.0.0</version>
+    <version>3.1.0</version>
     <packaging>nbm</packaging>
     <name>Minifierbeans</name>
     <url>https://github.com/Chris2011/minifierbeans</url>
@@ -85,7 +85,7 @@
                     </archive>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>1.6</version>
@@ -98,7 +98,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
@@ -126,6 +126,17 @@
         </plugins>
     </build>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20200518</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vdurmont</groupId>
+            <artifactId>semver4j</artifactId>
+            <version>3.1.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.mozilla/javascript -->
         <dependency>
             <groupId>org.mozilla</groupId>

@@ -13,23 +13,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package io.github.chris2011.netbeans.minifierbeans.css;
+package io.github.chris2011.netbeans.minifierbeans.javascript;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import org.netbeans.api.progress.ProgressHandle;
+import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
+import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyFileResult;
+import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyUtil;
 import java.io.StringWriter;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import org.netbeans.api.progress.ProgressHandle;
-import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.api.project.FileOwnerQuery;
 import org.netbeans.api.project.Project;
-import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
-import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyFileResult;
-import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyUtil;
 import org.openide.loaders.DataObject;
 
 import org.openide.awt.ActionRegistration;
@@ -45,20 +44,21 @@ import org.openide.util.TaskListener;
 import org.openide.windows.TopComponent;
 
 @ActionID(category = "Build",
-        id = "org.netbeans.util.source.minify.CSSMinify")
-@ActionRegistration(iconBase = "io/github/chris2011/netbeans/minifierbeans/compress.png",
-        displayName = "#CTL_CSSMinify")
+        id = "org.netbeans.util.source.minify.JSMinify")
+@ActionRegistration(iconBase = "io/github/chris2011/netbeans/minifierbeans/util/source/minify/compress.png",
+        displayName = "#CTL_JSMinify")
 @ActionReferences({
-    @ActionReference(path = "Loaders/text/css/Actions", position = 300, separatorBefore = 250, separatorAfter = 350)
+    @ActionReference(path = "Loaders/text/javascript/Actions", position = 200, separatorBefore = 150, separatorAfter = 250)
 })
-@Messages("CTL_CSSMinify=Minify CSS")
-public final class CSSMinify implements ActionListener {
-    private final DataObject context;
-    private final static RequestProcessor RP = new RequestProcessor("CSSMinify", 1, true);
+@Messages("CTL_JSMinify=Minify JS")
+public final class JSMinify implements ActionListener {
 
-    public CSSMinify(DataObject context) {
+    private final DataObject context;
+
+    public JSMinify(DataObject context) {
         this.context = context;
     }
+    private final static RequestProcessor RP = new RequestProcessor("JSMinify", 1, true);
 
     @Override
     public void actionPerformed(ActionEvent ev) {
@@ -69,12 +69,12 @@ public final class CSSMinify implements ActionListener {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                cssMinify(context, content, notify);
+                jsMinify(context, content, notify);
             }
         };
 
         final RequestProcessor.Task theTask = RP.create(runnable);
-        final ProgressHandle ph = ProgressHandleFactory.createHandle("Minifying CSS " + context.getPrimaryFile().getName(), theTask);
+        final ProgressHandle ph = ProgressHandle.createHandle("Minifying JS " + context.getPrimaryFile().getName(), theTask);
 
         theTask.addTaskListener(new TaskListener() {
             @Override
@@ -87,7 +87,7 @@ public final class CSSMinify implements ActionListener {
         theTask.schedule(0);
     }
 
-    private static void cssMinify(DataObject context, String content, boolean notify) {
+    private static void jsMinify(DataObject context, String content, boolean notify) {
         Project project = TopComponent.getRegistry().getActivated().getLookup().lookup(Project.class);
         FileObject file = context.getPrimaryFile();
 
@@ -95,12 +95,12 @@ public final class CSSMinify implements ActionListener {
         MinifyUtil util = new MinifyUtil();
         MinifyFileResult minifyFileResult = new MinifyFileResult();
 
-        if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionCSS())) {
+        if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionJS())) {
             String inputFilePath = file.getPath();
             String outputFilePath;
 
-            if (minifyProperty.isNewCSSFile() && minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty()) {
-                outputFilePath = file.getParent().getPath() + "/" + file.getName() + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
+            if (minifyProperty.isNewJSFile() && minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()) {
+                outputFilePath = file.getParent().getPath() + "/" + file.getName() + minifyProperty.getPreExtensionJS() + "." + file.getExt();
             } else {
                 outputFilePath = inputFilePath;
             }
@@ -117,8 +117,8 @@ public final class CSSMinify implements ActionListener {
                 project = FileOwnerQuery.getOwner(file);
             }
 
-            PostCssCliExecutable postCssCliExecutable = PostCssCliExecutable.getDefault(project);
-            Future<Integer> task = postCssCliExecutable.generate(inputFile, outputFile);
+            GoogleClosureCompilerCliExecutable googleClosureCompilerCliExecutable = GoogleClosureCompilerCliExecutable.getDefault(project);
+            Future<Integer> task = googleClosureCompilerCliExecutable.generate(inputFile, outputFile, minifyProperty.getCompilerFlagsJS());
 
             try {
                 task.get(1, TimeUnit.MINUTES);
@@ -130,13 +130,18 @@ public final class CSSMinify implements ActionListener {
                 Exceptions.printStackTrace(ex);
             }
 
+//                if (content != null) {
+//                    minifyFileResult = util.compressContent(inputFilePath, content, "text/javascript", outputFilePath, minifyProperty);
+//                } else {
+//                    minifyFileResult = util.compress(inputFilePath, "text/javascript", outputFilePath, minifyProperty);
+//                }
             if (minifyProperty.isEnableOutputLogAlert() && notify) {
-                NotificationDisplayer.getDefault().notify("Successful CSS minification",
+                NotificationDisplayer.getDefault().notify("Successful JS minification",
                         NotificationDisplayer.Priority.NORMAL.getIcon(), String.format(
-                        "Input CSS Files Size: %s Bytes \n"
-                        + "CSS Minified Completed Successfully\n"
-                        + "After Minifying CSS Files Size: %s Bytes \n"
-                        + "CSS Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
+                        "Input JS Files Size: %s Bytes \n"
+                        + "JS Minified Completed Successfully\n"
+                        + "After Minifying JS Files Size: %s Bytes \n"
+                        + "JS Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
             }
         }
     }

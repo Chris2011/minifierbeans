@@ -13,8 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package io.github.chris2011.netbeans.minifierbeans.util.source.minify;
+package io.github.chris2011.netbeans.minifierbeans.html;
 
+import io.github.chris2011.netbeans.minifierbeans.javascript.JSMinifyClipboard;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -23,38 +24,35 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import javax.swing.JEditorPane;
 import org.mozilla.javascript.EvaluatorException;
-import org.netbeans.api.lexer.TokenHierarchy;
-import org.netbeans.api.lexer.TokenSequence;
+import org.openide.cookies.EditorCookie;
+import org.openide.nodes.Node;
+import org.openide.util.NbBundle;
+import org.openide.util.actions.CookieAction;
+import org.netbeans.api.lexer.*;
 import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
+import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyUtil;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.NotificationDisplayer;
-import org.openide.cookies.EditorCookie;
-import org.openide.nodes.Node;
-import org.openide.util.Exceptions;
-import org.openide.util.HelpCtx;
-import org.openide.util.NbBundle;
-import org.openide.util.Utilities;
-import org.openide.util.actions.CookieAction;
+import org.openide.util.*;
 
-@ActionID(
-        category = "Build",
-        id = "org.netbeans.util.source.minify.XMLMinifyClipboard"
-)
-@ActionRegistration(displayName = "#CTL_XMLMinifyClipboard", lazy = true)
+@ActionID(category = "Build",
+        id = "org.netbeans.util.source.minify.HTMLMinifyClipboard")
+@ActionRegistration(displayName = "#CTL_HTMLMinifyClipboard", lazy = true)
 @ActionReferences({
-    @ActionReference(path = "Editors/text/xml/Popup", position = 400, separatorBefore = 350, separatorAfter = 450)
+    @ActionReference(path = "Editors/text/html/Popup", position = 400, separatorBefore = 350, separatorAfter = 450)
 })
-@NbBundle.Messages("CTL_XMLMinifyClipboard=Copy as Minified XML")
-public final class XMLMinifyClipboard extends CookieAction {
+@NbBundle.Messages("CTL_HTMLMinifyClipboard=Copy as Minified HTML")
+
+public final class HTMLMinifyClipboard extends CookieAction {
     @Override
     protected final void performAction(final Node[] activatedNodes) {
-        xmlMinify(activatedNodes);
+        htmlMinify(activatedNodes);
     }
 
-    protected final void xmlMinify(final Node[] activatedNodes) {
+    protected final void htmlMinify(final Node[] activatedNodes) {
         final EditorCookie editorCookie
                 = Utilities.actionsGlobalContext().lookup(EditorCookie.class);
 
@@ -84,15 +82,14 @@ public final class XMLMinifyClipboard extends CookieAction {
                 sb.append(ts.token().text().toString());
             }
             MinifyUtil minifyUtil = new MinifyUtil();
-            minifyUtil.compressXmlInternal(new StringReader(sb.toString()), out, minifyProperty);
+            minifyUtil.compressHtmlInternal(new StringReader(sb.toString()), out, minifyProperty);
 
-            NotificationDisplayer.getDefault().notify("Successful copied", NotificationDisplayer.Priority.NORMAL.getIcon(), "Copied as minified XML source.", null);
+            NotificationDisplayer.getDefault().notify("Successful copied", NotificationDisplayer.Priority.NORMAL.getIcon(), "Copied as minified HTML source.", null);
+        } catch (EvaluatorException ex) {
+            NotificationDisplayer.getDefault().notify("Error: Copy process failed", NotificationDisplayer.Priority.HIGH.getIcon(), String.format("Invalid HTML Source Selected: \n %s", ex.getMessage()), null);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
-        } catch (EvaluatorException ex) {
-            NotificationDisplayer.getDefault().notify("Error: Copy process failed", NotificationDisplayer.Priority.HIGH.getIcon(), String.format("Invalid XML Source Selected: \n %s", ex.getMessage()), null);
         }
-
         return out.toString();
     }
 
@@ -103,7 +100,7 @@ public final class XMLMinifyClipboard extends CookieAction {
 
     @Override
     public final String getName() {
-        return NbBundle.getMessage(JSMinifyClipboard.class, "CTL_XMLMinifyClipboard");
+        return NbBundle.getMessage(JSMinifyClipboard.class, "CTL_HTMLMinifyClipboard");
     }
 
     @Override

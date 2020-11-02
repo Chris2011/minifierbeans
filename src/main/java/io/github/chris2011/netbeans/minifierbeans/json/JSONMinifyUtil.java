@@ -1,4 +1,4 @@
-package io.github.chris2011.netbeans.minifierbeans.util.source.minify;
+package io.github.chris2011.netbeans.minifierbeans.json;
 
 import java.util.ArrayList;
 import java.util.List;

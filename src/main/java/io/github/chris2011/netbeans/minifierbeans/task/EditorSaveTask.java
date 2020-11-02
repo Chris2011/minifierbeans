@@ -22,10 +22,10 @@ import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
 import org.netbeans.modules.editor.NbEditorUtilities;
 import org.netbeans.spi.editor.document.OnSaveTask;
 import io.github.chris2011.netbeans.minifierbeans.css.CSSMinify;
-import io.github.chris2011.netbeans.minifierbeans.util.source.minify.HTMLMinify;
-import io.github.chris2011.netbeans.minifierbeans.util.source.minify.JSMinify;
-import io.github.chris2011.netbeans.minifierbeans.util.source.minify.JSONMinify;
-import io.github.chris2011.netbeans.minifierbeans.util.source.minify.XMLMinify;
+import io.github.chris2011.netbeans.minifierbeans.html.HTMLMinify;
+import io.github.chris2011.netbeans.minifierbeans.javascript.JSMinify;
+import io.github.chris2011.netbeans.minifierbeans.json.JSONMinify;
+import io.github.chris2011.netbeans.minifierbeans.xml.XMLMinify;
 import org.openide.loaders.DataObject;
 import org.openide.util.Exceptions;
 
