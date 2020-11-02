@@ -1,5 +1,6 @@
 {
-    "name": "Minifierbeans",
+    "name": "minifierbeans",
+    "version": "1.0.0",
     "description": "CLIs to minify JS, CSS, HTML, XML and JSON.",
     "devDependencies": {
         "cssnano": "^4.1.10",
