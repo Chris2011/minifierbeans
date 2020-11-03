@@ -226,11 +226,11 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
         org.openide.awt.Mnemonics.setLocalizedText(closureCompilerArgumentsHintsLabel, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.closureCompilerArgumentsHintsLabel.text")); // NOI18N
 
         autoMinifyJS.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyJS, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text_1")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyJS, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text")); // NOI18N
         autoMinifyJS.setContentAreaFilled(false);
 
         newJSFile.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(newJSFile, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.newJSFile.text_1")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(newJSFile, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.newJSFile.text")); // NOI18N
         newJSFile.setToolTipText(org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.newJSFile.toolTipText")); // NOI18N
         newJSFile.setContentAreaFilled(false);
 
@@ -255,13 +255,13 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(newJSFile)
-                                .addComponent(autoMinifyJS, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(preExtensionJS_Label)
                                     .addGap(6, 6, 6)
                                     .addComponent(preExtensionJS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(extLabel)))
+                                    .addComponent(extLabel))
+                                .addComponent(autoMinifyJS))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))))
                 .addGap(6, 6, 6))
@@ -272,7 +272,7 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(closureCompilerArgumentsHintsLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 35, Short.MAX_VALUE))
                     .addComponent(closureCompilerFlagsTextField))
                 .addContainerGap())
         );
