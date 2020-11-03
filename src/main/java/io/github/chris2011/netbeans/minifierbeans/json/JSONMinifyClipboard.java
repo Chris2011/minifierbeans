@@ -26,8 +26,6 @@ import org.mozilla.javascript.EvaluatorException;
 import org.netbeans.api.lexer.TokenHierarchy;
 import org.netbeans.api.lexer.TokenSequence;
 import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
-import io.github.chris2011.netbeans.minifierbeans.javascript.JSMinifyClipboard;
-import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyUtil;
 import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyUtil;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -107,7 +105,7 @@ public final class JSONMinifyClipboard extends CookieAction {
 
     @Override
     public final String getName() {
-        return NbBundle.getMessage(JSMinifyClipboard.class, "CTL_JSONMinifyClipboard");
+        return NbBundle.getMessage(JSONMinifyClipboard.class, "CTL_JSONMinifyClipboard");
     }
 
     @Override
