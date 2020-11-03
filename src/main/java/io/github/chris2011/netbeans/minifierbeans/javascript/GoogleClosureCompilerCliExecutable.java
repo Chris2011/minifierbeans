@@ -1,6 +1,5 @@
-package io.github.chris2011.netbeans.minifierbeans.css;
+package io.github.chris2011.netbeans.minifierbeans.javascript;
 
-import io.github.chris2011.netbeans.minifierbeans.util.FileUtils;
 import io.github.chris2011.netbeans.minifierbeans.util.StringUtils;
 import java.awt.EventQueue;
 import java.io.File;
@@ -13,69 +12,68 @@ import org.netbeans.api.annotations.common.NullAllowed;
 import org.netbeans.api.extexecution.ExecutionDescriptor;
 import org.netbeans.api.project.Project;
 import io.github.chris2011.netbeans.minifierbeans.ExternalExecutable;
+import io.github.chris2011.netbeans.minifierbeans.util.FileUtils;
+import java.util.Arrays;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
 
-public class PostCssCliExecutable {
-    public static final String POST_CSS_CLI_NAME;
+public class GoogleClosureCompilerCliExecutable {
+    public static final String GOOGLE_CLOSURE_COMPILER_CLI_NAME;
     
-    private static final String OUTPUT_FILE_PARAM = "-o"; // NOI18N
-    private static final String CONFIG_DIR_PARAM = "--config"; // NOI18N
+    private static final String INPUT_FILE_PARAM = "--js"; // NOI18N
+    private static final String OUTPUT_FILE_PARAM = "--js_output_file"; // NOI18N
     private static final String CONFIG_DIR = System.getProperty("user.home") + "/.netbeans/minifierbeans/custom-packages";
 
     protected final Project project;
-    protected final String postCssPath;
+    protected final String googleClosureCompilerPath;
     
     static {
         if (Utilities.isWindows()) {
-            POST_CSS_CLI_NAME = CONFIG_DIR + "/postcss.cmd"; // NOI18N
+            GOOGLE_CLOSURE_COMPILER_CLI_NAME = CONFIG_DIR + "/google-closure-compiler.cmd"; // NOI18N
         } else {
-            POST_CSS_CLI_NAME = CONFIG_DIR + "/postcss"; // NOI18N
+            GOOGLE_CLOSURE_COMPILER_CLI_NAME = CONFIG_DIR + "/google-closure-compiler"; // NOI18N
         }
     }
 
     private static final String OPTIONS_PATH = "HTML5/Minifier";
 
-    PostCssCliExecutable(String postCssCliPath, @NullAllowed Project project) {
-        assert postCssCliPath != null;
+    GoogleClosureCompilerCliExecutable(String googleClosureCompilerCliPath, @NullAllowed Project project) {
+        assert googleClosureCompilerCliPath != null;
 
-        this.postCssPath = postCssCliPath;
+        this.googleClosureCompilerPath = googleClosureCompilerCliPath;
         this.project = project;
     }
 
     @CheckForNull
-    public static PostCssCliExecutable getDefault(@NullAllowed Project project) {
-        return createExecutable(POST_CSS_CLI_NAME, project);
+    public static GoogleClosureCompilerCliExecutable getDefault(@NullAllowed Project project) {
+        return createExecutable(GOOGLE_CLOSURE_COMPILER_CLI_NAME, project);
     }
 
-    private static PostCssCliExecutable createExecutable(String cssNanoCli, Project project) {
+    private static GoogleClosureCompilerCliExecutable createExecutable(String googleClosureCompilerCli, Project project) {
         if (Utilities.isMac()) {
-            return new PostCssCliExecutable.MacCssNanoCliExecutable(cssNanoCli, project);
+            return new GoogleClosureCompilerCliExecutable.MacGoogleClosureCompilerCliExecutable(googleClosureCompilerCli, project);
         }
-        return new PostCssCliExecutable(cssNanoCli, project);
+        return new GoogleClosureCompilerCliExecutable(googleClosureCompilerCli, project);
     }
 
     String getCommand() {
-        return postCssPath;
+        return googleClosureCompilerPath;
     }
 
     @NbBundle.Messages({
         "# {0} - project name",
-        "CssNanoCliExecutable.generate=CSSNano CLI ({0})",})
-    public Future<Integer> generate(File inputFile, File outputFile) {
+        "GoogleClosureCompilerCliExecutable.generate=Google Closure Compiler CLI ({0})",})
+    public Future<Integer> generate(File inputFile, File outputFile, String compilerFlags) {
         assert !EventQueue.isDispatchThread();
         assert project != null;
 
-//        String projectName = ProjectUtils.getInformation(project).getDisplayName();
-//        Future<Integer> task = getExecutable(Bundle.CssNanoCliExecutable_generate(projectName))
-
         Future<Integer> task = getExecutable("Minification in progress")
-                .additionalParameters(getGenerateParams(inputFile, outputFile))
+                .additionalParameters(getGenerateParams(inputFile, outputFile, compilerFlags))
                 .run(getDescriptor());
         
 
-        assert task != null : postCssPath;
+        assert task != null : googleClosureCompilerPath;
         return task;
     }
 
@@ -117,11 +115,20 @@ public class PostCssCliExecutable {
         return workDir;
     }
 
-    private List<String> getGenerateParams(File inputFile, File outputFile) {
-        List<String> params = new ArrayList<>(3);
+    private List<String> getGenerateParams(File inputFile, File outputFile, String compilerFlags) {
+        List<String> params = new ArrayList<>();
+        
+        if (!compilerFlags.isEmpty()) {
+            String[] splittedCompilerFlags = compilerFlags.split("; ");
+            
+            for (String splittedCompilerFlag : splittedCompilerFlags) {
+                String[] splittedKeyAndValue = splittedCompilerFlag.split(" ");
+                
+                params.addAll(Arrays.asList(splittedKeyAndValue));
+            }
+        }
 
-        params.add(CONFIG_DIR_PARAM);
-        params.add(CONFIG_DIR);
+        params.add(INPUT_FILE_PARAM);
         params.add(inputFile.getAbsolutePath().replace("\\", "/"));
         params.add(OUTPUT_FILE_PARAM);
         params.add(outputFile.getAbsolutePath().replace("\\", "/"));
@@ -136,12 +143,12 @@ public class PostCssCliExecutable {
     }
 
     //~ Inner classes
-    private static final class MacCssNanoCliExecutable extends PostCssCliExecutable {
+    private static final class MacGoogleClosureCompilerCliExecutable extends GoogleClosureCompilerCliExecutable {
 
         private static final String BASH_COMMAND = "/bin/bash -lc"; // NOI18N
 
-        MacCssNanoCliExecutable(String cssNanoCliPath, Project project) {
-            super(cssNanoCliPath, project);
+        MacGoogleClosureCompilerCliExecutable(String googleClosureCompileStringCliPath, Project project) {
+            super(googleClosureCompileStringCliPath, project);
         }
 
         @Override
@@ -153,10 +160,11 @@ public class PostCssCliExecutable {
         List<String> getParams(List<String> params) {
             StringBuilder sb = new StringBuilder(200);
             sb.append("\""); // NOI18N
-            sb.append(postCssPath);
+            sb.append(googleClosureCompilerPath);
             sb.append("\" \""); // NOI18N
             sb.append(StringUtils.implode(super.getParams(params), "\" \"")); // NOI18N
             sb.append("\""); // NOI18N
+
             return Collections.singletonList(sb.toString());
         }
 

@@ -1,5 +1,19 @@
 # Changelog
 
+## Updates in 3.1.0
+
+### General
+1 - Refactored code, removed old options (JS Obfuscate, will be handled later by compiler flags for the google closure compiler).
+2 - Changed the process to check the current and the remote version to update the custom-packages if needed.
+3 - Updated Readme.md.
+
+### Fixes
+1 - [#64](https://github.com/Chris2011/minifierbeans/issues/64): MissingResourceException on action Copy minified CSS.
+
+### Features
+1 - [#61](https://github.com/Chris2011/minifierbeans/issues/61): Switch from Java google closure compiler to the node implementation.
+
+
 ## Updates in 3.0.0
 
 ### General

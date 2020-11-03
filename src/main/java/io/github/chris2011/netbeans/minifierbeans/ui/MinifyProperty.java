@@ -15,41 +15,50 @@
  */
 package io.github.chris2011.netbeans.minifierbeans.ui;
 
+import io.github.chris2011.netbeans.minifierbeans.javascript.ui.options.JsOptionsPanel;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.prefs.Preferences;
 import org.openide.util.Exceptions;
+import org.openide.util.NbBundle;
 import org.openide.util.NbPreferences;
 
 public class MinifyProperty implements Serializable {
-
+    // INFO: JS Minifier
     private boolean autoMinifyJS = false;
-    private boolean autoMinifyCSS = false;
-    private boolean autoMinifyHTML = false;
-    private boolean autoMinifyXML = false;
-    private boolean autoMinifyJSON = false;
-
     private String headerJS = "";
-    private String headerCSS = "";
-    private String headerHTML = "";
-    private String headerXML = "";
-    private String headerJSON = "";
-
+    private String compilerFlagsJS = NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.closureCompilerFlagsTextField.text");
     private boolean newJSFile = true;
     private String preExtensionJS = ".min";
-    private boolean jsObfuscate = true;//munge
-    private boolean preserveSemicolon = false;
+
+    // INFO: CSS Minifier
+    private boolean autoMinifyCSS = false;
+    private String headerCSS = "";
     private boolean newCSSFile = true;
     private String preExtensionCSS = ".min";
+
+    // INFO: HTML Minifier
+    private boolean autoMinifyHTML = false;
+    private String headerHTML = "";
     private boolean newHTMLFile = true;
     private String preExtensionHTML = ".min";
     private boolean buildInternalJSMinify = true;
     private boolean buildInternalCSSMinify = true;
+
+    // INFO: XML Minifier
+    private boolean autoMinifyXML = false;
+    private String headerXML = "";
     private boolean newXMLFile = true;
     private String preExtensionXML = ".min";
+
+    // INFO: JSON Minifier
+    private boolean autoMinifyJSON = false;
+    private String headerJSON = "";
     private boolean newJSONFile = true;
     private String preExtensionJSON = ".min";
 
+//    private boolean preserveSemicolon = false;
+    // INFO: Project Minifier
     private boolean separatBuild = false;
     private boolean buildJSMinify = true;
     private boolean skipPreExtensionJS = true;
@@ -83,7 +92,7 @@ public class MinifyProperty implements Serializable {
     }
 
     public void store() {
-        Preferences prefs = NbPreferences.forModule(DummyCorePreference.class);
+        Preferences prefs = NbPreferences.forModule(MiniferBeansPreference.class);
 //        prefs.put("separatorJS", separatorJS != null ? separatorJS.toString() : null);
 //        prefs.put("separatorHTML", separatorHTML != null ? separatorHTML.toString() : null);
 //        prefs.put("separatorXML", separatorXML != null ? separatorXML.toString() : null);
@@ -109,7 +118,7 @@ public class MinifyProperty implements Serializable {
     }
 
     public void load() {
-        Preferences prefs = NbPreferences.forModule(DummyCorePreference.class);
+        Preferences prefs = NbPreferences.forModule(MiniferBeansPreference.class);
         Class<?> clazz = this.getClass();
 //        separatorJS = prefs.get("separatorJS", separatorJS.toString()).toCharArray()[0];
 //        separatorHTML = prefs.get("separatorHTML", separatorHTML.toString()).toCharArray()[0];
@@ -172,34 +181,19 @@ public class MinifyProperty implements Serializable {
         this.preExtensionJS = preExtensionJS;
     }
 
-    /**
-     * @return the jsObfuscate
-     */
-    public boolean isJsObfuscate() {
-        return jsObfuscate;
-    }
-
-    /**
-     * @param jsObfuscate the jsObfuscate to set
-     */
-    public void setJsObfuscate(boolean jsObfuscate) {
-        this.jsObfuscate = jsObfuscate;
-    }
-
-    /**
-     * @return the preserveSemicolon
-     */
-    public boolean isPreserveSemicolon() {
-        return preserveSemicolon;
-    }
-
-    /**
-     * @param preserveSemicolon the preserveSemicolon to set
-     */
-    public void setPreserveSemicolon(boolean preserveSemicolon) {
-        this.preserveSemicolon = preserveSemicolon;
-    }
-
+//    /**
+//     * @return the preserveSemicolon
+//     */
+//    public boolean isPreserveSemicolon() {
+//        return preserveSemicolon;
+//    }
+//
+//    /**
+//     * @param preserveSemicolon the preserveSemicolon to set
+//     */
+//    public void setPreserveSemicolon(boolean preserveSemicolon) {
+//        this.preserveSemicolon = preserveSemicolon;
+//    }
     /**
      * @return the newCSSFile
      */
@@ -360,28 +354,24 @@ public class MinifyProperty implements Serializable {
 //    public Character getSeparatorJS() {
 //        return separatorJS;
 //    }
-
     /**
      * @param separatorJS the separatorJS to set
      */
 //    public void setSeparatorJS(Character separatorJS) {
 //        this.separatorJS = separatorJS;
 //    }
-
     /**
      * @return the separatorCSS
      */
 //    public Character getSeparatorCSS() {
 //        return separatorCSS;
 //    }
-
     /**
      * @param separatorCSS the separatorCSS to set
      */
 //    public void setSeparatorCSS(Character separatorCSS) {
 //        this.separatorCSS = separatorCSS;
 //    }
-
     /**
      * @return the newHTMLFile
      */
@@ -416,14 +406,12 @@ public class MinifyProperty implements Serializable {
 //    public Character getSeparatorHTML() {
 //        return separatorHTML;
 //    }
-
     /**
      * @param separatorHTML the separatorHTML to set
      */
 //    public void setSeparatorHTML(Character separatorHTML) {
 //        this.separatorHTML = separatorHTML;
 //    }
-
     /**
      * @return the buildHTMLMinify
      */
@@ -571,14 +559,12 @@ public class MinifyProperty implements Serializable {
 //    public Character getSeparatorXML() {
 //        return separatorXML;
 //    }
-
     /**
      * @param separatorXML the separatorXML to set
      */
 //    public void setSeparatorXML(Character separatorXML) {
 //        this.separatorXML = separatorXML;
 //    }
-
     /**
      * @return the newJSONFile
      */
@@ -613,14 +599,12 @@ public class MinifyProperty implements Serializable {
 //    public Character getSeparatorJSON() {
 //        return separatorJSON;
 //    }
-
     /**
      * @param separatorJSON the separatorJSON to set
      */
 //    public void setSeparatorJSON(Character separatorJSON) {
 //        this.separatorJSON = separatorJSON;
 //    }
-
     /**
      * @return the buildXMLMinify
      */
@@ -759,6 +743,20 @@ public class MinifyProperty implements Serializable {
      */
     public void setHeaderJS(String headerJS) {
         this.headerJS = headerJS;
+    }
+
+    /**
+     * @return the compilerflags
+     */
+    public String getCompilerFlagsJS() {
+        return compilerFlagsJS;
+    }
+
+    /**
+     * @param compilerFlagsJS the compilerFlagsJS to set
+     */
+    public void setCompilerFlagsJS(String compilerFlagsJS) {
+        this.compilerFlagsJS = compilerFlagsJS;
     }
 
     /**

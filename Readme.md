@@ -19,11 +19,18 @@ Also optimize by compressing image PNG/JPEG (Currently Supported format) and pro
 
 ## Compiler used
 
-#### JS - Google Closure Compiler
-#### CSS - YUI Compressor (Unmaintained)
-#### HTML/CML - HTML Compressor
+#### JS
+    - Single file action -> Google Closure Compiler (Node based)
+    - Minify WEB Content -> YUI Compressor (Unmaintained - Java based) - #46
+    - Copy minifed JS -> YUI Compressor (Unmaintained - Java based) #46
+#### CSS
+    - Single file action -> PostCSS with CSSNano (Node based)
+    - Minify WEB Content -> YUI Compressor (Unmaintained - Java based) #46
+    - Copy minifed CSS -> YUI Compressor (Unmaintained - Java based) #46
+#### HTML - HTML Compressor (Unmaintained - Java based) [#46](https://github.com/Chris2011/minifierbeans/issues/46)
+#### XML - XML Compressor (Unmaintained - Java based) [#46](https://github.com/Chris2011/minifierbeans/issues/46)
 #### JSON - Custom implementation
-#### Images - Image Compressor
+#### Images - PngTastic (Java based) [#46](https://github.com/Chris2011/minifierbeans/issues/46)
 
 
 ## What does it do?

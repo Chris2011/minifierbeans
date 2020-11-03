@@ -30,7 +30,6 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.CookieAction;
 import org.netbeans.api.lexer.*;
 import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
-import io.github.chris2011.netbeans.minifierbeans.util.source.minify.JSMinifyClipboard;
 import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyUtil;
 import org.openide.ErrorManager;
 import org.openide.awt.ActionID;
@@ -107,7 +106,7 @@ public final class CSSMinifyClipboard extends CookieAction {
 
     @Override
     public final String getName() {
-        return NbBundle.getMessage(JSMinifyClipboard.class, "CTL_CSSMinifyClipboard");
+        return NbBundle.getMessage(CSSMinifyClipboard.class, "CTL_CSSMinifyClipboard");
     }
 
     @Override

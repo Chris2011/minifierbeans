@@ -159,7 +159,7 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cssNanoLabel)
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,12 +175,12 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
 
         autoMinifyCSS.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(autoMinifyCSS, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.autoMinifyCSS.text")); // NOI18N
-        autoMinifyCSS.setOpaque(false);
+        autoMinifyCSS.setContentAreaFilled(false);
 
         newCSSFile.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(newCSSFile, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.newCSSFile.text")); // NOI18N
         newCSSFile.setToolTipText(org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.newCSSFile.toolTipText")); // NOI18N
-        newCSSFile.setOpaque(false);
+        newCSSFile.setContentAreaFilled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

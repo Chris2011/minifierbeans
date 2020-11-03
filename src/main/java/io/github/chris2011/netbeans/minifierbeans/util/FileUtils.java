@@ -1,6 +1,5 @@
-package io.github.chris2011.netbeans.minifierbeans.css;
+package io.github.chris2011.netbeans.minifierbeans.util;
 
-import io.github.chris2011.netbeans.minifierbeans.util.StringUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;

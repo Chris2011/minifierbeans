@@ -50,10 +50,10 @@ import org.openide.windows.InputOutput;
     @ActionReference(path = "Loaders/folder/any/Actions", position = 300, separatorBefore = 250, separatorAfter = 350)
 })
 @Messages("CTL_Minify=Minify WEB Content")
-public final class Minify implements ActionListener {
+public final class MinifyWebContent implements ActionListener {
     private final DataObject context;
 
-    public Minify(DataObject context) {
+    public MinifyWebContent(DataObject context) {
         this.context = context;
     }
     private final static RequestProcessor RP = new RequestProcessor("Minify", 1, true);

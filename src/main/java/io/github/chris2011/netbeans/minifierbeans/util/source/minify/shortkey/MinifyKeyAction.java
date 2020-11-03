@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
 import io.github.chris2011.netbeans.minifierbeans.css.CSSMinify;
-import io.github.chris2011.netbeans.minifierbeans.util.source.minify.HTMLMinify;
-import io.github.chris2011.netbeans.minifierbeans.util.source.minify.JSMinify;
-import io.github.chris2011.netbeans.minifierbeans.util.source.minify.Minify;
+import io.github.chris2011.netbeans.minifierbeans.html.HTMLMinify;
+import io.github.chris2011.netbeans.minifierbeans.javascript.JSMinify;
+import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyWebContent;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.awt.ActionID;
@@ -51,7 +51,7 @@ public final class MinifyKeyAction implements ActionListener {
             }
             if (allowAction) {
                 if (fileObject.isFolder()) {
-                    targetAction = new Minify(dob);
+                    targetAction = new MinifyWebContent(dob);
                 } else {
                     if (fileObject.getExt().equalsIgnoreCase("js")) {
                         targetAction = new JSMinify(dob);

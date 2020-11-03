@@ -1,13 +1,17 @@
 package io.github.chris2011.netbeans.minifierbeans;
 
+import com.vdurmont.semver4j.Semver;
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -16,6 +20,8 @@ import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import org.apache.commons.io.*;
+import org.json.JSONObject;
 import org.netbeans.api.progress.ProgressHandle;
 import org.openide.awt.NotificationDisplayer;
 import org.openide.modules.ModuleInstall;
@@ -35,15 +41,79 @@ public class Installer extends ModuleInstall implements Runnable {
         RP.post(new Runnable() {
             @Override
             public void run() {
-                if (!Files.exists(Paths.get(System.getProperty("user.home") + "/.netbeans/minifierbeans/custom-packages"))) {
-                    try {
+                try {
+                    Path customPackagesFolder = Paths.get(System.getProperty("user.home") + "/.netbeans/minifierbeans/custom-packages");
+
+                    if (Files.exists(customPackagesFolder)) {
+                        String remoteVersion = getVersionFromRemotePackageJson();
+                        String localVersion = getVersionFromLocalPackageJson();
+
+                        if (localVersion.equals("") && deleteDirectory(customPackagesFolder.toFile())) {
+                            downloadFile(DOWNLOAD_URL, System.getProperty("user.home"));
+
+                            return;
+                        }
+
+                        Semver remoteSemVersion = new Semver(remoteVersion);
+                        Semver localSemVersion = new Semver(localVersion);
+
+                        if (remoteSemVersion.isGreaterThan(localSemVersion) && deleteDirectory(customPackagesFolder.toFile())) {
+                            downloadFile(DOWNLOAD_URL, System.getProperty("user.home"));
+                        }
+                    } else {
                         downloadFile(DOWNLOAD_URL, System.getProperty("user.home"));
-                    } catch (IOException ex) {
-                        Exceptions.printStackTrace(ex);
                     }
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
                 }
             }
         }, 0);
+    }
+
+    private String getVersionFromRemotePackageJson() {
+        String version = "";
+
+        try {
+            String sURL = "https://raw.githubusercontent.com/Chris2011/minifierbeans/master/custom-packages/package.json";
+
+            // Convert to a JSON object to print data
+            JSONObject json = new JSONObject(IOUtils.toString(new URL(sURL), Charset.forName("UTF-8")));
+
+            version = json.getString("version");
+        } catch (MalformedURLException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+
+        return version.isEmpty() ? "" : version;
+    }
+
+    private String getVersionFromLocalPackageJson() {
+        String version = "";
+
+        try {
+            String packageJsonPath = Paths.get(System.getProperty("user.home") + "/.netbeans/minifierbeans/custom-packages/package.json").toString();
+
+            File f = new File(packageJsonPath);
+
+            if (f.exists()) {
+                InputStream is = new FileInputStream(packageJsonPath);
+                JSONObject json = new JSONObject(IOUtils.toString(is, "UTF-8"));
+                
+                if(json.has("version")) {
+                    version = json.getString("version");
+                }
+
+            }
+
+        } catch (MalformedURLException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+
+        return version.isEmpty() ? "" : version;
     }
 
     /**
@@ -105,12 +175,24 @@ public class Installer extends ModuleInstall implements Runnable {
 
         httpConn.disconnect();
     }
+    
+    private boolean deleteDirectory(File directoryToBeDeleted) {
+        File[] allContents = directoryToBeDeleted.listFiles();
+        
+        if(allContents != null) {
+            for (File file : allContents) {
+                deleteDirectory(file);
+            }
+        }
+        
+        return directoryToBeDeleted.delete();
+    }
 
     private void extractArchive(String fileZip, String destDir) throws FileNotFoundException, IOException {
         ProgressHandle handle = ProgressHandle.createHandle("Extracting minifierbeans archive");
 
         //Open the file 
-        try (ZipFile file = new ZipFile(fileZip)) {
+        try ( ZipFile file = new ZipFile(fileZip)) {
             FileSystem fileSystem = FileSystems.getDefault();
             //Get file entries
             Enumeration<? extends ZipEntry> entries = file.entries();

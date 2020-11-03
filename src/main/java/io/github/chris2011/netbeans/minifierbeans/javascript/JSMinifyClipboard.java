@@ -13,44 +13,46 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package io.github.chris2011.netbeans.minifierbeans.util.source.minify;
+package io.github.chris2011.netbeans.minifierbeans.javascript;
 
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
 import javax.swing.JEditorPane;
-import org.mozilla.javascript.EvaluatorException;
 import org.openide.cookies.EditorCookie;
 import org.openide.nodes.Node;
+import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.CookieAction;
 import org.netbeans.api.lexer.*;
 import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
+import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyUtil;
+import org.netbeans.modules.editor.NbEditorUtilities;
+import org.openide.ErrorManager;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.NotificationDisplayer;
-import org.openide.util.*;
+import org.openide.filesystems.FileObject;
+import org.openide.util.Exceptions;
+import org.openide.util.Utilities;
 
 @ActionID(category = "Build",
-        id = "org.netbeans.util.source.minify.HTMLMinifyClipboard")
-@ActionRegistration(displayName = "#CTL_HTMLMinifyClipboard", lazy = true)
+        id = "org.netbeans.util.source.minify.JSMinifyClipboard")
+@ActionRegistration(displayName = "#CTL_JSMinifyClipboard", lazy = true)
 @ActionReferences({
-    @ActionReference(path = "Editors/text/html/Popup", position = 400, separatorBefore = 350, separatorAfter = 450)
+    @ActionReference(path = "Editors/text/javascript/Popup", position = 400, separatorBefore = 350, separatorAfter = 450)
 })
-@NbBundle.Messages("CTL_HTMLMinifyClipboard=Copy as Minified HTML")
-
-public final class HTMLMinifyClipboard extends CookieAction {
+@NbBundle.Messages("CTL_JSMinifyClipboard=Copy as Minified JS")
+public final class JSMinifyClipboard extends CookieAction {
     @Override
     protected final void performAction(final Node[] activatedNodes) {
-        htmlMinify(activatedNodes);
+        jsMinify(activatedNodes);
     }
 
-    protected final void htmlMinify(final Node[] activatedNodes) {
+    protected final void jsMinify(final Node[] activatedNodes) {
         final EditorCookie editorCookie
                 = Utilities.actionsGlobalContext().lookup(EditorCookie.class);
 
@@ -63,7 +65,7 @@ public final class HTMLMinifyClipboard extends CookieAction {
                             setContents(content, content);
                     return;
                 } catch (final HeadlessException e) {
-                    org.openide.ErrorManager.getDefault().notify(e);
+                    ErrorManager.getDefault().notify(e);
                 }
             }
         }
@@ -71,24 +73,34 @@ public final class HTMLMinifyClipboard extends CookieAction {
 
     private String selectedSourceAsMinify(final JEditorPane pane) {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
-        StringWriter out = new StringWriter();
+        String minifedString = "";
+        String oldContent = "";
+
+        FileObject fileObject = NbEditorUtilities.getFileObject(pane.getDocument());
+
         try {
             final TokenSequence ts = TokenHierarchy.get(pane.getDocument()).tokenSequence();
             final StringBuilder sb = new StringBuilder();
             ts.move(pane.getSelectionStart());
+
             while (ts.moveNext() && ts.offset() < pane.getSelectionEnd()) {
                 sb.append(ts.token().text().toString());
             }
-            MinifyUtil minifyUtil = new MinifyUtil();
-            minifyUtil.compressHtmlInternal(new StringReader(sb.toString()), out, minifyProperty);
 
-            NotificationDisplayer.getDefault().notify("Successful copied", NotificationDisplayer.Priority.NORMAL.getIcon(), "Copied as minified HTML source.", null);
-        } catch (EvaluatorException ex) {
-            NotificationDisplayer.getDefault().notify("Error: Copy process failed", NotificationDisplayer.Priority.HIGH.getIcon(), String.format("Invalid HTML Source Selected: \n %s", ex.getMessage()), null);
+            MinifyUtil minifyUtil = new MinifyUtil();
+            oldContent = sb.toString();
+            minifedString = minifyUtil.compressSelectedJavaScript(fileObject.getNameExt(), sb.toString(), minifyProperty);
+
+            NotificationDisplayer.getDefault().notify("Successful copied", NotificationDisplayer.Priority.NORMAL.getIcon(), "Copied as minified JS source.", null);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
-        return out.toString();
+
+        if (minifedString.equals("")) {
+            minifedString = oldContent;
+        }
+
+        return minifedString;
     }
 
     @Override
@@ -98,7 +110,7 @@ public final class HTMLMinifyClipboard extends CookieAction {
 
     @Override
     public final String getName() {
-        return NbBundle.getMessage(JSMinifyClipboard.class, "CTL_HTMLMinifyClipboard");
+        return NbBundle.getMessage(JSMinifyClipboard.class, "CTL_JSMinifyClipboard");
     }
 
     @Override
