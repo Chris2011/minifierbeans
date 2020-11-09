@@ -42,8 +42,6 @@ public class MinifyProperty implements Serializable {
     private String headerHTML = "";
     private boolean newHTMLFile = true;
     private String preExtensionHTML = ".min";
-    private boolean buildInternalJSMinify = true;
-    private boolean buildInternalCSSMinify = true;
 
     // INFO: XML Minifier
     private boolean autoMinifyXML = false;
@@ -438,34 +436,6 @@ public class MinifyProperty implements Serializable {
      */
     public void setSkipPreExtensionHTML(boolean skipPreExtensionHTML) {
         this.skipPreExtensionHTML = skipPreExtensionHTML;
-    }
-
-    /**
-     * @return the buildInternalJSMinify
-     */
-    public boolean isBuildInternalJSMinify() {
-        return buildInternalJSMinify;
-    }
-
-    /**
-     * @param buildInternalJSMinify the buildInternalJSMinify to set
-     */
-    public void setBuildInternalJSMinify(boolean buildInternalJSMinify) {
-        this.buildInternalJSMinify = buildInternalJSMinify;
-    }
-
-    /**
-     * @return the buildInternalCSSMinify
-     */
-    public boolean isBuildInternalCSSMinify() {
-        return buildInternalCSSMinify;
-    }
-
-    /**
-     * @param buildInternalCSSMinify the buildInternalCSSMinify to set
-     */
-    public void setBuildInternalCSSMinify(boolean buildInternalCSSMinify) {
-        this.buildInternalCSSMinify = buildInternalCSSMinify;
     }
 
     /**

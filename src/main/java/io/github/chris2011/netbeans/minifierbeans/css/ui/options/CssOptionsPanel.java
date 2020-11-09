@@ -36,7 +36,6 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
         /*-------- CSS ----------*/
         newCSSFile.setSelected(minifyProperty.isNewCSSFile());
         preExtensionCSS.setEnabled(minifyProperty.isNewCSSFile());
-        preExtensionCSS_Label.setEnabled(minifyProperty.isNewCSSFile());
         projectOptionsPanel.skipPreExtensionCSS.setEnabled(minifyProperty.isNewCSSFile());
         this.preExtensionCSS.setText(minifyProperty.getPreExtensionCSS());
 
@@ -78,7 +77,6 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
                     minifyProperty.setPreExtensionCSS(".min");
                     preExtensionCSS.setText(".min");
                     preExtensionCSS.setEnabled(Boolean.TRUE);
-                    preExtensionCSS_Label.setEnabled(Boolean.TRUE);
 
                     if (minifyProperty.isBuildCSSMinify() && minifyProperty.isNewCSSFile()) {
                         projectOptionsPanel.skipPreExtensionCSS.setEnabled(Boolean.TRUE);
@@ -89,7 +87,6 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
                 } else {
                     minifyProperty.setNewCSSFile(Boolean.FALSE);
                     preExtensionCSS.setEnabled(Boolean.FALSE);
-                    preExtensionCSS_Label.setEnabled(Boolean.FALSE);
                     projectOptionsPanel.skipPreExtensionCSS.setEnabled(Boolean.FALSE);
                     minifyProperty.setSkipPreExtensionCSS(Boolean.FALSE);
                     projectOptionsPanel.skipPreExtensionCSS.setSelected(Boolean.FALSE);
@@ -141,7 +138,6 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
         jPanel1 = new javax.swing.JPanel();
         cssNanoLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        preExtensionCSS_Label = new javax.swing.JLabel();
         extLabel = new javax.swing.JLabel();
         preExtensionCSS = new javax.swing.JTextField();
         autoMinifyCSS = new javax.swing.JCheckBox();
@@ -157,16 +153,16 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(cssNanoLabel)
+                .addGap(0, 476, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cssNanoLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cssNanoLabel)
-        );
-
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionCSS_Label, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.preExtensionCSS_Label.text")); // NOI18N
 
         extLabel.setForeground(extLabel.getForeground().darker());
         org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.extLabel.text")); // NOI18N
@@ -179,7 +175,6 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
 
         newCSSFile.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(newCSSFile, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.newCSSFile.text")); // NOI18N
-        newCSSFile.setToolTipText(org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.newCSSFile.toolTipText")); // NOI18N
         newCSSFile.setContentAreaFilled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -190,14 +185,13 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
                 .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(autoMinifyCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(newCSSFile)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(preExtensionCSS_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
+                        .addComponent(newCSSFile)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(preExtensionCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(extLabel)))
-                .addGap(6, 6, 6))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,18 +199,16 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
                 .addGap(6, 6, 6)
                 .addComponent(autoMinifyCSS)
                 .addGap(6, 6, 6)
-                .addComponent(newCSSFile)
-                .addGap(6, 6, 6)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(preExtensionCSS_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(preExtensionCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(extLabel))
-                .addGap(6, 6, 6))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(preExtensionCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(extLabel))
+                    .addComponent(newCSSFile))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         org.openide.awt.Mnemonics.setLocalizedText(headerLabelCSS, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.headerLabelCSS.text")); // NOI18N
 
-        headerEditorPaneCSS.setToolTipText(org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.headerEditorPaneCSS.toolTipText")); // NOI18N
         headerScrollPaneCSS.setViewportView(headerEditorPaneCSS);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -226,14 +218,17 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(headerLabelCSS)
                             .addComponent(headerScrollPaneCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)))
-                .addGap(6, 6, 6))
+                        .addGap(12, 12, 12))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(6, 6, 6))))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,7 +237,7 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
+                .addGap(18, 18, 18)
                 .addComponent(headerLabelCSS)
                 .addGap(6, 6, 6)
                 .addComponent(headerScrollPaneCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -273,7 +268,6 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
     private javax.swing.JPanel jPanel2;
     public javax.swing.JCheckBox newCSSFile;
     public javax.swing.JTextField preExtensionCSS;
-    public javax.swing.JLabel preExtensionCSS_Label;
     // End of variables declaration//GEN-END:variables
 
     void fireChange() {

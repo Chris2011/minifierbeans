@@ -35,7 +35,6 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
 
         newHTMLFile.setSelected(minifyProperty.isNewHTMLFile());
         preExtensionHTML.setEnabled(minifyProperty.isNewHTMLFile());
-        preExtensionHTML_Label.setEnabled(minifyProperty.isNewHTMLFile());
         projectOptionsPanel.skipPreExtensionHTML.setEnabled(minifyProperty.isNewHTMLFile());
         this.preExtensionHTML.setText(minifyProperty.getPreExtensionHTML());
         autoMinifyHTML.setSelected(minifyProperty.isAutoMinifyHTML());
@@ -75,7 +74,6 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
                     minifyProperty.setPreExtensionHTML(".min");
                     preExtensionHTML.setText(".min");
                     preExtensionHTML.setEnabled(Boolean.TRUE);
-                    preExtensionHTML_Label.setEnabled(Boolean.TRUE);
                     if (minifyProperty.isBuildHTMLMinify() && minifyProperty.isNewHTMLFile()) {
                         projectOptionsPanel.skipPreExtensionHTML.setEnabled(Boolean.TRUE);
                         minifyProperty.setSkipPreExtensionHTML(Boolean.TRUE);
@@ -85,7 +83,6 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
                 } else {
                     minifyProperty.setNewHTMLFile(Boolean.FALSE);
                     preExtensionHTML.setEnabled(Boolean.FALSE);
-                    preExtensionHTML_Label.setEnabled(Boolean.FALSE);
                     projectOptionsPanel.skipPreExtensionHTML.setEnabled(Boolean.FALSE);
                     minifyProperty.setSkipPreExtensionHTML(Boolean.FALSE);
                     projectOptionsPanel.skipPreExtensionHTML.setSelected(Boolean.FALSE);
@@ -109,35 +106,6 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
                     text = text.trim();
                 }
                 minifyProperty.setPreExtensionHTML(text);
-            }
-        });
-
-        if (minifyProperty.isBuildInternalCSSMinify()) {
-            this.buildInternalCSSMinify.setSelected(Boolean.TRUE);
-        }
-
-        if (minifyProperty.isBuildInternalJSMinify()) {
-            this.buildInternalJSMinify.setSelected(Boolean.TRUE);
-        }
-        this.buildInternalCSSMinify.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    minifyProperty.setBuildInternalCSSMinify(Boolean.TRUE);
-                } else {
-                    minifyProperty.setBuildInternalCSSMinify(Boolean.FALSE);
-                }
-            }
-        });
-        this.buildInternalJSMinify.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    minifyProperty.setBuildInternalJSMinify(Boolean.TRUE);
-                } else {
-                    minifyProperty.setBuildInternalJSMinify(Boolean.FALSE);
-                }
-                //minifyPropertyController.writeMinifyProperty(minifyProperty);
             }
         });
     }
@@ -172,14 +140,15 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        closureCompilerLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         newHTMLFile = new javax.swing.JCheckBox();
-        preExtensionHTML_Label = new javax.swing.JLabel();
         preExtensionHTML = new javax.swing.JTextField();
         autoMinifyHTML = new javax.swing.JCheckBox();
         extLabel = new javax.swing.JLabel();
-        buildInternalJSMinify = new javax.swing.JCheckBox();
-        buildInternalCSSMinify = new javax.swing.JCheckBox();
+        htmlMinifierFlagsLabel = new javax.swing.JLabel();
+        htmlMinifierFlagsTextField = new javax.swing.JTextField();
+        htmlMinifierFlagsHintsLabel = new javax.swing.JLabel();
         headerLabelHTML = new javax.swing.JLabel();
         headerScrollPaneHTML = new javax.swing.JScrollPane();
         headerEditorPaneHTML = new javax.swing.JEditorPane();
@@ -188,42 +157,45 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(0, 32));
 
+        org.openide.awt.Mnemonics.setLocalizedText(closureCompilerLabel, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.closureCompilerLabel.text")); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(closureCompilerLabel)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 32, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(closureCompilerLabel)
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jPanel2.setPreferredSize(new java.awt.Dimension(762, 86));
 
         newHTMLFile.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(newHTMLFile, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.newHTMLFile.text")); // NOI18N
-        newHTMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.newHTMLFile.toolTipText")); // NOI18N
-        newHTMLFile.setOpaque(false);
-
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionHTML_Label, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.preExtensionHTML_Label.text")); // NOI18N
+        newHTMLFile.setContentAreaFilled(false);
 
         preExtensionHTML.setText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.preExtensionHTML.text")); // NOI18N
 
         autoMinifyHTML.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(autoMinifyHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.autoMinifyHTML.text")); // NOI18N
-        autoMinifyHTML.setOpaque(false);
+        autoMinifyHTML.setContentAreaFilled(false);
 
         extLabel.setForeground(extLabel.getForeground().darker());
         org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.extLabel.text")); // NOI18N
 
-        buildInternalJSMinify.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(buildInternalJSMinify, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.buildInternalJSMinify.text")); // NOI18N
-        buildInternalJSMinify.setOpaque(false);
+        org.openide.awt.Mnemonics.setLocalizedText(htmlMinifierFlagsLabel, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.htmlMinifierFlagsLabel.text")); // NOI18N
 
-        buildInternalCSSMinify.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(buildInternalCSSMinify, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.buildInternalCSSMinify.text")); // NOI18N
-        buildInternalCSSMinify.setOpaque(false);
+        htmlMinifierFlagsTextField.setText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.htmlMinifierFlagsTextField.text")); // NOI18N
+
+        htmlMinifierFlagsHintsLabel.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(htmlMinifierFlagsHintsLabel, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.htmlMinifierFlagsHintsLabel.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -232,44 +204,45 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(autoMinifyHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(preExtensionHTML_Label)
-                        .addGap(6, 6, 6)
+                        .addComponent(newHTMLFile)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(preExtensionHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(extLabel))
+                        .addComponent(extLabel)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(htmlMinifierFlagsLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(autoMinifyHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(newHTMLFile))
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(buildInternalJSMinify)
-                            .addComponent(buildInternalCSSMinify, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(htmlMinifierFlagsHintsLabel)
+                        .addGap(0, 165, Short.MAX_VALUE))
+                    .addComponent(htmlMinifierFlagsTextField))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(autoMinifyHTML)
-                    .addComponent(buildInternalJSMinify))
+                    .addComponent(htmlMinifierFlagsLabel)
+                    .addComponent(htmlMinifierFlagsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(htmlMinifierFlagsHintsLabel)
+                .addGap(18, 18, 18)
+                .addComponent(autoMinifyHTML)
                 .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newHTMLFile)
-                    .addComponent(buildInternalCSSMinify))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(preExtensionHTML_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(preExtensionHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(extLabel))
-                .addGap(6, 6, 6))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         org.openide.awt.Mnemonics.setLocalizedText(headerLabelHTML, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.headerLabelHTML.text")); // NOI18N
 
-        headerEditorPaneHTML.setToolTipText(org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.headerEditorPaneHTML.toolTipText")); // NOI18N
         headerScrollPaneHTML.setViewportView(headerEditorPaneHTML);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -279,29 +252,27 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(headerScrollPaneHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE))
-                .addGap(6, 6, 6))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 762, Short.MAX_VALUE)))
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(headerLabelHTML)
-                .addGap(6, 6, 6))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(headerScrollPaneHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(headerLabelHTML))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(headerLabelHTML)
                 .addGap(6, 6, 6)
                 .addComponent(headerScrollPaneHTML, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -319,17 +290,18 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox autoMinifyHTML;
-    public javax.swing.JCheckBox buildInternalCSSMinify;
-    public javax.swing.JCheckBox buildInternalJSMinify;
+    private javax.swing.JLabel closureCompilerLabel;
     private javax.swing.JLabel extLabel;
     protected javax.swing.JEditorPane headerEditorPaneHTML;
     private javax.swing.JLabel headerLabelHTML;
     private javax.swing.JScrollPane headerScrollPaneHTML;
+    private javax.swing.JLabel htmlMinifierFlagsHintsLabel;
+    private javax.swing.JLabel htmlMinifierFlagsLabel;
+    private javax.swing.JTextField htmlMinifierFlagsTextField;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public javax.swing.JCheckBox newHTMLFile;
     public javax.swing.JTextField preExtensionHTML;
-    public javax.swing.JLabel preExtensionHTML_Label;
     // End of variables declaration//GEN-END:variables
 
     void fireChange() {

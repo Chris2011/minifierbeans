@@ -35,7 +35,6 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
 
         newJSONFile.setSelected(minifyProperty.isNewJSONFile());
         preExtensionJSON.setEnabled(minifyProperty.isNewJSONFile());
-        preExtensionJSON_Label.setEnabled(minifyProperty.isNewJSONFile());
         projectOptionsPanel.skipPreExtensionJSON.setEnabled(minifyProperty.isNewJSONFile());
         this.preExtensionJSON.setText(minifyProperty.getPreExtensionJSON());
         autoMinifyJSON.setSelected(minifyProperty.isAutoMinifyJSON());
@@ -77,7 +76,6 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
                     minifyProperty.setPreExtensionJSON(".min");
                     preExtensionJSON.setText(".min");
                     preExtensionJSON.setEnabled(Boolean.TRUE);
-                    preExtensionJSON_Label.setEnabled(Boolean.TRUE);
                     if (minifyProperty.isBuildJSONMinify() && minifyProperty.isNewJSONFile()) {
                         projectOptionsPanel.skipPreExtensionJSON.setEnabled(Boolean.TRUE);
                         minifyProperty.setSkipPreExtensionJSON(Boolean.TRUE);
@@ -87,7 +85,6 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
                 } else {
                     minifyProperty.setNewJSONFile(Boolean.FALSE);
                     preExtensionJSON.setEnabled(Boolean.FALSE);
-                    preExtensionJSON_Label.setEnabled(Boolean.FALSE);
                     projectOptionsPanel.skipPreExtensionJSON.setEnabled(Boolean.FALSE);
                     minifyProperty.setSkipPreExtensionJSON(Boolean.FALSE);
                     projectOptionsPanel.skipPreExtensionJSON.setSelected(Boolean.FALSE);
@@ -139,7 +136,6 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         newJSONFile = new javax.swing.JCheckBox();
-        preExtensionJSON_Label = new javax.swing.JLabel();
         preExtensionJSON = new javax.swing.JTextField();
         autoMinifyJSON = new javax.swing.JCheckBox();
         extLabel = new javax.swing.JLabel();
@@ -164,16 +160,13 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
 
         newJSONFile.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(newJSONFile, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.newJSONFile.text")); // NOI18N
-        newJSONFile.setToolTipText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.newJSONFile.toolTipText")); // NOI18N
-        newJSONFile.setOpaque(false);
-
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionJSON_Label, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.preExtensionJSON_Label.text")); // NOI18N
+        newJSONFile.setContentAreaFilled(false);
 
         preExtensionJSON.setText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.preExtensionJSON.text")); // NOI18N
 
         autoMinifyJSON.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(autoMinifyJSON, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.autoMinifyJSON.text")); // NOI18N
-        autoMinifyJSON.setOpaque(false);
+        autoMinifyJSON.setContentAreaFilled(false);
 
         extLabel.setForeground(extLabel.getForeground().darker());
         org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.extLabel.text")); // NOI18N
@@ -185,15 +178,14 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(newJSONFile)
                     .addComponent(autoMinifyJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(preExtensionJSON_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
+                        .addComponent(newJSONFile)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(preExtensionJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(extLabel)))
-                .addGap(0, 0, 0))
+                .addContainerGap(371, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,17 +193,14 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
                 .addGap(6, 6, 6)
                 .addComponent(autoMinifyJSON)
                 .addGap(6, 6, 6)
-                .addComponent(newJSONFile)
-                .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(extLabel)
                         .addComponent(preExtensionJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(preExtensionJSON_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6))
+                    .addComponent(newJSONFile))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        headerEditorPaneJSON.setToolTipText(org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.headerEditorPaneJSON.toolTipText")); // NOI18N
         headerScrollPaneJSON.setViewportView(headerEditorPaneJSON);
 
         org.openide.awt.Mnemonics.setLocalizedText(headerLabelJSON, org.openide.util.NbBundle.getMessage(JsonOptionsPanel.class, "JsonOptionsPanel.headerLabelJSON.text")); // NOI18N
@@ -238,13 +227,13 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(headerLabelJSON)
                 .addGap(6, 6, 6)
                 .addComponent(headerScrollPaneJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -263,7 +252,6 @@ public final class JsonOptionsPanel extends JPanel implements ChangeListener {
     private javax.swing.JPanel jPanel2;
     public javax.swing.JCheckBox newJSONFile;
     public javax.swing.JTextField preExtensionJSON;
-    public javax.swing.JLabel preExtensionJSON_Label;
     // End of variables declaration//GEN-END:variables
 
     void fireChange() {

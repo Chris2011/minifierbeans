@@ -35,7 +35,6 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
 
         newXMLFile.setSelected(minifyProperty.isNewXMLFile());
         preExtensionXML.setEnabled(minifyProperty.isNewXMLFile());
-        preExtensionXML_Label.setEnabled(minifyProperty.isNewXMLFile());
         projectOptionsPanel.skipPreExtensionXML.setEnabled(minifyProperty.isNewXMLFile());
         this.preExtensionXML.setText(minifyProperty.getPreExtensionXML());
         autoMinifyXML.setSelected(minifyProperty.isAutoMinifyXML());
@@ -77,7 +76,6 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
                     minifyProperty.setPreExtensionXML(".min");
                     preExtensionXML.setText(".min");
                     preExtensionXML.setEnabled(Boolean.TRUE);
-                    preExtensionXML_Label.setEnabled(Boolean.TRUE);
                     if (minifyProperty.isBuildXMLMinify() && minifyProperty.isNewXMLFile()) {
                         projectOptionsPanel.skipPreExtensionXML.setEnabled(Boolean.TRUE);
                         minifyProperty.setSkipPreExtensionXML(Boolean.TRUE);
@@ -87,7 +85,6 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
                 } else {
                     minifyProperty.setNewXMLFile(Boolean.FALSE);
                     preExtensionXML.setEnabled(Boolean.FALSE);
-                    preExtensionXML_Label.setEnabled(Boolean.FALSE);
                     projectOptionsPanel.skipPreExtensionXML.setEnabled(Boolean.FALSE);
                     minifyProperty.setSkipPreExtensionXML(Boolean.FALSE);
                     projectOptionsPanel.skipPreExtensionXML.setSelected(Boolean.FALSE);
@@ -146,7 +143,6 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         newXMLFile = new javax.swing.JCheckBox();
-        preExtensionXML_Label = new javax.swing.JLabel();
         preExtensionXML = new javax.swing.JTextField();
         autoMinifyXML = new javax.swing.JCheckBox();
         extLabel = new javax.swing.JLabel();
@@ -169,16 +165,13 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
 
         newXMLFile.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(newXMLFile, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.newXMLFile.text")); // NOI18N
-        newXMLFile.setToolTipText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.newXMLFile.toolTipText")); // NOI18N
-        newXMLFile.setOpaque(false);
-
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionXML_Label, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.preExtensionXML_Label.text")); // NOI18N
+        newXMLFile.setContentAreaFilled(false);
 
         preExtensionXML.setText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.preExtensionXML.text")); // NOI18N
 
         autoMinifyXML.setBackground(new java.awt.Color(255, 255, 255));
         org.openide.awt.Mnemonics.setLocalizedText(autoMinifyXML, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.autoMinifyXML.text")); // NOI18N
-        autoMinifyXML.setOpaque(false);
+        autoMinifyXML.setContentAreaFilled(false);
 
         extLabel.setForeground(extLabel.getForeground().darker());
         org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.extLabel.text")); // NOI18N
@@ -188,20 +181,15 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(newXMLFile))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(autoMinifyXML, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(preExtensionXML_Label)
-                        .addGap(6, 6, 6)
+                        .addComponent(newXMLFile)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(preExtensionXML, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(extLabel)))
+                        .addComponent(extLabel))
+                    .addComponent(autoMinifyXML, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -210,10 +198,8 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
                 .addGap(6, 6, 6)
                 .addComponent(autoMinifyXML)
                 .addGap(6, 6, 6)
-                .addComponent(newXMLFile)
-                .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(preExtensionXML_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newXMLFile)
                     .addComponent(extLabel)
                     .addComponent(preExtensionXML, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -221,7 +207,6 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
 
         org.openide.awt.Mnemonics.setLocalizedText(headerLabelXML, org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.headerLabelXML.text")); // NOI18N
 
-        headerEditorPaneXML.setToolTipText(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.headerEditorPaneXML.toolTipText")); // NOI18N
         headerScrollPaneXML.setViewportView(headerEditorPaneXML);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -229,16 +214,17 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(headerLabelXML)
-                    .addComponent(headerScrollPaneXML, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(headerLabelXML)
+                            .addComponent(headerScrollPaneXML, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(6, 6, 6))
         );
         layout.setVerticalGroup(
@@ -247,8 +233,8 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
                 .addGap(6, 6, 6)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(headerLabelXML)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(headerScrollPaneXML, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -280,7 +266,6 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
     private javax.swing.JPanel jPanel2;
     public javax.swing.JCheckBox newXMLFile;
     public javax.swing.JTextField preExtensionXML;
-    public javax.swing.JLabel preExtensionXML_Label;
     // End of variables declaration//GEN-END:variables
 
     void fireChange() {

@@ -33,7 +33,6 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
 
         newJSFile.setSelected(minifyProperty.isNewJSFile());
         preExtensionJS.setEnabled(minifyProperty.isNewJSFile());
-        preExtensionJS_Label.setEnabled(minifyProperty.isNewJSFile());
 
         projectOptionsPanel.skipPreExtensionJS.setEnabled(minifyProperty.isNewJSFile());
         minifyProperty.setSkipPreExtensionJS(minifyProperty.isNewJSFile());
@@ -105,7 +104,6 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
                     preExtensionJS.setText(".min");
 
                     preExtensionJS.setEnabled(Boolean.TRUE);
-                    preExtensionJS_Label.setEnabled(Boolean.TRUE);
 
                     if (minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
                         projectOptionsPanel.skipPreExtensionJS.setEnabled(true);
@@ -115,7 +113,6 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
                 } else {
                     minifyProperty.setNewJSFile(Boolean.FALSE);
                     preExtensionJS.setEnabled(Boolean.FALSE);
-                    preExtensionJS_Label.setEnabled(Boolean.FALSE);
 
                     projectOptionsPanel.skipPreExtensionJS.setEnabled(false);
 
@@ -170,17 +167,16 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
         jPanel1 = new javax.swing.JPanel();
         closureCompilerLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        headerLabelJS = new javax.swing.JLabel();
-        headerScrollPaneJS = new javax.swing.JScrollPane();
-        headerEditorPaneJS = new javax.swing.JEditorPane();
+        autoMinifyJS = new javax.swing.JCheckBox();
+        newJSFile = new javax.swing.JCheckBox();
+        preExtensionJS = new javax.swing.JTextField();
+        extLabel = new javax.swing.JLabel();
         closureCompilerFlagsLabel = new javax.swing.JLabel();
         closureCompilerFlagsTextField = new javax.swing.JTextField();
         closureCompilerArgumentsHintsLabel = new javax.swing.JLabel();
-        autoMinifyJS = new javax.swing.JCheckBox();
-        newJSFile = new javax.swing.JCheckBox();
-        preExtensionJS_Label = new javax.swing.JLabel();
-        preExtensionJS = new javax.swing.JTextField();
-        extLabel = new javax.swing.JLabel();
+        headerLabelJS = new javax.swing.JLabel();
+        headerScrollPaneJS = new javax.swing.JScrollPane();
+        headerEditorPaneJS = new javax.swing.JEditorPane();
 
         org.openide.awt.Mnemonics.setLocalizedText(closureCompilerLabel, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.closureCompilerLabel.text")); // NOI18N
 
@@ -202,21 +198,18 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
 
         jPanel2.setPreferredSize(new java.awt.Dimension(762, 86));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 92, Short.MAX_VALUE)
-        );
+        autoMinifyJS.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyJS, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text")); // NOI18N
+        autoMinifyJS.setContentAreaFilled(false);
 
-        org.openide.awt.Mnemonics.setLocalizedText(headerLabelJS, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.headerLabelJS.text")); // NOI18N
+        newJSFile.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(newJSFile, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.newJSFile.text")); // NOI18N
+        newJSFile.setContentAreaFilled(false);
 
-        headerEditorPaneJS.setToolTipText(org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.headerEditorPaneJS.toolTipText")); // NOI18N
-        headerScrollPaneJS.setViewportView(headerEditorPaneJS);
+        preExtensionJS.setText(org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.preExtensionJS.text")); // NOI18N
+
+        extLabel.setForeground(extLabel.getForeground().darker());
+        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.extLabel.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(closureCompilerFlagsLabel, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.closureCompilerFlagsLabel.text")); // NOI18N
 
@@ -225,55 +218,67 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
         closureCompilerArgumentsHintsLabel.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(closureCompilerArgumentsHintsLabel, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.closureCompilerArgumentsHintsLabel.text")); // NOI18N
 
-        autoMinifyJS.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyJS, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.autoMinifyJS.text")); // NOI18N
-        autoMinifyJS.setContentAreaFilled(false);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(newJSFile)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(preExtensionJS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(extLabel))
+                    .addComponent(autoMinifyJS))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(closureCompilerFlagsLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(closureCompilerArgumentsHintsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(closureCompilerFlagsTextField))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(closureCompilerFlagsLabel)
+                    .addComponent(closureCompilerFlagsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(closureCompilerArgumentsHintsLabel)
+                .addGap(18, 18, 18)
+                .addComponent(autoMinifyJS)
+                .addGap(6, 6, 6)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newJSFile)
+                    .addComponent(extLabel)
+                    .addComponent(preExtensionJS, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        newJSFile.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(newJSFile, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.newJSFile.text")); // NOI18N
-        newJSFile.setToolTipText(org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.newJSFile.toolTipText")); // NOI18N
-        newJSFile.setContentAreaFilled(false);
+        org.openide.awt.Mnemonics.setLocalizedText(headerLabelJS, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.headerLabelJS.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(preExtensionJS_Label, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.preExtensionJS_Label.text")); // NOI18N
-
-        preExtensionJS.setText(org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.preExtensionJS.text")); // NOI18N
-
-        extLabel.setForeground(extLabel.getForeground().darker());
-        org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(JsOptionsPanel.class, "JsOptionsPanel.extLabel.text")); // NOI18N
+        headerScrollPaneJS.setViewportView(headerEditorPaneJS);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(headerLabelJS)
-                    .addComponent(headerScrollPaneJS, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(newJSFile)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(preExtensionJS_Label)
-                                    .addGap(6, 6, 6)
-                                    .addComponent(preExtensionJS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(extLabel))
-                                .addComponent(autoMinifyJS))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))))
-                .addGap(6, 6, 6))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(closureCompilerFlagsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(closureCompilerArgumentsHintsLabel)
-                        .addGap(0, 35, Short.MAX_VALUE))
-                    .addComponent(closureCompilerFlagsTextField))
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(headerLabelJS)
+                            .addComponent(headerScrollPaneJS, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -281,32 +286,13 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(closureCompilerFlagsLabel)
-                    .addComponent(closureCompilerFlagsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(closureCompilerArgumentsHintsLabel)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(autoMinifyJS)
-                        .addGap(6, 6, 6)
-                        .addComponent(newJSFile)
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(preExtensionJS_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(extLabel)
-                            .addComponent(preExtensionJS, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(headerLabelJS)
                 .addGap(6, 6, 6)
                 .addComponent(headerScrollPaneJS, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -337,7 +323,6 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
     private javax.swing.JPanel jPanel2;
     public javax.swing.JCheckBox newJSFile;
     public javax.swing.JTextField preExtensionJS;
-    public javax.swing.JLabel preExtensionJS_Label;
     // End of variables declaration//GEN-END:variables
 
     void fireChange() {
