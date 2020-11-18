@@ -39,7 +39,6 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
         preExtensionJS.setText(minifyProperty.getPreExtensionJS());
 
         autoMinifyJS.setSelected(minifyProperty.isAutoMinifyJS());
-        headerEditorPaneJS.setText(minifyProperty.getHeaderJS());
         
         closureCompilerFlagsTextField.setText(minifyProperty.getCompilerFlagsJS());
         
@@ -63,6 +62,8 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
                 minifyProperty.setCompilerFlagsJS(text);
             }
         });
+        
+        headerEditorPaneJS.setText(minifyProperty.getHeaderJS());
 
         headerEditorPaneJS.addFocusListener(new FocusListener() {
             @Override

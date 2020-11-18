@@ -99,30 +99,6 @@
                     </execution>
                 </executions>
             </plugin>-->
-            <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.8.0</version>
-                <executions>
-                    <execution>
-                        <id>install node and yarn</id>
-                        <goals>
-                            <goal>install-node-and-yarn</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>yarn install</id>
-                        <goals>
-                            <goal>yarn</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <nodeVersion>v10.16.0</nodeVersion>
-                    <yarnVersion>v1.16.0</yarnVersion>
-                    <workingDirectory>custom-packages</workingDirectory>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
     <dependencies>

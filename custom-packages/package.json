@@ -5,9 +5,7 @@
     "devDependencies": {
         "cssnano": "^4.1.10",
         "google-closure-compiler": "^20201006.0.0",
-        "postcss-cli": "^7.1.0"
-    },
-    "dependencies": {
+        "postcss-cli": "^7.1.0",
         "html-minifier-terser": "^5.1.1"
     }
 }

@@ -38,6 +38,30 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
         projectOptionsPanel.skipPreExtensionHTML.setEnabled(minifyProperty.isNewHTMLFile());
         this.preExtensionHTML.setText(minifyProperty.getPreExtensionHTML());
         autoMinifyHTML.setSelected(minifyProperty.isAutoMinifyHTML());
+        
+        htmlMinifierFlagsTextField.setText(minifyProperty.getCompilerFlagsHTML());
+        
+        htmlMinifierFlagsTextField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent arg0) {
+                
+            }
+
+            @Override
+            public void focusLost(FocusEvent arg0) {
+                String text = htmlMinifierFlagsTextField.getText();
+
+                if (text == null || text.trim().isEmpty()) {
+                    text = "";
+                    htmlMinifierFlagsTextField.setText("");
+                } else {
+                    text = text.trim();
+                }
+
+                minifyProperty.setCompilerFlagsHTML(text);
+            }
+        });
+        
         headerEditorPaneHTML.setText(minifyProperty.getHeaderHTML());
         headerEditorPaneHTML.addFocusListener(new FocusListener() {
             @Override
@@ -140,7 +164,7 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        closureCompilerLabel = new javax.swing.JLabel();
+        htmlMinifierLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         newHTMLFile = new javax.swing.JCheckBox();
         preExtensionHTML = new javax.swing.JTextField();
@@ -157,21 +181,21 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(0, 32));
 
-        org.openide.awt.Mnemonics.setLocalizedText(closureCompilerLabel, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.closureCompilerLabel.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(htmlMinifierLabel, org.openide.util.NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.htmlMinifierLabel.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(closureCompilerLabel)
+                .addComponent(htmlMinifierLabel)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(closureCompilerLabel)
+                .addComponent(htmlMinifierLabel)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -290,7 +314,6 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox autoMinifyHTML;
-    private javax.swing.JLabel closureCompilerLabel;
     private javax.swing.JLabel extLabel;
     protected javax.swing.JEditorPane headerEditorPaneHTML;
     private javax.swing.JLabel headerLabelHTML;
@@ -298,6 +321,7 @@ public final class HtmlOptionsPanel extends JPanel implements ChangeListener {
     private javax.swing.JLabel htmlMinifierFlagsHintsLabel;
     private javax.swing.JLabel htmlMinifierFlagsLabel;
     private javax.swing.JTextField htmlMinifierFlagsTextField;
+    private javax.swing.JLabel htmlMinifierLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public javax.swing.JCheckBox newHTMLFile;
