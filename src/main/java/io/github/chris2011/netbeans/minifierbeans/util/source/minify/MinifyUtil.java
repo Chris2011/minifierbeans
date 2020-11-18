@@ -257,8 +257,8 @@ public class MinifyUtil {
         try {
             HtmlCompressor compressor = new HtmlCompressor();
             compressor.setRemoveIntertagSpaces(true);
-            compressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
-            compressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());
+//            compressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
+//            compressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());
             String output = compressor.compress(fromStream(in));//out, minifyProperty.getLineBreakPosition());
             in.close();
             in = null;
@@ -298,8 +298,8 @@ public class MinifyUtil {
                     HtmlCompressor htmlCompressor = new HtmlCompressor();
 
                     htmlCompressor.setRemoveIntertagSpaces(true);
-                    htmlCompressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
-                    htmlCompressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
+//                    htmlCompressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
+//                    htmlCompressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
 
                     output = htmlCompressor.compress(content);
 
@@ -404,8 +404,8 @@ public class MinifyUtil {
                 case "text/html":
                     HtmlCompressor htmlCompressor = new HtmlCompressor();
                     htmlCompressor.setRemoveIntertagSpaces(true);
-                    htmlCompressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
-                    htmlCompressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
+//                    htmlCompressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
+//                    htmlCompressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
 
                     output = htmlCompressor.compress(fromStream(in));
                     out.write(MinifyProperty.getInstance().getHeaderHTML() + "\n" + output);

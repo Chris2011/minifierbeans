@@ -15,6 +15,7 @@
  */
 package io.github.chris2011.netbeans.minifierbeans.ui;
 
+import io.github.chris2011.netbeans.minifierbeans.html.ui.options.HtmlOptionsPanel;
 import io.github.chris2011.netbeans.minifierbeans.javascript.ui.options.JsOptionsPanel;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -40,10 +41,9 @@ public class MinifyProperty implements Serializable {
     // INFO: HTML Minifier
     private boolean autoMinifyHTML = false;
     private String headerHTML = "";
+    private String compilerFlagsHTML = NbBundle.getMessage(HtmlOptionsPanel.class, "HtmlOptionsPanel.htmlMinifierFlagsTextField.text");
     private boolean newHTMLFile = true;
     private String preExtensionHTML = ".min";
-    private boolean buildInternalJSMinify = true;
-    private boolean buildInternalCSSMinify = true;
 
     // INFO: XML Minifier
     private boolean autoMinifyXML = false;
@@ -441,34 +441,6 @@ public class MinifyProperty implements Serializable {
     }
 
     /**
-     * @return the buildInternalJSMinify
-     */
-    public boolean isBuildInternalJSMinify() {
-        return buildInternalJSMinify;
-    }
-
-    /**
-     * @param buildInternalJSMinify the buildInternalJSMinify to set
-     */
-    public void setBuildInternalJSMinify(boolean buildInternalJSMinify) {
-        this.buildInternalJSMinify = buildInternalJSMinify;
-    }
-
-    /**
-     * @return the buildInternalCSSMinify
-     */
-    public boolean isBuildInternalCSSMinify() {
-        return buildInternalCSSMinify;
-    }
-
-    /**
-     * @param buildInternalCSSMinify the buildInternalCSSMinify to set
-     */
-    public void setBuildInternalCSSMinify(boolean buildInternalCSSMinify) {
-        this.buildInternalCSSMinify = buildInternalCSSMinify;
-    }
-
-    /**
      * @return the appendLogToFile
      */
     public boolean isAppendLogToFile() {
@@ -757,6 +729,20 @@ public class MinifyProperty implements Serializable {
      */
     public void setCompilerFlagsJS(String compilerFlagsJS) {
         this.compilerFlagsJS = compilerFlagsJS;
+    }
+
+    /**
+     * @return the compilerflags
+     */
+    public String getCompilerFlagsHTML() {
+        return compilerFlagsHTML;
+    }
+
+    /**
+     * @param compilerFlagsJS the compilerFlagsJS to set
+     */
+    public void setCompilerFlagsHTML(String compilerFlagsHTML) {
+        this.compilerFlagsHTML = compilerFlagsHTML;
     }
 
     /**

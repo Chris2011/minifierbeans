@@ -1,5 +1,17 @@
 # Changelog
 
+## Updates in 3.2.0
+
+### General
+1 - Simplified UI, removed unused code and options. Will be handled via compiler flags.
+
+### Fixes
+1 - [#58](https://github.com/Chris2011/minifierbeans/issues/58): javascript let makes minify fail.
+
+### Features
+1 - [#66](https://github.com/Chris2011/minifierbeans/issues/66): Switch from Java HTMLCompressor to html-minifier-terser.
+
+
 ## Updates in 3.1.0
 
 ### General
