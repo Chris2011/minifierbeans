@@ -1,43 +1,52 @@
 # Changelog
 
+## Update in 3.3.0
+
+### General
+1 - Simplified and removed code.  
+
+### Features
+1 - [#67](https://github.com/Chris2011/minifierbeans/issues/67): Switch from Java based XMLCompressor to npm minify-xml.  
+
+
 ## Updates in 3.2.0
 
 ### General
-1 - Simplified UI, removed unused code and options. Will be handled via compiler flags.
+1 - Simplified UI, removed unused code and options. Will be handled via compiler flags.  
 
 ### Fixes
-1 - [#58](https://github.com/Chris2011/minifierbeans/issues/58): javascript let makes minify fail.
+1 - [#58](https://github.com/Chris2011/minifierbeans/issues/58): javascript let makes minify fail.  
 
 ### Features
-1 - [#66](https://github.com/Chris2011/minifierbeans/issues/66): Switch from Java HTMLCompressor to html-minifier-terser.
+1 - [#66](https://github.com/Chris2011/minifierbeans/issues/66): Switch from Java HTMLCompressor to html-minifier-terser.  
 
 
 ## Updates in 3.1.0
 
 ### General
-1 - Refactored code, removed old options (JS Obfuscate, will be handled later by compiler flags for the google closure compiler).
-2 - Changed the process to check the current and the remote version to update the custom-packages if needed.
-3 - Updated Readme.md.
+1 - Refactored code, removed old options (JS Obfuscate, will be handled later by compiler flags for the google closure compiler).  
+2 - Changed the process to check the current and the remote version to update the custom-packages if needed.  
+3 - Updated Readme.md.  
 
 ### Fixes
-1 - [#64](https://github.com/Chris2011/minifierbeans/issues/64): MissingResourceException on action Copy minified CSS.
+1 - [#64](https://github.com/Chris2011/minifierbeans/issues/64): MissingResourceException on action Copy minified CSS.  
 
 ### Features
-1 - [#61](https://github.com/Chris2011/minifierbeans/issues/61): Switch from Java google closure compiler to the node implementation.
+1 - [#61](https://github.com/Chris2011/minifierbeans/issues/61): Switch from Java google closure compiler to the node implementation.  
 
 
 ## Updates in 3.0.0
 
 ### General
-1 - Changed UI from tabs to a tree view.
-2 - Switched from Ant to Maven.
+1 - Changed UI from tabs to a tree view.  
+2 - Switched from Ant to Maven.  
 
 ### Fixes
-1 - [#16](https://github.com/Chris2011/minifierbeans/issues/16): Avoid remove spacing for css calc().
+1 - [#16](https://github.com/Chris2011/minifierbeans/issues/16): Avoid remove spacing for css calc().  
 
 ### Features
-1 - [#45](https://github.com/Chris2011/minifierbeans/issues/45): Switch from YUICompressor for NPM CSS Nano.
-2 - [#47](https://github.com/Chris2011/minifierbeans/issues/47): Change result behaviour from dialog to notifications.
+1 - [#45](https://github.com/Chris2011/minifierbeans/issues/45): Switch from YUICompressor for NPM CSS Nano.  
+2 - [#47](https://github.com/Chris2011/minifierbeans/issues/47): Change result behaviour from dialog to notifications.  
 
 
 ## Updates in 2.5.1
