@@ -27,8 +27,14 @@ Also optimize by compressing image PNG/JPEG (Currently Supported format) and pro
     - Single file action -> PostCSS with CSSNano (Node based)
     - Minify WEB Content -> YUI Compressor (Unmaintained - Java based) #46
     - Copy minifed CSS -> YUI Compressor (Unmaintained - Java based) #46
-#### HTML - HTML Compressor (Unmaintained - Java based) [#46](https://github.com/Chris2011/minifierbeans/issues/46)
-#### XML - XML Compressor (Unmaintained - Java based) [#46](https://github.com/Chris2011/minifierbeans/issues/46)
+#### HTML
+    - Single file action -> html-minifier-terser (Node based)
+    - Minify WEB Content -> htmlcompressor (Unmaintained - Java based) #46
+    - Copy minifed HTML -> htmlcompressor (Unmaintained - Java based) #46
+#### XML
+    - Single file action -> Minify-XML (Node based)
+    - Minify WEB Content -> htmlcompressor (Unmaintained - Java based) #46
+    - Copy minifed XML -> htmlcompressor (Unmaintained - Java based) #46
 #### JSON - Custom implementation
 #### Images - PngTastic (Java based) [#46](https://github.com/Chris2011/minifierbeans/issues/46)
 
