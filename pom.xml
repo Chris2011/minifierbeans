@@ -5,7 +5,7 @@
     <!-- START Common stuff, can be copied and changed for other plugins -->
     <groupId>io.github.chris2011.netbeans.minifierbeans</groupId>
     <artifactId>Minifierbeans</artifactId>
-    <version>3.2.0</version>
+    <version>3.3.0</version>
     <packaging>nbm</packaging>
     <name>Minifierbeans</name>
     <url>https://github.com/Chris2011/minifierbeans</url>

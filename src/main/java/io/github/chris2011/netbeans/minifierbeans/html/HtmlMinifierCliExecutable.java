@@ -1,6 +1,5 @@
 package io.github.chris2011.netbeans.minifierbeans.html;
 
-import io.github.chris2011.netbeans.minifierbeans.util.StringUtils;
 import java.awt.EventQueue;
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ import org.netbeans.api.project.Project;
 import io.github.chris2011.netbeans.minifierbeans.ExternalExecutable;
 import io.github.chris2011.netbeans.minifierbeans.util.FileUtils;
 import java.util.Arrays;
+import org.apache.commons.lang.StringUtils;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
@@ -161,7 +161,7 @@ public class HtmlMinifierCliExecutable {
             sb.append("\""); // NOI18N
             sb.append(htmlMinifierPath);
             sb.append("\" \""); // NOI18N
-            sb.append(StringUtils.implode(super.getParams(params), "\" \"")); // NOI18N
+            sb.append(StringUtils.join(super.getParams(params), "\" \"")); // NOI18N
             sb.append("\""); // NOI18N
 
             return Collections.singletonList(sb.toString());

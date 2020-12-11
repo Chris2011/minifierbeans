@@ -1,4 +1,4 @@
-package io.github.chris2011.netbeans.minifierbeans.javascript;
+package io.github.chris2011.netbeans.minifierbeans.xml;
 
 import java.awt.EventQueue;
 import java.io.File;
@@ -18,52 +18,52 @@ import org.openide.filesystems.FileUtil;
 import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
 
-public class GoogleClosureCompilerCliExecutable {
-    public static final String GOOGLE_CLOSURE_COMPILER_CLI_NAME;
-    
-    private static final String INPUT_FILE_PARAM = "--js"; // NOI18N
-    private static final String OUTPUT_FILE_PARAM = "--js_output_file"; // NOI18N
+public class MinifyXmlCliExecutable {
+
+    public static final String MINIFY_XML_CLI_NAME;
+
+    private static final String OUTPUT_FILE_PARAM = "--output"; // NOI18N
     private static final String CONFIG_DIR = System.getProperty("user.home") + "/.netbeans/minifierbeans/custom-packages";
 
     protected final Project project;
-    protected final String googleClosureCompilerPath;
-    
+    protected final String minifyXmlCliPath;
+
     static {
         if (Utilities.isWindows()) {
-            GOOGLE_CLOSURE_COMPILER_CLI_NAME = CONFIG_DIR + "/google-closure-compiler.cmd"; // NOI18N
+            MINIFY_XML_CLI_NAME = CONFIG_DIR + "/minify-xml.cmd"; // NOI18N
         } else {
-            GOOGLE_CLOSURE_COMPILER_CLI_NAME = CONFIG_DIR + "/google-closure-compiler"; // NOI18N
+            MINIFY_XML_CLI_NAME = CONFIG_DIR + "/minify-xml"; // NOI18N
         }
     }
 
     private static final String OPTIONS_PATH = "HTML5/Minifier";
 
-    GoogleClosureCompilerCliExecutable(String googleClosureCompilerCliPath, @NullAllowed Project project) {
-        assert googleClosureCompilerCliPath != null;
+    MinifyXmlCliExecutable(String minifyXmlCliPath, @NullAllowed Project project) {
+        assert minifyXmlCliPath != null;
 
-        this.googleClosureCompilerPath = googleClosureCompilerCliPath;
+        this.minifyXmlCliPath = minifyXmlCliPath;
         this.project = project;
     }
 
     @CheckForNull
-    public static GoogleClosureCompilerCliExecutable getDefault(@NullAllowed Project project) {
-        return createExecutable(GOOGLE_CLOSURE_COMPILER_CLI_NAME, project);
+    public static MinifyXmlCliExecutable getDefault(@NullAllowed Project project) {
+        return createExecutable(MINIFY_XML_CLI_NAME, project);
     }
 
-    private static GoogleClosureCompilerCliExecutable createExecutable(String googleClosureCompilerCli, Project project) {
+    private static MinifyXmlCliExecutable createExecutable(String minifyXmlCli, Project project) {
         if (Utilities.isMac()) {
-            return new GoogleClosureCompilerCliExecutable.MacGoogleClosureCompilerCliExecutable(googleClosureCompilerCli, project);
+            return new MinifyXmlCliExecutable.MacMinifyXmlCliExecutable(minifyXmlCli, project);
         }
-        return new GoogleClosureCompilerCliExecutable(googleClosureCompilerCli, project);
+        return new MinifyXmlCliExecutable(minifyXmlCli, project);
     }
 
     String getCommand() {
-        return googleClosureCompilerPath;
+        return minifyXmlCliPath;
     }
 
     @NbBundle.Messages({
         "# {0} - project name",
-        "GoogleClosureCompilerCliExecutable.generate=Google Closure Compiler CLI ({0})",})
+        "MinifyXmlCliExecutable.generate=Minify-xml CLI ({0})",})
     public Future<Integer> generate(File inputFile, File outputFile, String compilerFlags) {
         assert !EventQueue.isDispatchThread();
         assert project != null;
@@ -71,9 +71,8 @@ public class GoogleClosureCompilerCliExecutable {
         Future<Integer> task = getExecutable("Minification in progress")
                 .additionalParameters(getGenerateParams(inputFile, outputFile, compilerFlags))
                 .run(getDescriptor());
-        
 
-        assert task != null : googleClosureCompilerPath;
+        assert task != null : minifyXmlCliPath;
         return task;
     }
 
@@ -117,19 +116,20 @@ public class GoogleClosureCompilerCliExecutable {
 
     private List<String> getGenerateParams(File inputFile, File outputFile, String compilerFlags) {
         List<String> params = new ArrayList<>();
-        
+
+        params.add(inputFile.getAbsolutePath().replace("\\", "/"));
+
         if (!compilerFlags.isEmpty()) {
+            compilerFlags = StringUtils.removeEnd(compilerFlags, ";");
             String[] splittedCompilerFlags = compilerFlags.split("; ");
-            
+
             for (String splittedCompilerFlag : splittedCompilerFlags) {
                 String[] splittedKeyAndValue = splittedCompilerFlag.split(" ");
-                
+
                 params.addAll(Arrays.asList(splittedKeyAndValue));
             }
         }
 
-        params.add(INPUT_FILE_PARAM);
-        params.add(inputFile.getAbsolutePath().replace("\\", "/"));
         params.add(OUTPUT_FILE_PARAM);
         params.add(outputFile.getAbsolutePath().replace("\\", "/"));
 
@@ -143,12 +143,12 @@ public class GoogleClosureCompilerCliExecutable {
     }
 
     //~ Inner classes
-    private static final class MacGoogleClosureCompilerCliExecutable extends GoogleClosureCompilerCliExecutable {
+    private static final class MacMinifyXmlCliExecutable extends MinifyXmlCliExecutable {
 
         private static final String BASH_COMMAND = "/bin/bash -lc"; // NOI18N
 
-        MacGoogleClosureCompilerCliExecutable(String googleClosureCompileStringCliPath, Project project) {
-            super(googleClosureCompileStringCliPath, project);
+        MacMinifyXmlCliExecutable(String minifyXmlStringCliPath, Project project) {
+            super(minifyXmlStringCliPath, project);
         }
 
         @Override
@@ -160,7 +160,7 @@ public class GoogleClosureCompilerCliExecutable {
         List<String> getParams(List<String> params) {
             StringBuilder sb = new StringBuilder(200);
             sb.append("\""); // NOI18N
-            sb.append(googleClosureCompilerPath);
+            sb.append(minifyXmlCliPath);
             sb.append("\" \""); // NOI18N
             sb.append(StringUtils.join(super.getParams(params), "\" \"")); // NOI18N
             sb.append("\""); // NOI18N

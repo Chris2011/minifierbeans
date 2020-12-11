@@ -15,16 +15,21 @@
  */
 package io.github.chris2011.netbeans.minifierbeans.xml;
 
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
 import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyFileResult;
 import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyUtil;
+import java.io.StringWriter;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import org.netbeans.api.project.FileOwnerQuery;
+import org.netbeans.api.project.Project;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -36,6 +41,7 @@ import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.RequestProcessor;
 import org.openide.util.TaskListener;
+import org.openide.windows.TopComponent;
 
 @ActionID(category = "Build",
         id = "org.netbeans.util.source.minify.XMLMinify")
@@ -46,6 +52,7 @@ import org.openide.util.TaskListener;
 })
 @Messages("CTL_XMLMinify=Minify XML")
 public final class XMLMinify implements ActionListener {
+
     private final DataObject context;
 
     public XMLMinify(DataObject context) {
@@ -78,34 +85,59 @@ public final class XMLMinify implements ActionListener {
     }
 
     private static void xmlMinify(DataObject context, String content, boolean notify) {
+        Project project = TopComponent.getRegistry().getActivated().getLookup().lookup(Project.class);
+        FileObject file = context.getPrimaryFile();
+
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         MinifyUtil util = new MinifyUtil();
-        try {
-            FileObject file = context.getPrimaryFile();
-            if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionXML())) {
-                String inputFilePath = file.getPath();
-                String outputFilePath;
+        MinifyFileResult minifyFileResult = new MinifyFileResult();
 
-                if (minifyProperty.isNewXMLFile() && minifyProperty.getPreExtensionXML() != null && !minifyProperty.getPreExtensionXML().trim().isEmpty()) {
-                    outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionXML() + "." + file.getExt();
-                } else {
-                    outputFilePath = inputFilePath;
-                }
+        if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionXML())) {
+            String inputFilePath = file.getPath();
+            String outputFilePath;
 
-                MinifyFileResult minifyFileResult;
-                if (content != null) {
-                    minifyFileResult = util.compressContent(inputFilePath, content, "text/xml-mime", outputFilePath, minifyProperty);
-                } else {
-                    minifyFileResult = util.compress(inputFilePath, "text/xml-mime", outputFilePath, minifyProperty);
-                }
-                if (minifyProperty.isEnableOutputLogAlert() && notify) {
-                    NotificationDisplayer.getDefault().notify("Successful XML minification", NotificationDisplayer.Priority.NORMAL.getIcon(), String.format("Input XML Files Size: %s Bytes \n"
-                            + "After Minifying XML Files Size: %s Bytes \n"
-                            + "XML Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
-                }
+            if (minifyProperty.isNewXMLFile() && minifyProperty.getPreExtensionXML() != null && !minifyProperty.getPreExtensionXML().trim().isEmpty()) {
+                outputFilePath = file.getParent().getPath() + "/" + file.getName() + minifyProperty.getPreExtensionXML() + "." + file.getExt();
+            } else {
+                outputFilePath = inputFilePath;
             }
-        } catch (HeadlessException | IOException ex) {
-            Exceptions.printStackTrace(ex);
+
+            File inputFile = new File(inputFilePath);
+            File outputFile = new File(outputFilePath);
+            minifyFileResult.setInputFileSize(inputFile.length());
+
+            StringWriter outputWriter = new StringWriter();
+
+            outputWriter.flush();
+
+            if (project == null) {
+                project = FileOwnerQuery.getOwner(file);
+            }
+
+            MinifyXmlCliExecutable minifyXmlCliExecutable = MinifyXmlCliExecutable.getDefault(project);
+            Future<Integer> task = minifyXmlCliExecutable.generate(inputFile, outputFile, minifyProperty.getCompilerFlagsXML());
+
+            try {
+                task.get(1, TimeUnit.MINUTES);
+
+                minifyFileResult.setOutputFileSize(outputFile.length());
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            } catch (ExecutionException | TimeoutException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+
+            //            if (content != null) {
+//                minifyFileResult = util.compressContent(inputFilePath, content, "text/xml-mime", outputFilePath, minifyProperty);
+//            } else {
+//                minifyFileResult = util.compress(inputFilePath, "text/xml-mime", outputFilePath, minifyProperty);
+//            }
+            if (minifyProperty.isEnableOutputLogAlert() && notify) {
+                NotificationDisplayer.getDefault().notify("Successful XML minification", NotificationDisplayer.Priority.NORMAL.getIcon(), String.format("Input XML Files Size: %s Bytes \n"
+                        + "After Minifying XML Files Size: %s Bytes \n"
+                        + "XML Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
+            }
         }
+
     }
 }

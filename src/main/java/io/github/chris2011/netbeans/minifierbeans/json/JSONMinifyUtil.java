@@ -15,7 +15,7 @@ public class JSONMinifyUtil {
         Boolean in_singleline_comment = false;
         String tmp = "";
         String tmp2 = "";
-        List<String> new_str = new ArrayList<String>();
+        List<String> new_str = new ArrayList<>();
         Integer from = 0;
         String lc = "";
         String rc = "";

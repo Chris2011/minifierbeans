@@ -17,6 +17,7 @@ package io.github.chris2011.netbeans.minifierbeans.ui;
 
 import io.github.chris2011.netbeans.minifierbeans.html.ui.options.HtmlOptionsPanel;
 import io.github.chris2011.netbeans.minifierbeans.javascript.ui.options.JsOptionsPanel;
+import io.github.chris2011.netbeans.minifierbeans.xml.ui.options.XmlOptionsPanel;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.prefs.Preferences;
@@ -48,6 +49,7 @@ public class MinifyProperty implements Serializable {
     // INFO: XML Minifier
     private boolean autoMinifyXML = false;
     private String headerXML = "";
+    private String compilerFlagsXML = NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.xmlMinifierFlagsTextField.text");
     private boolean newXMLFile = true;
     private String preExtensionXML = ".min";
 
@@ -730,19 +732,33 @@ public class MinifyProperty implements Serializable {
     public void setCompilerFlagsJS(String compilerFlagsJS) {
         this.compilerFlagsJS = compilerFlagsJS;
     }
-
+    
     /**
      * @return the compilerflags
      */
     public String getCompilerFlagsHTML() {
         return compilerFlagsHTML;
     }
-
+    
     /**
-     * @param compilerFlagsJS the compilerFlagsJS to set
+     * @param compilerFlagsHTML the compilerFlagsHTML to set
      */
     public void setCompilerFlagsHTML(String compilerFlagsHTML) {
         this.compilerFlagsHTML = compilerFlagsHTML;
+    }
+    
+    /**
+     * @return the compilerflags
+     */
+    public String getCompilerFlagsXML() {
+        return compilerFlagsXML;
+    }
+    
+    /**
+     * @param compilerFlagsXML the compilerFlagsXML to set
+     */
+    public void setCompilerFlagsXML(String compilerFlagsXML) {
+        this.compilerFlagsXML = compilerFlagsXML;
     }
 
     /**

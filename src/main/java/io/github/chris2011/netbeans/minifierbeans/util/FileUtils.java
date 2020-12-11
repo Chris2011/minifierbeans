@@ -62,9 +62,9 @@ public final class FileUtils {
             return Collections.<String>emptyList();
         }
         // on linux there are usually duplicities in PATH
-        Set<String> dirs = new LinkedHashSet<String>(Arrays.asList(path.split(File.pathSeparator)));
+        Set<String> dirs = new LinkedHashSet<>(Arrays.asList(path.split(File.pathSeparator)));
         LOGGER.log(Level.FINE, "PATH dirs: {0}", dirs);
-        List<String> found = new ArrayList<String>(dirs.size() * filenames.length);
+        List<String> found = new ArrayList<>(dirs.size() * filenames.length);
         for (String filename : filenames) {
             Parameters.notNull("filename", filename); // NOI18N
             for (String dir : dirs) {
@@ -130,7 +130,7 @@ public final class FileUtils {
     })
     @CheckForNull
     public static String validateFile(String source, String filePath, boolean writable) {
-        if (!StringUtils.hasText(filePath)) {
+        if (filePath != null && !filePath.trim().isEmpty()) {
             return Bundle.FileUtils_validateFile_missing(source);
         }
 

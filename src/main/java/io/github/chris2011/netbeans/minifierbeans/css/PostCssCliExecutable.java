@@ -1,7 +1,6 @@
 package io.github.chris2011.netbeans.minifierbeans.css;
 
 import io.github.chris2011.netbeans.minifierbeans.util.FileUtils;
-import io.github.chris2011.netbeans.minifierbeans.util.StringUtils;
 import java.awt.EventQueue;
 import java.io.File;
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import org.netbeans.api.annotations.common.NullAllowed;
 import org.netbeans.api.extexecution.ExecutionDescriptor;
 import org.netbeans.api.project.Project;
 import io.github.chris2011.netbeans.minifierbeans.ExternalExecutable;
+import org.apache.commons.lang.StringUtils;
 import org.openide.filesystems.FileUtil;
 import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
@@ -155,7 +155,7 @@ public class PostCssCliExecutable {
             sb.append("\""); // NOI18N
             sb.append(postCssPath);
             sb.append("\" \""); // NOI18N
-            sb.append(StringUtils.implode(super.getParams(params), "\" \"")); // NOI18N
+            sb.append(StringUtils.join(super.getParams(params), "\" \"")); // NOI18N
             sb.append("\""); // NOI18N
             return Collections.singletonList(sb.toString());
         }
