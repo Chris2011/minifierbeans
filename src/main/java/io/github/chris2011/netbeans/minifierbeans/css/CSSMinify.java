@@ -24,7 +24,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import org.netbeans.api.progress.ProgressHandle;
-import org.netbeans.api.progress.ProgressHandleFactory;
 import org.netbeans.api.project.FileOwnerQuery;
 import org.netbeans.api.project.Project;
 import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
@@ -62,19 +61,22 @@ public final class CSSMinify implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        execute(context, null, true);
+        execute(context, null, null, true);
     }
 
-    public static void execute(final DataObject context, final String content, final boolean notify) {
+    public static void execute(final DataObject context, final FileObject file, final String content, final boolean notify) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                cssMinify(context, content, notify);
+                cssMinify(context, file, content, notify);
             }
         };
 
         final RequestProcessor.Task theTask = RP.create(runnable);
-        final ProgressHandle ph = ProgressHandleFactory.createHandle("Minifying CSS " + context.getPrimaryFile().getName(), theTask);
+        
+        String foString = context == null ? file.getName() : context.getPrimaryFile().getName();
+
+        final ProgressHandle ph = ProgressHandle.createHandle("Minifying CSS " + foString, theTask);
 
         theTask.addTaskListener(new TaskListener() {
             @Override
@@ -87,20 +89,26 @@ public final class CSSMinify implements ActionListener {
         theTask.schedule(0);
     }
 
-    private static void cssMinify(DataObject context, String content, boolean notify) {
+    private static void cssMinify(DataObject context, FileObject file, String content, boolean notify) {
         Project project = TopComponent.getRegistry().getActivated().getLookup().lookup(Project.class);
-        FileObject file = context.getPrimaryFile();
+        FileObject primaryFile = null;
+
+        if (context != null) {
+            primaryFile = context.getPrimaryFile();
+        } else {
+            primaryFile = file;
+        }
 
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         MinifyUtil util = new MinifyUtil();
         MinifyFileResult minifyFileResult = new MinifyFileResult();
 
-        if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionCSS())) {
-            String inputFilePath = file.getPath();
+        if (!util.isMinifiedFile(primaryFile.getName(), minifyProperty.getPreExtensionCSS())) {
+            String inputFilePath = primaryFile.getPath();
             String outputFilePath;
 
             if (minifyProperty.isNewCSSFile() && minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty()) {
-                outputFilePath = file.getParent().getPath() + "/" + file.getName() + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
+                outputFilePath = primaryFile.getParent().getPath() + "/" + primaryFile.getName() + minifyProperty.getPreExtensionCSS() + "." + primaryFile.getExt();
             } else {
                 outputFilePath = inputFilePath;
             }
@@ -114,7 +122,7 @@ public final class CSSMinify implements ActionListener {
             outputWriter.flush();
 
             if (project == null) {
-                project = FileOwnerQuery.getOwner(file);
+                project = FileOwnerQuery.getOwner(primaryFile);
             }
 
             PostCssCliExecutable postCssCliExecutable = PostCssCliExecutable.getDefault(project);

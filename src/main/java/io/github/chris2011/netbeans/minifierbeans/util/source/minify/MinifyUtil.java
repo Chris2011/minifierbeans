@@ -24,6 +24,8 @@ import com.google.javascript.jscomp.SourceFile;
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 import com.googlecode.htmlcompressor.compressor.XmlCompressor;
 import com.yahoo.platform.yui.compressor.CssCompressor;
+import io.github.chris2011.netbeans.minifierbeans.css.CSSMinify;
+import io.github.chris2011.netbeans.minifierbeans.javascript.JSMinify;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -41,6 +43,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
 
 public class MinifyUtil {
@@ -52,12 +55,13 @@ public class MinifyUtil {
             if (file.isFolder()) {
                 directory++;
                 MinifyResult preMinifyResult = minify(file, minifyProperty);
-                directory = directory + preMinifyResult.getDirectories();
-                cssFile = cssFile + preMinifyResult.getCssFiles();
-                jsFile = jsFile + preMinifyResult.getJsFiles();
-                htmlFile = htmlFile + preMinifyResult.getHtmlFiles();
-                xmlFile = xmlFile + preMinifyResult.getXmlFiles();
-                jsonFile = jsonFile + preMinifyResult.getJsonFiles();
+
+                directory += preMinifyResult.getDirectories();
+                cssFile += preMinifyResult.getCssFiles();
+                jsFile += preMinifyResult.getJsFiles();
+                htmlFile += preMinifyResult.getHtmlFiles();
+                xmlFile += preMinifyResult.getXmlFiles();
+                jsonFile += preMinifyResult.getJsonFiles();
 
                 minifyResult.setInputJsFilesSize(minifyResult.getInputJsFilesSize() + preMinifyResult.getInputJsFilesSize());
                 minifyResult.setOutputJsFilesSize(minifyResult.getOutputJsFilesSize() + preMinifyResult.getOutputJsFilesSize());
@@ -71,30 +75,33 @@ public class MinifyUtil {
                 minifyResult.setOutputJsonFilesSize(minifyResult.getOutputJsonFilesSize() + preMinifyResult.getOutputJsonFilesSize());
             } else if (file.getExt().equalsIgnoreCase("js") && minifyProperty.isBuildJSMinify()) {
                 jsFile++;
-                try {
-                    Boolean allow = true;
-                    String inputFilePath = file.getPath();
-                    String outputFilePath;
 
-                    if (minifyProperty.isSkipPreExtensionJS() && minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
-                        if (minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()
-                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getPreExtensionJS()))) {
-                            allow = false;
-                        }
+                Boolean allow = true;
+                String inputFilePath = file.getPath();
+                String outputFilePath;
+
+                if (minifyProperty.isSkipPreExtensionJS() && minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
+                    if (minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()
+                            && file.getName().matches(".*" + Pattern.quote(minifyProperty.getPreExtensionJS()))) {
+                        allow = false;
                     }
-                    if (allow) {
+                }
+
+                if (allow) {
+                    try {
                         if (minifyProperty.isNewJSFile() && minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()) {
                             outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionJS() + "." + file.getExt();
                         } else {
                             outputFilePath = inputFilePath;
                         }
-
+                        
                         MinifyFileResult minifyFileResult = compress(inputFilePath, "text/javascript", outputFilePath, minifyProperty);
+
                         minifyResult.setInputJsFilesSize(minifyResult.getInputJsFilesSize() + minifyFileResult.getInputFileSize());
                         minifyResult.setOutputJsFilesSize(minifyResult.getOutputJsFilesSize() + minifyFileResult.getOutputFileSize());
+                    } catch (IOException ex) {
+                        Exceptions.printStackTrace(ex);
                     }
-                } catch (IOException ex) {
-                    Exceptions.printStackTrace(ex);
                 }
             } else if (file.getExt().equalsIgnoreCase("css") && minifyProperty.isBuildCSSMinify()) {
                 cssFile++;
@@ -109,6 +116,7 @@ public class MinifyUtil {
                             allow = false;
                         }
                     }
+
                     if (allow) {
                         if (minifyProperty.isNewCSSFile() && minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty()) {
                             outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
@@ -117,6 +125,7 @@ public class MinifyUtil {
                         }
 
                         MinifyFileResult minifyFileResult = compress(inputFilePath, "text/css", outputFilePath, minifyProperty);
+
                         minifyResult.setInputCssFilesSize(minifyResult.getInputCssFilesSize() + minifyFileResult.getInputFileSize());
                         minifyResult.setOutputCssFilesSize(minifyResult.getOutputCssFilesSize() + minifyFileResult.getOutputFileSize());
                     }
@@ -229,7 +238,7 @@ public class MinifyUtil {
 
         CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 
-        List<SourceFile> inputs = new ArrayList<SourceFile>();
+        List<SourceFile> inputs = new ArrayList<>();
         inputs.add(SourceFile.fromCode(inputFilename, content));
 
         StringWriter outputWriter = new StringWriter();
@@ -375,22 +384,20 @@ public class MinifyUtil {
         return minifyFileResult;
     }
 
+//    public MinifyFileResult compress(String inputFilename, String mimeType, String outputFilename, MinifyProperty minifyProperty) throws IOException {
     public MinifyFileResult compress(String inputFilename, String mimeType, String outputFilename, MinifyProperty minifyProperty) throws IOException {
         InputStreamReader in = null;
         Writer out = null;
         MinifyFileResult minifyFileResult = new MinifyFileResult();
-        Compiler compiler = new Compiler();
-        CompilerOptions options = new CompilerOptions();
+//        Compiler compiler = new Compiler();
+//        CompilerOptions options = new CompilerOptions();
         
-        compiler.initOptions(options);
+//        compiler.initOptions(options);
         
-        options.setEmitUseStrict(false);
-        options.setTrustedStrings(true);
+//        options.setEmitUseStrict(false);
+//        options.setTrustedStrings(true);
         
-        CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
-
-        List<SourceFile> inputs = new ArrayList<>();
-        inputs.add(SourceFile.fromFile(inputFilename));
+//        CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 
         try {
             File inputFile = new File(inputFilename);
@@ -412,28 +419,33 @@ public class MinifyUtil {
 
                     break;
                 case "text/javascript":
-                    // TODO: Change to Google Closure Compiler.
-                    compiler.compile(CommandLineRunner.getDefaultExterns(), inputs, options);
+                    JSMinify.execute(null, FileUtil.toFileObject(inputFile), null, false);
 
                     if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
-                        out.write(compiler.toSource());
+                        // TODO: Change
+//                        out.write(compiler.toSource());
                     } else {
-                        out.write(MinifyProperty.getInstance().getHeaderJS() + "\n" + compiler.toSource());
+                        // TODO: Change
+//                        out.write(MinifyProperty.getInstance().getHeaderJS() + "\n" + compiler.toSource());
                     }
                     
                     break;
                 case "text/css":
                     // TODO: Change to CSSNano.
-                    CssCompressor cssCompressor = new CssCompressor(in);
-                    StringWriter outputWriter = new StringWriter();
+                    CSSMinify.execute(null, FileUtil.toFileObject(inputFile), null, false);
+//                    CssCompressor cssCompressor = new CssCompressor(in);
+//                    StringWriter outputWriter = new StringWriter();
 
-                    cssCompressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
-                    outputWriter.flush();
-                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
-                        out.write(outputWriter.toString());
+//                    cssCompressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
+//                    outputWriter.flush();
+                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderCSS())) {
+                        // TODO: Change
+//                        out.write(outputWriter.toString());
                     } else {
-                        out.write(MinifyProperty.getInstance().getHeaderCSS() + "\n" + outputWriter.toString());
-                    }       outputWriter.close();
+                        // TODO: Change
+//                        out.write(MinifyProperty.getInstance().getHeaderCSS() + "\n" + outputWriter.toString());
+                    }
+//                    outputWriter.close();
 
                     break;
                 case "text/x-json":

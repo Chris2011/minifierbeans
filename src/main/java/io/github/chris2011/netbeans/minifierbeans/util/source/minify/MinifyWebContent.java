@@ -39,8 +39,6 @@ import org.openide.loaders.DataObject;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.RequestProcessor;
 import org.openide.util.TaskListener;
-import org.openide.windows.IOProvider;
-import org.openide.windows.InputOutput;
 
 @ActionID(category = "Build",
         id = "org.netbeans.util.source.minify.Minify")
@@ -96,7 +94,7 @@ public final class MinifyWebContent implements ActionListener {
 
     public void minify() {
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
-        InputOutput io = IOProvider.getDefault().getIO(Bundle.CTL_Minify(), false);
+//        InputOutput io = IOProvider.getDefault().getIO(Bundle.CTL_Minify(), false);
         MinifyUtil util = new MinifyUtil();
 
         try {
@@ -155,7 +153,7 @@ public final class MinifyWebContent implements ActionListener {
                 showNotification(minifyResult, jsEval, cssEval, htmlEval, xmlEval, jsonEval, totalTime);
             }
         } catch (HeadlessException | IOException ex) {
-            io.getOut().println("Exception: " + ex.toString());
+//            io.getOut().println("Exception: " + ex.toString());
         }
     }
 
@@ -169,7 +167,7 @@ public final class MinifyWebContent implements ActionListener {
                 + "%s%s%s%s%s \n\n"
                 + "Total Time - %d ms";
 
-        NotificationDisplayer.getDefault().notify("Successful JS & CSS minification",
+        NotificationDisplayer.getDefault().notify("Successful minification",
                 NotificationDisplayer.Priority.NORMAL.getIcon(),
                 String.format(message,
                         minifyResult.getDirectories(),

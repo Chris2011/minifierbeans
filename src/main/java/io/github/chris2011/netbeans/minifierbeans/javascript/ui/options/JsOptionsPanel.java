@@ -334,27 +334,4 @@ public final class JsOptionsPanel extends JPanel implements ChangeListener {
     public void stateChanged(ChangeEvent e) {
         fireChange();
     }
-
-//    private final class DefaultDocumentListener implements DocumentListener {
-//
-//        @Override
-//        public void insertUpdate(DocumentEvent e) {
-//            processUpdate();
-//        }
-//
-//        @Override
-//        public void removeUpdate(DocumentEvent e) {
-//            processUpdate();
-//        }
-//
-//        @Override
-//        public void changedUpdate(DocumentEvent e) {
-//            processUpdate();
-//        }
-//
-//        private void processUpdate() {
-//            fireChange();
-//        }
-//
-//    }
 }

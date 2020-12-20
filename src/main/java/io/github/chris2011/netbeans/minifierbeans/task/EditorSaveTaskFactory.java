@@ -24,7 +24,7 @@ import org.netbeans.spi.editor.document.OnSaveTask;
     @MimeRegistration(mimeType = "text/javascript", service = OnSaveTask.Factory.class),
     @MimeRegistration(mimeType = "text/css", service = OnSaveTask.Factory.class),
     @MimeRegistration(mimeType = "text/x-json", service = OnSaveTask.Factory.class),
-    @MimeRegistration(mimeType = "text/xml-mime", service = OnSaveTask.Factory.class)
+    @MimeRegistration(mimeType = "text/xml", service = OnSaveTask.Factory.class)
 })
     public  class EditorSaveTaskFactory implements OnSaveTask.Factory {
 

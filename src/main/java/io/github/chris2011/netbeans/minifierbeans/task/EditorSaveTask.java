@@ -15,7 +15,6 @@
  */
 package io.github.chris2011.netbeans.minifierbeans.task;
 
-
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
@@ -30,7 +29,6 @@ import org.openide.loaders.DataObject;
 import org.openide.util.Exceptions;
 
 public class EditorSaveTask implements OnSaveTask {
-
     private final Context context;
 
     public EditorSaveTask(Context ctx) {
@@ -39,23 +37,23 @@ public class EditorSaveTask implements OnSaveTask {
 
     @Override
     public void performTask() {
-        try {      
-            
+        try {
+
             Document document = context.getDocument();
             String content = document.getText(0, document.getLength());
-       
-        DataObject dataObject = NbEditorUtilities.getDataObject(context.getDocument());
-        if(dataObject.getPrimaryFile().getMIMEType().equals("text/html") && MinifyProperty.getInstance().isAutoMinifyHTML()){
-            HTMLMinify.execute(dataObject,content,false);
-        } else if(dataObject.getPrimaryFile().getMIMEType().equals("text/javascript") && MinifyProperty.getInstance().isAutoMinifyJS()){
-            JSMinify.execute(dataObject,content,false);
-        } else if(dataObject.getPrimaryFile().getMIMEType().equals("text/css") && MinifyProperty.getInstance().isAutoMinifyCSS()){
-            CSSMinify.execute(dataObject,content,false);
-        } else if(dataObject.getPrimaryFile().getMIMEType().equals("text/x-json") && MinifyProperty.getInstance().isAutoMinifyJSON()){
-            JSONMinify.execute(dataObject,content,false);
-        } else if(dataObject.getPrimaryFile().getMIMEType().equals("text/xml-mime") && MinifyProperty.getInstance().isAutoMinifyXML()){
-            XMLMinify.execute(dataObject,content,false);
-        } 
+
+            DataObject dataObject = NbEditorUtilities.getDataObject(context.getDocument());
+            if (dataObject.getPrimaryFile().getMIMEType().equals("text/html") && MinifyProperty.getInstance().isAutoMinifyHTML()) {
+                HTMLMinify.execute(dataObject, content, false);
+            } else if (dataObject.getPrimaryFile().getMIMEType().equals("text/javascript") && MinifyProperty.getInstance().isAutoMinifyJS()) {
+                JSMinify.execute(dataObject, null, content, false);
+            } else if (dataObject.getPrimaryFile().getMIMEType().equals("text/css") && MinifyProperty.getInstance().isAutoMinifyCSS()) {
+                CSSMinify.execute(dataObject, null, content, false);
+            } else if (dataObject.getPrimaryFile().getMIMEType().equals("text/x-json") && MinifyProperty.getInstance().isAutoMinifyJSON()) {
+                JSONMinify.execute(dataObject, content, false);
+            } else if (dataObject.getPrimaryFile().getMIMEType().equals("text/xml-mime") && MinifyProperty.getInstance().isAutoMinifyXML()) {
+                XMLMinify.execute(dataObject, content, false);
+            }
         } catch (BadLocationException ex) {
             Exceptions.printStackTrace(ex);
         }
@@ -71,5 +69,4 @@ public class EditorSaveTask implements OnSaveTask {
         return true;
     }
 
-    
 }

@@ -52,29 +52,31 @@ import org.openide.windows.TopComponent;
 })
 @Messages("CTL_JSMinify=Minify JS")
 public final class JSMinify implements ActionListener {
-
     private final DataObject context;
+    private final static RequestProcessor RP = new RequestProcessor("JSMinify", 1, true);
 
     public JSMinify(DataObject context) {
         this.context = context;
     }
-    private final static RequestProcessor RP = new RequestProcessor("JSMinify", 1, true);
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        execute(context, null, true);
+        execute(context, null, null, true);
     }
 
-    public static void execute(final DataObject context, final String content, final boolean notify) {
+    public static void execute(final DataObject context, final FileObject file, final String content, final boolean notify) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                jsMinify(context, content, notify);
+                jsMinify(context, file, content, notify);
             }
         };
 
         final RequestProcessor.Task theTask = RP.create(runnable);
-        final ProgressHandle ph = ProgressHandle.createHandle("Minifying JS " + context.getPrimaryFile().getName(), theTask);
+
+        String foString = context == null ? file.getName() : context.getPrimaryFile().getName();
+
+        final ProgressHandle ph = ProgressHandle.createHandle("Minifying JS " + foString, theTask);
 
         theTask.addTaskListener(new TaskListener() {
             @Override
@@ -87,20 +89,26 @@ public final class JSMinify implements ActionListener {
         theTask.schedule(0);
     }
 
-    private static void jsMinify(DataObject context, String content, boolean notify) {
+    private static void jsMinify(DataObject context, FileObject file, String content, boolean notify) {
         Project project = TopComponent.getRegistry().getActivated().getLookup().lookup(Project.class);
-        FileObject file = context.getPrimaryFile();
+        FileObject primaryFile = null;
+
+        if (context != null) {
+            primaryFile = context.getPrimaryFile();
+        } else {
+            primaryFile = file;
+        }
 
         MinifyProperty minifyProperty = MinifyProperty.getInstance();
         MinifyUtil util = new MinifyUtil();
         MinifyFileResult minifyFileResult = new MinifyFileResult();
 
-        if (!util.isMinifiedFile(file.getName(), minifyProperty.getPreExtensionJS())) {
-            String inputFilePath = file.getPath();
+        if (!util.isMinifiedFile(primaryFile.getName(), minifyProperty.getPreExtensionJS())) {
+            String inputFilePath = primaryFile.getPath();
             String outputFilePath;
 
             if (minifyProperty.isNewJSFile() && minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()) {
-                outputFilePath = file.getParent().getPath() + "/" + file.getName() + minifyProperty.getPreExtensionJS() + "." + file.getExt();
+                outputFilePath = primaryFile.getParent().getPath() + "/" + primaryFile.getName() + minifyProperty.getPreExtensionJS() + "." + primaryFile.getExt();
             } else {
                 outputFilePath = inputFilePath;
             }
@@ -114,7 +122,7 @@ public final class JSMinify implements ActionListener {
             outputWriter.flush();
 
             if (project == null) {
-                project = FileOwnerQuery.getOwner(file);
+                project = FileOwnerQuery.getOwner(primaryFile);
             }
 
             GoogleClosureCompilerCliExecutable googleClosureCompilerCliExecutable = GoogleClosureCompilerCliExecutable.getDefault(project);
@@ -135,6 +143,7 @@ public final class JSMinify implements ActionListener {
 //                } else {
 //                    minifyFileResult = util.compress(inputFilePath, "text/javascript", outputFilePath, minifyProperty);
 //                }
+
             if (minifyProperty.isEnableOutputLogAlert() && notify) {
                 NotificationDisplayer.getDefault().notify("Successful JS minification",
                         NotificationDisplayer.Priority.NORMAL.getIcon(), String.format(

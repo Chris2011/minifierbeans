@@ -36,8 +36,11 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
 
         newXMLFile.setSelected(minifyProperty.isNewXMLFile());
         preExtensionXML.setEnabled(minifyProperty.isNewXMLFile());
+
         projectOptionsPanel.skipPreExtensionXML.setEnabled(minifyProperty.isNewXMLFile());
-        this.preExtensionXML.setText(minifyProperty.getPreExtensionXML());
+        minifyProperty.setSkipPreExtensionXML(minifyProperty.isNewXMLFile());
+        preExtensionXML.setText(minifyProperty.getPreExtensionXML());
+
         autoMinifyXML.setSelected(minifyProperty.isAutoMinifyXML());
 
         xmlMinifierFlagsTextField.setText(minifyProperty.getCompilerFlagsXML());
@@ -149,13 +152,6 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
         changeSupport.removeChangeListener(listener);
     }
 
-//    public String getCssNanoCli() {
-//        return cssNanoCliPathTextField.getText();
-//    }
-//
-//    public void setCssNanoCli(String cssNanoCli) {
-//        cssNanoCliPathTextField.setText(cssNanoCli);
-//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -296,13 +292,14 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
         jPanel2.getAccessibleContext().setAccessibleName(org.openide.util.NbBundle.getMessage(XmlOptionsPanel.class, "XmlOptionsPanel.jPanel2.AccessibleContext.accessibleName")); // NOI18N
     }// </editor-fold>//GEN-END:initComponents
 
-//    void load() {
-//        String ngCli = NbPreferences.forModule(CssOptionsPanel.class).get("ngCliExecutableLocation", "");
-//        cssNanoCliPathTextField.setText(ngCli);
-//    }
-//    void store() {
-//        NbPreferences.forModule(CssOptionsPanel.class).put("ngCliExecutableLocation", cssNanoCliPathTextField.getText());
-//    }
+    void load() {
+        minifyProperty.load();
+    }
+
+    void store() {
+        minifyProperty.store();
+    }
+
     boolean valid() {
         // TODO check whether form is consistent and complete
         return true;
@@ -331,28 +328,5 @@ public final class XmlOptionsPanel extends JPanel implements ChangeListener {
     @Override
     public void stateChanged(ChangeEvent e) {
         fireChange();
-    }
-
-    private final class DefaultDocumentListener implements DocumentListener {
-
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-            processUpdate();
-        }
-
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-            processUpdate();
-        }
-
-        @Override
-        public void changedUpdate(DocumentEvent e) {
-            processUpdate();
-        }
-
-        private void processUpdate() {
-            fireChange();
-        }
-
     }
 }
