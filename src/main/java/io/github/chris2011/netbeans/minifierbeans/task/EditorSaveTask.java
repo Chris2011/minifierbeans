@@ -51,7 +51,7 @@ public class EditorSaveTask implements OnSaveTask {
                 CSSMinify.execute(dataObject, null, content, false);
             } else if (dataObject.getPrimaryFile().getMIMEType().equals("text/x-json") && MinifyProperty.getInstance().isAutoMinifyJSON()) {
                 JSONMinify.execute(dataObject, content, false);
-            } else if (dataObject.getPrimaryFile().getMIMEType().equals("text/xml-mime") && MinifyProperty.getInstance().isAutoMinifyXML()) {
+            } else if (dataObject.getPrimaryFile().getMIMEType().equals("text/xml") && MinifyProperty.getInstance().isAutoMinifyXML()) {
                 XMLMinify.execute(dataObject, content, false);
             }
         } catch (BadLocationException ex) {
