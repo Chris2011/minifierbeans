@@ -8,8 +8,6 @@ import java.awt.event.ItemListener;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import io.github.chris2011.netbeans.minifierbeans.project.ui.options.ProjectOptionsPanel;
 import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
 import org.openide.util.ChangeSupport;

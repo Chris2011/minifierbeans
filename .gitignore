@@ -3,3 +3,4 @@
 /target/
 /custom-packages/node_modules
 /custom-packages/node
+/custom-packages/nbproject/private/
