@@ -1,7 +1,7 @@
-/nbproject/private/
+/nbproject
 /build/
 /target/
 /custom-packages/node_modules
 /custom-packages/node
-/custom-packages/nbproject/
-nb-configuration.xml
+/custom-packages/nbproject
+/nb-configuration.xml
