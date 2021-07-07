@@ -19,14 +19,14 @@ import org.openide.util.Utilities;
 
 public class PostCssCliExecutable {
     public static final String POST_CSS_CLI_NAME;
-    
+
     private static final String OUTPUT_FILE_PARAM = "-o"; // NOI18N
     private static final String CONFIG_DIR_PARAM = "--config"; // NOI18N
     private static final String CONFIG_DIR = System.getProperty("user.home") + "/.netbeans/minifierbeans/custom-packages";
 
     protected final Project project;
     protected final String postCssPath;
-    
+
     static {
         if (Utilities.isWindows()) {
             POST_CSS_CLI_NAME = CONFIG_DIR + "/postcss.cmd"; // NOI18N
@@ -69,13 +69,15 @@ public class PostCssCliExecutable {
 
 //        String projectName = ProjectUtils.getInformation(project).getDisplayName();
 //        Future<Integer> task = getExecutable(Bundle.CssNanoCliExecutable_generate(projectName))
-
         Future<Integer> task = getExecutable("Minification in progress")
                 .additionalParameters(getGenerateParams(inputFile, outputFile))
                 .run(getDescriptor());
-        
 
-        assert task != null : postCssPath;
+        try {
+            assert task != null : postCssPath;
+        } catch (AssertionError e) {
+            e.printStackTrace();
+        }
         return task;
     }
 

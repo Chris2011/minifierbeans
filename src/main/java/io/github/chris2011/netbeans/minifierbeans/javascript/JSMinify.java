@@ -20,9 +20,14 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import org.netbeans.api.progress.ProgressHandle;
 import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
+import io.github.chris2011.netbeans.minifierbeans.util.FileUtils;
 import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyFileResult;
 import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyUtil;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -124,6 +129,37 @@ public final class JSMinify implements ActionListener {
                 task.get(1, TimeUnit.MINUTES);
 
                 minifyFileResult.setOutputFileSize(outputFile.length());
+
+                if (minifyProperty.isEnableOutputLogAlert() && notify) {
+                    NotificationDisplayer.getDefault().notify("Successful JS minification",
+                            NotificationDisplayer.Priority.NORMAL.getIcon(), String.format(
+                            "Input JS Files Size: %s Bytes \n"
+                            + "JS Minified Completed Successfully\n"
+                            + "After Minifying JS Files Size: %s Bytes \n"
+                            + "JS Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
+                }
+            } catch (NullPointerException ex) {
+                ex.printStackTrace();
+
+                NotificationDisplayer.getDefault().notify("Error on CLI execution", NotificationDisplayer.Priority.NORMAL.getIcon(), "Something went wrong. Please click this link to download and extract the binaries again.", new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        RP.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Path customPackagesFolder = Paths.get(System.getProperty("user.home") + "/.netbeans/minifierbeans/custom-packages");
+
+                                    if (Files.exists(customPackagesFolder) && FileUtils.deleteDirectory(customPackagesFolder.toFile())) {
+                                        FileUtils.downloadFile(System.getProperty("user.home"));
+                                    }
+                                } catch (IOException ex1) {
+                                    ex1.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                });
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             } catch (ExecutionException | TimeoutException ex) {
@@ -135,14 +171,6 @@ public final class JSMinify implements ActionListener {
 //                } else {
 //                    minifyFileResult = util.compress(inputFilePath, "text/javascript", outputFilePath, minifyProperty);
 //                }
-            if (minifyProperty.isEnableOutputLogAlert() && notify) {
-                NotificationDisplayer.getDefault().notify("Successful JS minification",
-                        NotificationDisplayer.Priority.NORMAL.getIcon(), String.format(
-                        "Input JS Files Size: %s Bytes \n"
-                        + "JS Minified Completed Successfully\n"
-                        + "After Minifying JS Files Size: %s Bytes \n"
-                        + "JS Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
-            }
         }
     }
 }

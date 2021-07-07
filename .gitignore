@@ -1,5 +1,7 @@
-/nbproject/private/
 /build/
 /target/
 /custom-packages/node_modules
 /custom-packages/node
+/custom-packages/nbproject/
+/nbproject/
+/custom-packages.zip
