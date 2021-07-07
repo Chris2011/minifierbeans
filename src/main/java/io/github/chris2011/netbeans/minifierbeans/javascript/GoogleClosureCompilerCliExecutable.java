@@ -19,15 +19,16 @@ import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
 
 public class GoogleClosureCompilerCliExecutable {
+
     public static final String GOOGLE_CLOSURE_COMPILER_CLI_NAME;
-    
+
     private static final String INPUT_FILE_PARAM = "--js"; // NOI18N
     private static final String OUTPUT_FILE_PARAM = "--js_output_file"; // NOI18N
     private static final String CONFIG_DIR = System.getProperty("user.home") + "/.netbeans/minifierbeans/custom-packages";
 
     protected final Project project;
     protected final String googleClosureCompilerPath;
-    
+
     static {
         if (Utilities.isWindows()) {
             GOOGLE_CLOSURE_COMPILER_CLI_NAME = CONFIG_DIR + "/google-closure-compiler.cmd"; // NOI18N
@@ -71,9 +72,12 @@ public class GoogleClosureCompilerCliExecutable {
         Future<Integer> task = getExecutable("Minification in progress")
                 .additionalParameters(getGenerateParams(inputFile, outputFile, compilerFlags))
                 .run(getDescriptor());
-        
 
-        assert task != null : googleClosureCompilerPath;
+        try {
+            assert task != null : googleClosureCompilerPath;
+        } catch (AssertionError e) {
+            e.printStackTrace();
+        }
         return task;
     }
 
@@ -117,13 +121,13 @@ public class GoogleClosureCompilerCliExecutable {
 
     private List<String> getGenerateParams(File inputFile, File outputFile, String compilerFlags) {
         List<String> params = new ArrayList<>();
-        
+
         if (!compilerFlags.isEmpty()) {
             String[] splittedCompilerFlags = compilerFlags.split("; ");
-            
+
             for (String splittedCompilerFlag : splittedCompilerFlags) {
                 String[] splittedKeyAndValue = splittedCompilerFlag.split(" ");
-                
+
                 params.addAll(Arrays.asList(splittedKeyAndValue));
             }
         }

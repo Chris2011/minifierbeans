@@ -1,5 +1,17 @@
 # Changelog
 
+## Update in 3.3.1
+
+### General
+1 - Added more error handling.  
+2 - Updated npm dependencies.  
+
+### Fixes
+1 - [#72](https://github.com/Chris2011/minifierbeans/issues/72): Installation in Netbeans 12.3 on OpenJDK 11 with Minifierbeans-3.3.0 not working.  
+2 - [#75](https://github.com/Chris2011/minifierbeans/issues/75): Change --language_out from STABLE to other spec.  
+3 - [#82](https://github.com/Chris2011/minifierbeans/issues/82): Exception while unzipping.  
+
+
 ## Update in 3.3.0
 
 ### General

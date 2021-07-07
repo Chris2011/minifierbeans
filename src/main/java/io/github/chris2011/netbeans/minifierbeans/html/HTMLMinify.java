@@ -15,8 +15,6 @@
  */
 package io.github.chris2011.netbeans.minifierbeans.html;
 
-import io.github.chris2011.netbeans.minifierbeans.javascript.GoogleClosureCompilerCliExecutable;
-import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -24,9 +22,13 @@ import java.io.IOException;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
 import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
+import io.github.chris2011.netbeans.minifierbeans.util.FileUtils;
 import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyFileResult;
 import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyUtil;
 import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -128,19 +130,41 @@ public final class HTMLMinify implements ActionListener {
                 task.get(1, TimeUnit.MINUTES);
 
                 minifyFileResult.setOutputFileSize(outputFile.length());
+
+                if (minifyProperty.isEnableOutputLogAlert() && notify) {
+                    NotificationDisplayer.getDefault().notify("Successful HTML minification",
+                            NotificationDisplayer.Priority.NORMAL.getIcon(), String.format(
+                            "Input HTML Files Size: %s Bytes \n"
+                            + "HTML Minified Completed Successfully\n"
+                            + "After Minifying HTML Files Size: %s Bytes \n"
+                            + "HTML Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
+                }
+            } catch (NullPointerException ex) {
+                ex.printStackTrace();
+
+                NotificationDisplayer.getDefault().notify("Error on CLI execution", NotificationDisplayer.Priority.NORMAL.getIcon(), "Something went wrong. Please click this link to download and extract the binaries again.", new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        RP.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Path customPackagesFolder = Paths.get(System.getProperty("user.home") + "/.netbeans/minifierbeans/custom-packages");
+
+                                    if (Files.exists(customPackagesFolder) && FileUtils.deleteDirectory(customPackagesFolder.toFile())) {
+                                        FileUtils.downloadFile(System.getProperty("user.home"));
+                                    }
+                                } catch (IOException ex1) {
+                                    ex1.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                });
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             } catch (ExecutionException | TimeoutException ex) {
                 Exceptions.printStackTrace(ex);
-            }
-
-            if (minifyProperty.isEnableOutputLogAlert() && notify) {
-                NotificationDisplayer.getDefault().notify("Successful HTML minification",
-                        NotificationDisplayer.Priority.NORMAL.getIcon(), String.format(
-                        "Input HTML Files Size: %s Bytes \n"
-                        + "HTML Minified Completed Successfully\n"
-                        + "After Minifying HTML Files Size: %s Bytes \n"
-                        + "HTML Space Saved %s%%", minifyFileResult.getInputFileSize(), minifyFileResult.getOutputFileSize(), minifyFileResult.getSavedPercentage()), null);
             }
 
 //                if (content != null) {

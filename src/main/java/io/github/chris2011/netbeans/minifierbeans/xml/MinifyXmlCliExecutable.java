@@ -72,7 +72,11 @@ public class MinifyXmlCliExecutable {
                 .additionalParameters(getGenerateParams(inputFile, outputFile, compilerFlags))
                 .run(getDescriptor());
 
-        assert task != null : minifyXmlCliPath;
+        try {
+            assert task != null : minifyXmlCliPath;
+        } catch (AssertionError e) {
+            e.printStackTrace();
+        }
         return task;
     }
 

@@ -72,7 +72,12 @@ public class HtmlMinifierCliExecutable {
                 .additionalParameters(getGenerateParams(inputFile, outputFile, compilerFlags))
                 .run(getDescriptor());
 
-        assert task != null : htmlMinifierPath;
+        try {
+            assert task != null : htmlMinifierPath;
+        } catch (AssertionError e) {
+            e.printStackTrace();
+        }
+
         return task;
     }
 
