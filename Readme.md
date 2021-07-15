@@ -70,4 +70,4 @@ See [Changelog](./Changelog.md) for all information
 Version < 2.3.0 is compatible to NetBeans 8.2 (Which is not supported anymore)  
 Version >= 2.5.1 is compatible to Apache NetBeans >= 9.0  
   
-Plugin is available at http://plugins.netbeans.org/plugin/49666/minifierbeans
+Plugin is available at https://github.com/Chris2011/minifierbeans/releases/tag/3.3.1
