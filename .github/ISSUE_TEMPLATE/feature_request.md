@@ -7,6 +7,9 @@ assignees: ''
 
 ---
 
+**Search first**
+Please make sure, that your request is not covered by any other ticket. Please search first before you create a ticket.
+
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
