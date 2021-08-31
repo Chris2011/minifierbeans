@@ -1,5 +1,17 @@
 # Changelog
 
+## Update in 3.4.0
+
+### General
+1 - Refactored code to do the same option handling as NetBeans core.  
+2 - Updated node dependencies.  
+
+### Fixes
+1 - [#21](https://github.com/Chris2011/minifierbeans/issues/21): New build folder has still the dev files in it.  
+2 - [#73](https://github.com/Chris2011/minifierbeans/issues/73): Every option that was changed will be resetted after NetBeans restart.  
+3 - [#85](https://github.com/Chris2011/minifierbeans/issues/85): After reboot Netbeans reset "Minify on save" setting.  
+
+
 ## Update in 3.3.1
 
 ### General
