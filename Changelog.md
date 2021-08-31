@@ -7,9 +7,11 @@
 2 - Updated node dependencies.  
 
 ### Fixes
+1 - [#73](https://github.com/Chris2011/minifierbeans/issues/73): Every option that was changed will be resetted after NetBeans restart.  
+2 - [#85](https://github.com/Chris2011/minifierbeans/issues/85): After reboot Netbeans reset "Minify on save" setting.  
+
+### Features
 1 - [#21](https://github.com/Chris2011/minifierbeans/issues/21): New build folder has still the dev files in it.  
-2 - [#73](https://github.com/Chris2011/minifierbeans/issues/73): Every option that was changed will be resetted after NetBeans restart.  
-3 - [#85](https://github.com/Chris2011/minifierbeans/issues/85): After reboot Netbeans reset "Minify on save" setting.  
 
 
 ## Update in 3.3.1
