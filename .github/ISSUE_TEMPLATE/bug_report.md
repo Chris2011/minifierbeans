@@ -7,6 +7,9 @@ assignees: ''
 
 ---
 
+**Search first**
+Please make sure, that your issues is not covered by any ticket. Please search before your create a ticket.
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
