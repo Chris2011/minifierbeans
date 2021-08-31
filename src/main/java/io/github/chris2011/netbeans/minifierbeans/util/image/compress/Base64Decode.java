@@ -31,7 +31,7 @@ import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.RequestProcessor;
-import org.openide.util.TaskListener;
+import org.openide.util.Task;
 import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
 
@@ -52,21 +52,15 @@ public final class Base64Decode implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                decode();
-            }
+        Runnable runnable = () -> {
+            decode();
         };
 
         final RequestProcessor.Task theTask = RP.create(runnable);
         final ProgressHandle ph = ProgressHandleFactory.createHandle("Base64 Decoding Image " + context.getPrimaryFile().getName(), theTask);
 
-        theTask.addTaskListener(new TaskListener() {
-            @Override
-            public void taskFinished(org.openide.util.Task task) {
-                ph.finish();
-            }
+        theTask.addTaskListener((Task task) -> {
+            ph.finish();
         });
 
         ph.start();

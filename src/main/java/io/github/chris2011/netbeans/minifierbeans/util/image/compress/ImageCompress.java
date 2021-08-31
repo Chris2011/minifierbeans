@@ -29,7 +29,7 @@ import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.RequestProcessor;
-import org.openide.util.TaskListener;
+import org.openide.util.Task;
 
 @ActionID(category = "Build",
     id = "org.netbeans.util.image.compress.ImageCompress")
@@ -48,28 +48,21 @@ public final class ImageCompress implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                compress();
-            }
+        Runnable runnable = () -> {
+            compress();
         };
         
         final RequestProcessor.Task theTask = RP.create(runnable);
         final ProgressHandle ph = ProgressHandleFactory.createHandle("Compressing Image " + context.getPrimaryFile().getName(), theTask);
         
-        theTask.addTaskListener(new TaskListener() {
-            @Override
-            public void taskFinished(org.openide.util.Task task) {
-                NotificationDisplayer.getDefault().notify("Image compressed successfully", NotificationDisplayer.Priority.NORMAL.getIcon(), "The compression of the image was successful.", null);
-                
-                ph.finish();
-            }
+        theTask.addTaskListener((Task task) -> {
+            NotificationDisplayer.getDefault().notify("Image compressed successfully", NotificationDisplayer.Priority.NORMAL.getIcon(), "The compression of the image was successful.", null);
+            
+            ph.finish();
         });
         
         ph.start();
         theTask.schedule(0);
-
     }
 
     void compress() {

@@ -26,34 +26,31 @@ public class Installer extends ModuleInstall implements Runnable {
 
     @Override
     public void run() {
-        RP.post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Path customPackagesFolder = Paths.get(System.getProperty("user.home") + "/.netbeans/minifierbeans/custom-packages");
-
-                    if (Files.exists(customPackagesFolder)) {
-                        String remoteVersion = getVersionFromRemotePackageJson();
-                        String localVersion = getVersionFromLocalPackageJson();
-
-                        if (localVersion.equals("") && FileUtils.deleteDirectory(customPackagesFolder.toFile())) {
-                            FileUtils.downloadFile(System.getProperty("user.home"));
-
-                            return;
-                        }
-
-                        Semver remoteSemVersion = new Semver(remoteVersion);
-                        Semver localSemVersion = new Semver(localVersion);
-
-                        if (remoteSemVersion.isGreaterThan(localSemVersion) && FileUtils.deleteDirectory(customPackagesFolder.toFile())) {
-                            FileUtils.downloadFile(System.getProperty("user.home"));
-                        }
-                    } else {
+        RP.post(() -> {
+            try {
+                Path customPackagesFolder = Paths.get(System.getProperty("user.home") + "/.netbeans/minifierbeans/custom-packages");
+                
+                if (Files.exists(customPackagesFolder)) {
+                    String remoteVersion = getVersionFromRemotePackageJson();
+                    String localVersion = getVersionFromLocalPackageJson();
+                    
+                    if (localVersion.equals("") && FileUtils.deleteDirectory(customPackagesFolder.toFile())) {
+                        FileUtils.downloadFile(System.getProperty("user.home"));
+                        
+                        return;
+                    }
+                    
+                    Semver remoteSemVersion = new Semver(remoteVersion);
+                    Semver localSemVersion = new Semver(localVersion);
+                    
+                    if (remoteSemVersion.isGreaterThan(localSemVersion) && FileUtils.deleteDirectory(customPackagesFolder.toFile())) {
                         FileUtils.downloadFile(System.getProperty("user.home"));
                     }
-                } catch (IOException ex) {
-                    Exceptions.printStackTrace(ex);
+                } else {
+                    FileUtils.downloadFile(System.getProperty("user.home"));
                 }
+            } catch (IOException ex) {
+                Exceptions.printStackTrace(ex);
             }
         }, 0);
     }

@@ -98,11 +98,8 @@ public class MinifyXmlCliExecutable {
                 .optionsPath(OPTIONS_PATH)
                 .outLineBased(true)
                 .errLineBased(true)
-                .postExecution(new Runnable() {
-                    @Override
-                    public void run() {
-                        project.getProjectDirectory().refresh();
-                    }
+                .postExecution(() -> {
+                    project.getProjectDirectory().refresh();
                 });
     }
 

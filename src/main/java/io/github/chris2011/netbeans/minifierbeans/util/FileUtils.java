@@ -13,9 +13,13 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -229,15 +233,12 @@ public final class FileUtils {
             inputStream.close();
             handle.finish();
 
-            RP.post(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        extractArchive(saveFilePath, theFile.getAbsolutePath() + "/");
-                    } catch (IOException ex) {
-                        handle.finish();
-                        Exceptions.printStackTrace(ex);
-                    }
+            RP.post(() -> {
+                try {
+                    extractArchive(saveFilePath, theFile.getAbsolutePath() + "/");
+                } catch (IOException ex) {
+                    handle.finish();
+                    Exceptions.printStackTrace(ex);
                 }
             });
         } else {
@@ -322,5 +323,21 @@ public final class FileUtils {
         }
 
         return directoryToBeDeleted.delete();
+    }
+    
+    public static String getRandomPostFix() {
+        DateFormat df = new SimpleDateFormat("_[MM-dd-yyyy_HH-mm-ss]");
+        Date today = Calendar.getInstance().getTime();
+        return df.format(today);
+    }
+
+    public static File getTargetFolder(File file) throws IOException {
+        if (file.exists()) {
+            file = new File(file.getParentFile().getPath() + File.separator + file.getName() + "_" + getRandomPostFix());
+            return getTargetFolder(file);
+        } else {
+            file.mkdir();
+            return file;
+        }
     }
 }

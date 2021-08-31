@@ -5,7 +5,7 @@
     <!-- START Common stuff, can be copied and changed for other plugins -->
     <groupId>io.github.chris2011.netbeans.minifierbeans</groupId>
     <artifactId>Minifierbeans</artifactId>
-    <version>3.3.1</version>
+    <version>3.4.0</version>
     <packaging>nbm</packaging>
     <name>Minifierbeans</name>
     <url>https://github.com/Chris2011/minifierbeans</url>
@@ -270,11 +270,23 @@
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-extexecution-base</artifactId>
             <version>${netbeans.version}</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-modules</artifactId>
-            <version>RELEASE90</version>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-modules-diff</artifactId>
+            <version>${netbeans.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-modules-editor-lib</artifactId>
+            <version>${netbeans.version}</version>
         </dependency>
     </dependencies>
     <properties>

@@ -31,7 +31,7 @@ import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.RequestProcessor;
-import org.openide.util.TaskListener;
+import org.openide.util.Task;
 import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
 
@@ -53,21 +53,15 @@ public final class Base64Encode implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                encode();
-            }
+        Runnable runnable = () -> {
+            encode();
         };
         final RequestProcessor.Task theTask = RP.create(runnable);
         final ProgressHandle ph = ProgressHandleFactory.createHandle("Base64 Encoding Image " + context.getPrimaryFile().getName(), theTask);
-        theTask.addTaskListener(new TaskListener() {
-            @Override
-            public void taskFinished(org.openide.util.Task task) {
-                NotificationDisplayer.getDefault().notify("Image encoded successfully", NotificationDisplayer.Priority.NORMAL.getIcon(), "The encoding of the image was successful.", null);
-                
-                ph.finish();
-            }
+        theTask.addTaskListener((Task task) -> {
+            NotificationDisplayer.getDefault().notify("Image encoded successfully", NotificationDisplayer.Priority.NORMAL.getIcon(), "The encoding of the image was successful.", null);
+            
+            ph.finish();
         });
 
         ph.start();

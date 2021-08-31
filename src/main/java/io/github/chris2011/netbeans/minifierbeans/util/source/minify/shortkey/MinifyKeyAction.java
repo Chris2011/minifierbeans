@@ -2,10 +2,10 @@ package io.github.chris2011.netbeans.minifierbeans.util.source.minify.shortkey;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
-import io.github.chris2011.netbeans.minifierbeans.css.CSSMinify;
-import io.github.chris2011.netbeans.minifierbeans.html.HTMLMinify;
-import io.github.chris2011.netbeans.minifierbeans.javascript.JSMinify;
+import io.github.chris2011.netbeans.minifierbeans.css.CssMinify;
+import io.github.chris2011.netbeans.minifierbeans.html.HtmlMinify;
+import io.github.chris2011.netbeans.minifierbeans.javascript.JsMinify;
+import io.github.chris2011.netbeans.minifierbeans.folder.FolderOptionsModel;
 import io.github.chris2011.netbeans.minifierbeans.util.source.minify.MinifyWebContent;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
@@ -18,10 +18,10 @@ import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
 
 @ActionID(
-        category = "Build",
-        id = "org.netbeans.util.source.minify.shortkey.MinifyKeyAction")
+    category = "Build",
+    id = "org.netbeans.util.source.minify.shortkey.MinifyKeyAction")
 @ActionRegistration(
-        displayName = "#CTL_MinifyKeyAction")
+    displayName = "#CTL_MinifyKeyAction")
 @ActionReference(path = "Shortcuts", name = "O-M")
 @Messages("CTL_MinifyKeyAction=Minify Key Action")
 public final class MinifyKeyAction implements ActionListener {
@@ -29,14 +29,14 @@ public final class MinifyKeyAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        MinifyProperty minifyProperty = MinifyProperty.getInstance();
+        FolderOptionsModel folderOptionsModel = FolderOptionsModel.getDefault();
         DataObject dob = TopComponent.getRegistry().getActivated().getLookup().lookup(DataObject.class);
 
-        if (dob != null && minifyProperty.isEnableShortKeyAction()) {
-            FileObject fileObject = dob.getPrimaryFile();//       p = FileOwnerQuery.getOwner(fo);
-            boolean allowAction = true;
+        if (dob != null && folderOptionsModel.getEnableShortKeyActionOption()) {
+            FileObject fileObject = dob.getPrimaryFile();
+            boolean allowAction = false;
 
-            if (minifyProperty.isEnableShortKeyActionConfirmBox()) {
+            if (folderOptionsModel.getEnableShortKeyActionConfirmBoxOption()) {
                 NotifyDescriptor.Confirmation nd
                         = new NotifyDescriptor.Confirmation(
                                 "Are you sure to minify " + fileObject.getNameExt() + " ?",
@@ -45,20 +45,21 @@ public final class MinifyKeyAction implements ActionListener {
                 nd.setOptions(new Object[]{
                     NotifyDescriptor.YES_OPTION,
                     NotifyDescriptor.NO_OPTION});
-                if (DialogDisplayer.getDefault().notify(nd).equals(NotifyDescriptor.NO_OPTION)) {
-                    allowAction = false;
+                if (DialogDisplayer.getDefault().notify(nd).equals(NotifyDescriptor.YES_OPTION)) {
+                    allowAction = true;
                 }
             }
+
             if (allowAction) {
                 if (fileObject.isFolder()) {
                     targetAction = new MinifyWebContent(dob);
                 } else {
                     if (fileObject.getExt().equalsIgnoreCase("js")) {
-                        targetAction = new JSMinify(dob);
+                        targetAction = new JsMinify(dob);
                     } else if (fileObject.getExt().equalsIgnoreCase("css")) {
-                        targetAction = new CSSMinify(dob);
+                        targetAction = new CssMinify(dob);
                     } else if (fileObject.getExt().equalsIgnoreCase("html") || fileObject.getExt().equalsIgnoreCase("htm")) {
-                        targetAction = new HTMLMinify(dob);
+                        targetAction = new HtmlMinify(dob);
                     }
                 }
                 targetAction.actionPerformed(e);

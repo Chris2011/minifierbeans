@@ -15,17 +15,20 @@
  */
 package io.github.chris2011.netbeans.minifierbeans.task;
 
-
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
-import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
 import org.netbeans.modules.editor.NbEditorUtilities;
 import org.netbeans.spi.editor.document.OnSaveTask;
-import io.github.chris2011.netbeans.minifierbeans.css.CSSMinify;
-import io.github.chris2011.netbeans.minifierbeans.html.HTMLMinify;
-import io.github.chris2011.netbeans.minifierbeans.javascript.JSMinify;
-import io.github.chris2011.netbeans.minifierbeans.json.JSONMinify;
-import io.github.chris2011.netbeans.minifierbeans.xml.XMLMinify;
+import io.github.chris2011.netbeans.minifierbeans.css.CssMinify;
+import io.github.chris2011.netbeans.minifierbeans.css.CssOptionsModel;
+import io.github.chris2011.netbeans.minifierbeans.html.HtmlMinify;
+import io.github.chris2011.netbeans.minifierbeans.html.HtmlOptionsModel;
+import io.github.chris2011.netbeans.minifierbeans.javascript.JsMinify;
+import io.github.chris2011.netbeans.minifierbeans.javascript.JsOptionsModel;
+import io.github.chris2011.netbeans.minifierbeans.json.JsonMinify;
+import io.github.chris2011.netbeans.minifierbeans.json.JsonOptionsModel;
+import io.github.chris2011.netbeans.minifierbeans.xml.XmlMinify;
+import io.github.chris2011.netbeans.minifierbeans.xml.XmlOptionsModel;
 import org.openide.loaders.DataObject;
 import org.openide.util.Exceptions;
 
@@ -39,23 +42,22 @@ public class EditorSaveTask implements OnSaveTask {
 
     @Override
     public void performTask() {
-        try {      
-            
+        try {
             Document document = context.getDocument();
             String content = document.getText(0, document.getLength());
-       
-        DataObject dataObject = NbEditorUtilities.getDataObject(context.getDocument());
-        if(dataObject.getPrimaryFile().getMIMEType().equals("text/html") && MinifyProperty.getInstance().isAutoMinifyHTML()){
-            HTMLMinify.execute(dataObject,content,false);
-        } else if(dataObject.getPrimaryFile().getMIMEType().equals("text/javascript") && MinifyProperty.getInstance().isAutoMinifyJS()){
-            JSMinify.execute(dataObject,content,false);
-        } else if(dataObject.getPrimaryFile().getMIMEType().equals("text/css") && MinifyProperty.getInstance().isAutoMinifyCSS()){
-            CSSMinify.execute(dataObject,content,false);
-        } else if(dataObject.getPrimaryFile().getMIMEType().equals("text/x-json") && MinifyProperty.getInstance().isAutoMinifyJSON()){
-            JSONMinify.execute(dataObject,content,false);
-        } else if(dataObject.getPrimaryFile().getMIMEType().equals("text/xml-mime") && MinifyProperty.getInstance().isAutoMinifyXML()){
-            XMLMinify.execute(dataObject,content,false);
-        } 
+
+            DataObject dataObject = NbEditorUtilities.getDataObject(context.getDocument());
+            if (dataObject.getPrimaryFile().getMIMEType().contains("html") && HtmlOptionsModel.getDefault().getMinifyHtmlOnSaveOption()) {
+                HtmlMinify.execute(dataObject, content, false);
+            } else if (dataObject.getPrimaryFile().getMIMEType().contains("javascript") && JsOptionsModel.getDefault().getMinifyJsOnSaveOption()) {
+                JsMinify.execute(dataObject, content, false);
+            } else if (dataObject.getPrimaryFile().getMIMEType().contains("css") && CssOptionsModel.getDefault().getMinifyCssOnSaveOption()) {
+                CssMinify.execute(dataObject, content, false);
+            } else if (dataObject.getPrimaryFile().getMIMEType().contains("json") && JsonOptionsModel.getDefault().getMinifyJsonOnSaveOption()) {
+                JsonMinify.execute(dataObject, content, false);
+            } else if (dataObject.getPrimaryFile().getMIMEType().contains("xml") && XmlOptionsModel.getDefault().getMinifyXmlOnSaveOption()) {
+                XmlMinify.execute(dataObject, content, false);
+            }
         } catch (BadLocationException ex) {
             Exceptions.printStackTrace(ex);
         }
@@ -70,6 +72,4 @@ public class EditorSaveTask implements OnSaveTask {
     public boolean cancel() {
         return true;
     }
-
-    
 }

@@ -1,130 +1,57 @@
 package io.github.chris2011.netbeans.minifierbeans.css.ui.options;
 
-import java.awt.EventQueue;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import io.github.chris2011.netbeans.minifierbeans.util.RoundButton;
+import java.awt.FlowLayout;
 import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import io.github.chris2011.netbeans.minifierbeans.project.ui.options.ProjectOptionsPanel;
-import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
-import org.openide.util.ChangeSupport;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import org.netbeans.spi.options.OptionsPanelController;
+import org.openide.util.NbBundle;
 
-public final class CssOptionsPanel extends JPanel implements ChangeListener {
-    private MinifyProperty minifyProperty;
-
-    private static final long serialVersionUID = 1L;
-    private final ChangeSupport changeSupport = new ChangeSupport(this);
+@OptionsPanelController.Keywords(keywords = {"css", "#CssOptionsPanel.Keyword1", "#CssOptionsPanel.Keyword2"},
+    location = "Html5", tabTitle = "#CTL_OptionsPanel.title")
+@NbBundle.Messages({
+    "CTL_OptionsPanel.title=Minification",
+    "CssOptionsPanel.Keyword1=Minify CSS",
+    "CssOptionsPanel.Keyword2=Minify CSS on save"
+})
+public final class CssOptionsPanel extends JPanel {
+    private String[] keywords;
+    public RoundButton btnHeaderContentHelp = new RoundButton(null, 75);
 
     public CssOptionsPanel() {
-        assert EventQueue.isDispatchThread();
-
         initComponents();
 
-        init();
+        pnlFixedHeaderContentHelp.setLayout(new FlowLayout());
+        pnlFixedHeaderContentHelp.add(btnHeaderContentHelp);
+        
+        jPanel3.setVisible(false);
+//        pnlFixedHeaderContentHelp.setVisible(false);
+//        txtHeaderEditorPaneCss.setVisible(false);
+//        lblHeaderEditorPaneCss.setVisible(false);
     }
 
-    private void init() {
-        final ProjectOptionsPanel projectOptionsPanel = new ProjectOptionsPanel();
-
-        minifyProperty = MinifyProperty.getInstance();
-
-        /*-------- CSS ----------*/
-        newCSSFile.setSelected(minifyProperty.isNewCSSFile());
-        preExtensionCSS.setEnabled(minifyProperty.isNewCSSFile());
-        projectOptionsPanel.skipPreExtensionCSS.setEnabled(minifyProperty.isNewCSSFile());
-        this.preExtensionCSS.setText(minifyProperty.getPreExtensionCSS());
-
-        autoMinifyCSS.setSelected(minifyProperty.isAutoMinifyCSS());
-        headerEditorPaneCSS.setText(minifyProperty.getHeaderCSS());
-
-        headerEditorPaneCSS.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent fe) {
-            }
-
-            @Override
-            public void focusLost(FocusEvent fe) {
-                String text = headerEditorPaneCSS.getText();
-                if (text == null || text.trim().isEmpty()) {
-                    text = "";
-                    headerEditorPaneCSS.setText("");
-                } else {
-                    text = text.trim();
-                }
-                minifyProperty.setHeaderCSS(text);
-            }
-        });
-        this.autoMinifyCSS.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    minifyProperty.setAutoMinifyCSS(Boolean.TRUE);
-                } else {
-                    minifyProperty.setAutoMinifyCSS(Boolean.FALSE);
-                }
-            }
-        });
-        this.newCSSFile.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    minifyProperty.setNewCSSFile(Boolean.TRUE);
-                    minifyProperty.setPreExtensionCSS(".min");
-                    preExtensionCSS.setText(".min");
-                    preExtensionCSS.setEnabled(Boolean.TRUE);
-
-                    if (minifyProperty.isBuildCSSMinify() && minifyProperty.isNewCSSFile()) {
-                        projectOptionsPanel.skipPreExtensionCSS.setEnabled(Boolean.TRUE);
-                        minifyProperty.setSkipPreExtensionCSS(Boolean.TRUE);
-                        projectOptionsPanel.skipPreExtensionCSS.setSelected(Boolean.TRUE);
-                    }
-
-                } else {
-                    minifyProperty.setNewCSSFile(Boolean.FALSE);
-                    preExtensionCSS.setEnabled(Boolean.FALSE);
-                    projectOptionsPanel.skipPreExtensionCSS.setEnabled(Boolean.FALSE);
-                    minifyProperty.setSkipPreExtensionCSS(Boolean.FALSE);
-                    projectOptionsPanel.skipPreExtensionCSS.setSelected(Boolean.FALSE);
-                }
-            }
-        });
-
-        this.preExtensionCSS.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent fe) {
-            }
-
-            @Override
-            public void focusLost(FocusEvent fe) {
-                String text = preExtensionCSS.getText();
-                if (text == null || text.trim().isEmpty()) {
-                    text = ".min";
-                    preExtensionCSS.setText(text);
-                } else {
-                    text = text.trim();
-                }
-                minifyProperty.setPreExtensionCSS(text);
-            }
-        });
+    @Override
+    public void addNotify() {
+        super.addNotify();
     }
 
-    public static CssOptionsPanel create() {
-        CssOptionsPanel panel = new CssOptionsPanel();
-
-        return panel;
+    @Override
+    public void removeNotify() {
+        super.removeNotify();
     }
 
-    public void addChangeListener(ChangeListener listener) {
-        changeSupport.addChangeListener(listener);
-    }
+    public Collection<String> getKeywords() {
+        if (keywords == null) {
+            keywords = new String[]{
+                "CSS",
+                Bundle.CssOptionsPanel_Keyword1().toUpperCase(),
+                Bundle.CssOptionsPanel_Keyword2().toUpperCase()
+            };
+        }
 
-    public void removeChangeListener(ChangeListener listener) {
-        changeSupport.removeChangeListener(listener);
+        return Collections.unmodifiableList(Arrays.asList(keywords));
     }
 
     /**
@@ -139,13 +66,16 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
         cssNanoLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         extLabel = new javax.swing.JLabel();
-        preExtensionCSS = new javax.swing.JTextField();
-        autoMinifyCSS = new javax.swing.JCheckBox();
-        newCSSFile = new javax.swing.JCheckBox();
-        headerLabelCSS = new javax.swing.JLabel();
+        txtCssPreExtension = new javax.swing.JTextField();
+        chbMinifyCssOnSave = new javax.swing.JCheckBox();
+        chbGenerateNewCssFile = new javax.swing.JCheckBox();
+        jPanel3 = new javax.swing.JPanel();
+        pnlFixedHeaderContentHelp = new javax.swing.JPanel();
+        lblHeaderEditorPaneCss = new javax.swing.JLabel();
         headerScrollPaneCSS = new javax.swing.JScrollPane();
-        headerEditorPaneCSS = new javax.swing.JEditorPane();
+        txtHeaderEditorPaneCss = new javax.swing.JEditorPane();
 
+        cssNanoLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(cssNanoLabel, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.cssNanoLabel.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -154,41 +84,41 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(cssNanoLabel)
-                .addGap(0, 476, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cssNanoLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(68, 68, 68))
         );
 
         extLabel.setForeground(extLabel.getForeground().darker());
         org.openide.awt.Mnemonics.setLocalizedText(extLabel, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.extLabel.text")); // NOI18N
 
-        preExtensionCSS.setText(org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.preExtensionCSS.text")); // NOI18N
+        txtCssPreExtension.setText(org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.txtCssPreExtension.text")); // NOI18N
 
-        autoMinifyCSS.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(autoMinifyCSS, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.autoMinifyCSS.text")); // NOI18N
-        autoMinifyCSS.setContentAreaFilled(false);
+        chbMinifyCssOnSave.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(chbMinifyCssOnSave, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.chbMinifyCssOnSave.text")); // NOI18N
+        chbMinifyCssOnSave.setContentAreaFilled(false);
 
-        newCSSFile.setBackground(new java.awt.Color(255, 255, 255));
-        org.openide.awt.Mnemonics.setLocalizedText(newCSSFile, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.newCSSFile.text")); // NOI18N
-        newCSSFile.setContentAreaFilled(false);
+        chbGenerateNewCssFile.setBackground(new java.awt.Color(255, 255, 255));
+        org.openide.awt.Mnemonics.setLocalizedText(chbGenerateNewCssFile, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.chbGenerateNewCssFile.text")); // NOI18N
+        chbGenerateNewCssFile.setContentAreaFilled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(autoMinifyCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chbMinifyCssOnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(newCSSFile)
+                        .addComponent(chbGenerateNewCssFile)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(preExtensionCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCssPreExtension, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(extLabel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -196,20 +126,53 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(autoMinifyCSS)
+                .addGap(0, 0, 0)
+                .addComponent(chbMinifyCssOnSave)
                 .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(preExtensionCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCssPreExtension, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(extLabel))
-                    .addComponent(newCSSFile))
+                    .addComponent(chbGenerateNewCssFile))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        org.openide.awt.Mnemonics.setLocalizedText(headerLabelCSS, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.headerLabelCSS.text")); // NOI18N
+        javax.swing.GroupLayout pnlFixedHeaderContentHelpLayout = new javax.swing.GroupLayout(pnlFixedHeaderContentHelp);
+        pnlFixedHeaderContentHelp.setLayout(pnlFixedHeaderContentHelpLayout);
+        pnlFixedHeaderContentHelpLayout.setHorizontalGroup(
+            pnlFixedHeaderContentHelpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 15, Short.MAX_VALUE)
+        );
+        pnlFixedHeaderContentHelpLayout.setVerticalGroup(
+            pnlFixedHeaderContentHelpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 16, Short.MAX_VALUE)
+        );
 
-        headerScrollPaneCSS.setViewportView(headerEditorPaneCSS);
+        org.openide.awt.Mnemonics.setLocalizedText(lblHeaderEditorPaneCss, org.openide.util.NbBundle.getMessage(CssOptionsPanel.class, "CssOptionsPanel.lblHeaderEditorPaneCss.text")); // NOI18N
+
+        txtHeaderEditorPaneCss.setContentType("text/css");
+        headerScrollPaneCSS.setViewportView(txtHeaderEditorPaneCss);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(lblHeaderEditorPaneCss)
+                .addGap(214, 214, 214)
+                .addComponent(pnlFixedHeaderContentHelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(headerScrollPaneCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblHeaderEditorPaneCss)
+                    .addComponent(pnlFixedHeaderContentHelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(headerScrollPaneCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -219,86 +182,39 @@ public final class CssOptionsPanel extends JPanel implements ChangeListener {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(headerLabelCSS)
-                            .addComponent(headerScrollPaneCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(6, 6, 6))))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(6, 6, 6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(headerLabelCSS)
-                .addGap(6, 6, 6)
-                .addComponent(headerScrollPaneCSS, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-//    void load() {
-//        String ngCli = NbPreferences.forModule(CssOptionsPanel.class).get("ngCliExecutableLocation", "");
-//        cssNanoCliPathTextField.setText(ngCli);
-//    }
-//    void store() {
-//        NbPreferences.forModule(CssOptionsPanel.class).put("ngCliExecutableLocation", cssNanoCliPathTextField.getText());
-//    }
-    boolean valid() {
-        // TODO check whether form is consistent and complete
-        return true;
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JCheckBox autoMinifyCSS;
+    public javax.swing.JCheckBox chbGenerateNewCssFile;
+    public javax.swing.JCheckBox chbMinifyCssOnSave;
     private javax.swing.JLabel cssNanoLabel;
     private javax.swing.JLabel extLabel;
-    protected javax.swing.JEditorPane headerEditorPaneCSS;
-    private javax.swing.JLabel headerLabelCSS;
     private javax.swing.JScrollPane headerScrollPaneCSS;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    public javax.swing.JCheckBox newCSSFile;
-    public javax.swing.JTextField preExtensionCSS;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblHeaderEditorPaneCss;
+    private javax.swing.JPanel pnlFixedHeaderContentHelp;
+    public javax.swing.JTextField txtCssPreExtension;
+    protected javax.swing.JEditorPane txtHeaderEditorPaneCss;
     // End of variables declaration//GEN-END:variables
-
-    void fireChange() {
-        changeSupport.fireChange();
-    }
-
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        fireChange();
-    }
-
-    private final class DefaultDocumentListener implements DocumentListener {
-
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-            processUpdate();
-        }
-
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-            processUpdate();
-        }
-
-        @Override
-        public void changedUpdate(DocumentEvent e) {
-            processUpdate();
-        }
-
-        private void processUpdate() {
-            fireChange();
-        }
-
-    }
 }

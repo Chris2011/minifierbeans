@@ -15,7 +15,7 @@
  */
 package io.github.chris2011.netbeans.minifierbeans.util.source.minify;
 
-import io.github.chris2011.netbeans.minifierbeans.json.JSONMinifyUtil;
+import io.github.chris2011.netbeans.minifierbeans.json.JsonMinifyUtil;
 import com.google.javascript.jscomp.CommandLineRunner;
 import com.google.javascript.jscomp.CompilationLevel;
 import com.google.javascript.jscomp.CompilerOptions;
@@ -24,6 +24,13 @@ import com.google.javascript.jscomp.SourceFile;
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 import com.googlecode.htmlcompressor.compressor.XmlCompressor;
 import com.yahoo.platform.yui.compressor.CssCompressor;
+import io.github.chris2011.netbeans.minifierbeans.css.CssOptionsModel;
+import io.github.chris2011.netbeans.minifierbeans.html.HtmlOptionsModel;
+import io.github.chris2011.netbeans.minifierbeans.javascript.JsOptionsModel;
+import io.github.chris2011.netbeans.minifierbeans.json.JsonOptionsModel;
+import io.github.chris2011.netbeans.minifierbeans.folder.FolderOptionsModel;
+import io.github.chris2011.netbeans.minifierbeans.util.FileUtils;
+import io.github.chris2011.netbeans.minifierbeans.xml.XmlOptionsModel;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -39,168 +46,193 @@ import java.util.List;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
 import org.openide.filesystems.FileObject;
+import org.openide.filesystems.FileUtil;
 import org.openide.util.Exceptions;
 
 public class MinifyUtil {
-    MinifyResult minify(FileObject parentFile, MinifyProperty minifyProperty) {
+    private final CssOptionsModel cssOptionsModel = CssOptionsModel.getDefault();
+    private final HtmlOptionsModel htmlOptionsModel = HtmlOptionsModel.getDefault();
+    private final JsOptionsModel jsOptionsModel = JsOptionsModel.getDefault();
+    private final JsonOptionsModel jsonOptionsModel = JsonOptionsModel.getDefault();
+    private final XmlOptionsModel xmlOptionsModel = XmlOptionsModel.getDefault();
+    private final FolderOptionsModel folderOptionsModel = FolderOptionsModel.getDefault();
+
+    MinifyResult minify(FileObject sourceFolder, FileObject targetFolder) {
         int directory = 0, cssFile = 0, jsFile = 0, htmlFile = 0, xmlFile = 0, jsonFile = 0;
         MinifyResult minifyResult = new MinifyResult();
 
-        for (FileObject file : parentFile.getChildren()) {
+        for (FileObject file : sourceFolder.getChildren()) {
             if (file.isFolder()) {
-                directory++;
-                MinifyResult preMinifyResult = minify(file, minifyProperty);
-                directory = directory + preMinifyResult.getDirectories();
-                cssFile = cssFile + preMinifyResult.getCssFiles();
-                jsFile = jsFile + preMinifyResult.getJsFiles();
-                htmlFile = htmlFile + preMinifyResult.getHtmlFiles();
-                xmlFile = xmlFile + preMinifyResult.getXmlFiles();
-                jsonFile = jsonFile + preMinifyResult.getJsonFiles();
+                try {
+                    directory++;
 
-                minifyResult.setInputJsFilesSize(minifyResult.getInputJsFilesSize() + preMinifyResult.getInputJsFilesSize());
-                minifyResult.setOutputJsFilesSize(minifyResult.getOutputJsFilesSize() + preMinifyResult.getOutputJsFilesSize());
-                minifyResult.setInputCssFilesSize(minifyResult.getInputCssFilesSize() + preMinifyResult.getInputCssFilesSize());
-                minifyResult.setOutputCssFilesSize(minifyResult.getOutputCssFilesSize() + preMinifyResult.getOutputCssFilesSize());
-                minifyResult.setInputHtmlFilesSize(minifyResult.getInputHtmlFilesSize() + preMinifyResult.getInputHtmlFilesSize());
-                minifyResult.setOutputHtmlFilesSize(minifyResult.getOutputHtmlFilesSize() + preMinifyResult.getOutputHtmlFilesSize());
-                minifyResult.setInputXmlFilesSize(minifyResult.getInputXmlFilesSize() + preMinifyResult.getInputXmlFilesSize());
-                minifyResult.setOutputXmlFilesSize(minifyResult.getOutputXmlFilesSize() + preMinifyResult.getOutputXmlFilesSize());
-                minifyResult.setInputJsonFilesSize(minifyResult.getInputJsonFilesSize() + preMinifyResult.getInputJsonFilesSize());
-                minifyResult.setOutputJsonFilesSize(minifyResult.getOutputJsonFilesSize() + preMinifyResult.getOutputJsonFilesSize());
-            } else if (file.getExt().equalsIgnoreCase("js") && minifyProperty.isBuildJSMinify()) {
+                    MinifyResult preMinifyResult = minify(file, FileUtil.toFileObject(FileUtils.getTargetFolder(new File(targetFolder.getPath() + File.separator + file.getName() + "_minified"))));
+                    directory = directory + preMinifyResult.getDirectories();
+                    cssFile = cssFile + preMinifyResult.getCssFiles();
+                    jsFile = jsFile + preMinifyResult.getJsFiles();
+                    htmlFile = htmlFile + preMinifyResult.getHtmlFiles();
+                    xmlFile = xmlFile + preMinifyResult.getXmlFiles();
+                    jsonFile = jsonFile + preMinifyResult.getJsonFiles();
+                    minifyResult.setInputJsFilesSize(minifyResult.getInputJsFilesSize() + preMinifyResult.getInputJsFilesSize());
+                    minifyResult.setOutputJsFilesSize(minifyResult.getOutputJsFilesSize() + preMinifyResult.getOutputJsFilesSize());
+                    minifyResult.setInputCssFilesSize(minifyResult.getInputCssFilesSize() + preMinifyResult.getInputCssFilesSize());
+                    minifyResult.setOutputCssFilesSize(minifyResult.getOutputCssFilesSize() + preMinifyResult.getOutputCssFilesSize());
+                    minifyResult.setInputHtmlFilesSize(minifyResult.getInputHtmlFilesSize() + preMinifyResult.getInputHtmlFilesSize());
+                    minifyResult.setOutputHtmlFilesSize(minifyResult.getOutputHtmlFilesSize() + preMinifyResult.getOutputHtmlFilesSize());
+                    minifyResult.setInputXmlFilesSize(minifyResult.getInputXmlFilesSize() + preMinifyResult.getInputXmlFilesSize());
+                    minifyResult.setOutputXmlFilesSize(minifyResult.getOutputXmlFilesSize() + preMinifyResult.getOutputXmlFilesSize());
+                    minifyResult.setInputJsonFilesSize(minifyResult.getInputJsonFilesSize() + preMinifyResult.getInputJsonFilesSize());
+                    minifyResult.setOutputJsonFilesSize(minifyResult.getOutputJsonFilesSize() + preMinifyResult.getOutputJsonFilesSize());
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            } else if (file.getExt().equalsIgnoreCase("js") && folderOptionsModel.getFileExtensionsRegexOption().contains(file.getExt().toLowerCase())) {
                 jsFile++;
+
                 try {
-                    Boolean allow = true;
                     String inputFilePath = file.getPath();
-                    String outputFilePath;
+                    String outputFilePath = targetFolder.getPath();
+                    boolean minifyAllFiles = folderOptionsModel.getMinifyAllFilesOption();
 
-                    if (minifyProperty.isSkipPreExtensionJS() && minifyProperty.isBuildJSMinify() && minifyProperty.isNewJSFile()) {
-                        if (minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()
-                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getPreExtensionJS()))) {
-                            allow = false;
-                        }
-                    }
-                    if (allow) {
-                        if (minifyProperty.isNewJSFile() && minifyProperty.getPreExtensionJS() != null && !minifyProperty.getPreExtensionJS().trim().isEmpty()) {
-                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionJS() + "." + file.getExt();
+                    if (minifyAllFiles) {
+                        if (jsOptionsModel.getGenerateNewJsFileOption()) {
+                            outputFilePath += File.separator + file.getName() + jsOptionsModel.getJsPreExtensionOption() + "." + file.getExt();
                         } else {
-                            outputFilePath = inputFilePath;
+                            outputFilePath += File.separator + file.getNameExt();
                         }
-
-                        MinifyFileResult minifyFileResult = compress(inputFilePath, "text/javascript", outputFilePath, minifyProperty);
-                        minifyResult.setInputJsFilesSize(minifyResult.getInputJsFilesSize() + minifyFileResult.getInputFileSize());
-                        minifyResult.setOutputJsFilesSize(minifyResult.getOutputJsFilesSize() + minifyFileResult.getOutputFileSize());
+                    } else {
+                        if (!file.getName().matches(".*" + Pattern.quote(jsOptionsModel.getJsPreExtensionOption()))) {
+                            if (jsOptionsModel.getGenerateNewJsFileOption()) {
+                                outputFilePath += File.separator + file.getName() + jsOptionsModel.getJsPreExtensionOption() + "." + file.getExt();
+                            } else {
+                                outputFilePath += File.separator + file.getNameExt();
+                            }
+                        }
                     }
+
+                    MinifyFileResult minifyFileResult = compress(inputFilePath, "text/javascript", outputFilePath);
+                    minifyResult.setInputJsFilesSize(minifyResult.getInputJsFilesSize() + minifyFileResult.getInputFileSize());
+                    minifyResult.setOutputJsFilesSize(minifyResult.getOutputJsFilesSize() + minifyFileResult.getOutputFileSize());
                 } catch (IOException ex) {
                     Exceptions.printStackTrace(ex);
                 }
-            } else if (file.getExt().equalsIgnoreCase("css") && minifyProperty.isBuildCSSMinify()) {
+            } else if (file.getExt().equalsIgnoreCase("css") && folderOptionsModel.getFileExtensionsRegexOption().contains(file.getExt().toLowerCase())) {
                 cssFile++;
+
                 try {
-                    Boolean allow = true;
                     String inputFilePath = file.getPath();
-                    String outputFilePath;
+                    String outputFilePath = targetFolder.getPath();
+                    boolean minifyAllFiles = folderOptionsModel.getMinifyAllFilesOption();
 
-                    if (minifyProperty.isSkipPreExtensionCSS() && minifyProperty.isBuildCSSMinify() && minifyProperty.isNewCSSFile()) {
-                        if (minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty()
-                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getPreExtensionCSS()))) {
-                            allow = false;
-                        }
-                    }
-                    if (allow) {
-                        if (minifyProperty.isNewCSSFile() && minifyProperty.getPreExtensionCSS() != null && !minifyProperty.getPreExtensionCSS().trim().isEmpty()) {
-                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionCSS() + "." + file.getExt();
+                    if (minifyAllFiles) {
+                        if (cssOptionsModel.getGenerateNewCssFileOption()) {
+                            outputFilePath += File.separator + file.getName() + cssOptionsModel.getCssPreExtensionOption() + "." + file.getExt();
                         } else {
-                            outputFilePath = inputFilePath;
+                            outputFilePath += File.separator + file.getNameExt();
                         }
-
-                        MinifyFileResult minifyFileResult = compress(inputFilePath, "text/css", outputFilePath, minifyProperty);
-                        minifyResult.setInputCssFilesSize(minifyResult.getInputCssFilesSize() + minifyFileResult.getInputFileSize());
-                        minifyResult.setOutputCssFilesSize(minifyResult.getOutputCssFilesSize() + minifyFileResult.getOutputFileSize());
+                    } else {
+                        if (!file.getName().matches(".*" + Pattern.quote(cssOptionsModel.getCssPreExtensionOption()))) {
+                            if (cssOptionsModel.getGenerateNewCssFileOption()) {
+                                outputFilePath += File.separator + file.getName() + cssOptionsModel.getCssPreExtensionOption() + "." + file.getExt();
+                            } else {
+                                outputFilePath += File.separator + file.getNameExt();
+                            }
+                        }
                     }
+
+                    MinifyFileResult minifyFileResult = compress(inputFilePath, "text/css", outputFilePath);
+                    minifyResult.setInputCssFilesSize(minifyResult.getInputCssFilesSize() + minifyFileResult.getInputFileSize());
+                    minifyResult.setOutputCssFilesSize(minifyResult.getOutputCssFilesSize() + minifyFileResult.getOutputFileSize());
                 } catch (IOException ex) {
                     Exceptions.printStackTrace(ex);
                 }
-            } else if (file.getExt().equalsIgnoreCase("html") && minifyProperty.isBuildHTMLMinify()) {
+            } else if (file.getExt().equalsIgnoreCase("html") && folderOptionsModel.getFileExtensionsRegexOption().contains(file.getExt().toLowerCase())) {
                 htmlFile++;
+
                 try {
-                    Boolean allow = true;
                     String inputFilePath = file.getPath();
-                    String outputFilePath;
+                    String outputFilePath = targetFolder.getPath();
+                    boolean minifyAllFiles = folderOptionsModel.getMinifyAllFilesOption();
 
-                    if (minifyProperty.isSkipPreExtensionHTML() && minifyProperty.isBuildHTMLMinify() && minifyProperty.isNewHTMLFile()) {
-                        if (minifyProperty.getPreExtensionHTML() != null && !minifyProperty.getPreExtensionHTML().trim().isEmpty()
-                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getPreExtensionHTML()))) {
-                            allow = false;
-                        }
-                    }
-                    if (allow) {
-                        if (minifyProperty.isNewHTMLFile() && minifyProperty.getPreExtensionHTML() != null && !minifyProperty.getPreExtensionHTML().trim().isEmpty()) {
-                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionHTML() + "." + file.getExt();
+                    if (minifyAllFiles) {
+                        if (htmlOptionsModel.getGenerateNewHtmlFileOption()) {
+                            outputFilePath += File.separator + file.getName() + htmlOptionsModel.getHtmlPreExtensionOption() + "." + file.getExt();
                         } else {
-                            outputFilePath = inputFilePath;
+                            outputFilePath += File.separator + file.getNameExt();
                         }
-
-                        MinifyFileResult minifyFileResult = compress(inputFilePath, "text/html", outputFilePath, minifyProperty);
-                        minifyResult.setInputHtmlFilesSize(minifyResult.getInputHtmlFilesSize() + minifyFileResult.getInputFileSize());
-                        minifyResult.setOutputHtmlFilesSize(minifyResult.getOutputHtmlFilesSize() + minifyFileResult.getOutputFileSize());
+                    } else {
+                        if (!file.getName().matches(".*" + Pattern.quote(htmlOptionsModel.getHtmlPreExtensionOption()))) {
+                            if (htmlOptionsModel.getGenerateNewHtmlFileOption()) {
+                                outputFilePath += File.separator + file.getName() + htmlOptionsModel.getHtmlPreExtensionOption() + "." + file.getExt();
+                            } else {
+                                outputFilePath += File.separator + file.getNameExt();
+                            }
+                        }
                     }
+
+                    MinifyFileResult minifyFileResult = compress(inputFilePath, "text/html", outputFilePath);
+                    minifyResult.setInputHtmlFilesSize(minifyResult.getInputHtmlFilesSize() + minifyFileResult.getInputFileSize());
+                    minifyResult.setOutputHtmlFilesSize(minifyResult.getOutputHtmlFilesSize() + minifyFileResult.getOutputFileSize());
                 } catch (IOException ex) {
                     Exceptions.printStackTrace(ex);
                 }
-            } else if (file.getExt().equalsIgnoreCase("xml") && minifyProperty.isBuildXMLMinify()) {
+            } else if (file.getExt().equalsIgnoreCase("xml") && folderOptionsModel.getFileExtensionsRegexOption().contains(file.getExt().toLowerCase())) {
                 xmlFile++;
                 try {
-                    Boolean allow = true;
                     String inputFilePath = file.getPath();
-                    String outputFilePath;
+                    String outputFilePath = targetFolder.getPath();
+                    boolean minifyAllFiles = folderOptionsModel.getMinifyAllFilesOption();
 
-                    if (minifyProperty.isSkipPreExtensionXML() && minifyProperty.isBuildXMLMinify() && minifyProperty.isNewXMLFile()) {
-                        if (minifyProperty.getPreExtensionXML() != null && !minifyProperty.getPreExtensionXML().trim().isEmpty()
-                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getPreExtensionXML()))) {
-                            allow = false;
-                        }
-                    }
-                    if (allow) {
-                        if (minifyProperty.isNewXMLFile() && minifyProperty.getPreExtensionXML() != null && !minifyProperty.getPreExtensionXML().trim().isEmpty()) {
-                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionXML() + "." + file.getExt();
+                    if (minifyAllFiles) {
+                        if (xmlOptionsModel.getGenerateNewXmlFileOption()) {
+                            outputFilePath += File.separator + file.getName() + xmlOptionsModel.getXmlPreExtensionOption() + "." + file.getExt();
                         } else {
-                            outputFilePath = inputFilePath;
+                            outputFilePath += File.separator + file.getNameExt();
                         }
-
-                        MinifyFileResult minifyFileResult = compress(inputFilePath, "text/xml-mime", outputFilePath, minifyProperty);
-                        minifyResult.setInputXmlFilesSize(minifyResult.getInputXmlFilesSize() + minifyFileResult.getInputFileSize());
-                        minifyResult.setOutputXmlFilesSize(minifyResult.getOutputXmlFilesSize() + minifyFileResult.getOutputFileSize());
+                    } else {
+                        if (!file.getName().matches(".*" + Pattern.quote(xmlOptionsModel.getXmlPreExtensionOption()))) {
+                            if (xmlOptionsModel.getGenerateNewXmlFileOption()) {
+                                outputFilePath += File.separator + file.getName() + xmlOptionsModel.getXmlPreExtensionOption() + "." + file.getExt();
+                            } else {
+                                outputFilePath += File.separator + file.getNameExt();
+                            }
+                        }
                     }
+
+                    MinifyFileResult minifyFileResult = compress(inputFilePath, "text/xml-mime", outputFilePath);
+                    minifyResult.setInputXmlFilesSize(minifyResult.getInputXmlFilesSize() + minifyFileResult.getInputFileSize());
+                    minifyResult.setOutputXmlFilesSize(minifyResult.getOutputXmlFilesSize() + minifyFileResult.getOutputFileSize());
                 } catch (IOException ex) {
                     Exceptions.printStackTrace(ex);
                 }
-            } else if (file.getExt().equalsIgnoreCase("json") && minifyProperty.isBuildJSONMinify()) {
+            } else if (file.getExt().equalsIgnoreCase("json") && folderOptionsModel.getFileExtensionsRegexOption().contains(file.getExt().toLowerCase())) {
                 jsonFile++;
+
                 try {
-                    Boolean allow = true;
                     String inputFilePath = file.getPath();
-                    String outputFilePath;
+                    String outputFilePath = targetFolder.getPath();
+                    boolean minifyAllFiles = folderOptionsModel.getMinifyAllFilesOption();
 
-                    if (minifyProperty.isSkipPreExtensionJSON() && minifyProperty.isBuildJSONMinify() && minifyProperty.isNewJSONFile()) {
-                        if (minifyProperty.getPreExtensionJSON() != null && !minifyProperty.getPreExtensionJSON().trim().isEmpty()
-                                && file.getName().matches(".*" + Pattern.quote(minifyProperty.getPreExtensionJSON()))) {
-                            allow = false;
-                        }
-                    }
-                    if (allow) {
-                        if (minifyProperty.isNewJSONFile() && minifyProperty.getPreExtensionJSON() != null && !minifyProperty.getPreExtensionJSON().trim().isEmpty()) {
-                            outputFilePath = file.getParent().getPath() + File.separator + file.getName() + minifyProperty.getPreExtensionJSON() + "." + file.getExt();
+                    if (minifyAllFiles) {
+                        if (jsonOptionsModel.getGenerateNewJsonFileOption()) {
+                            outputFilePath += File.separator + file.getName() + jsonOptionsModel.getJsonPreExtensionOption() + "." + file.getExt();
                         } else {
-                            outputFilePath = inputFilePath;
+                            outputFilePath += File.separator + file.getNameExt();
                         }
-
-                        MinifyFileResult minifyFileResult = compress(inputFilePath, "text/x-json", outputFilePath, minifyProperty);
-                        minifyResult.setInputJsonFilesSize(minifyResult.getInputJsonFilesSize() + minifyFileResult.getInputFileSize());
-                        minifyResult.setOutputJsonFilesSize(minifyResult.getOutputJsonFilesSize() + minifyFileResult.getOutputFileSize());
+                    } else {
+                        if (!file.getName().matches(".*" + Pattern.quote(jsonOptionsModel.getJsonPreExtensionOption()))) {
+                            if (jsonOptionsModel.getGenerateNewJsonFileOption()) {
+                                outputFilePath += File.separator + file.getName() + jsonOptionsModel.getJsonPreExtensionOption() + "." + file.getExt();
+                            } else {
+                                outputFilePath += File.separator + file.getNameExt();
+                            }
+                        }
                     }
+
+                    MinifyFileResult minifyFileResult = compress(inputFilePath, "text/x-json", outputFilePath);
+                    minifyResult.setInputJsonFilesSize(minifyResult.getInputJsonFilesSize() + minifyFileResult.getInputFileSize());
+                    minifyResult.setOutputJsonFilesSize(minifyResult.getOutputJsonFilesSize() + minifyFileResult.getOutputFileSize());
                 } catch (IOException ex) {
                     Exceptions.printStackTrace(ex);
                 }
@@ -217,7 +249,8 @@ public class MinifyUtil {
         return minifyResult;
     }
 
-    public String compressSelectedJavaScript(String inputFilename, String content, MinifyProperty minifyProperty) throws IOException {
+//    public String compressSelectedJavaScript(String inputFilename, String content, MinifyOptions minifyProperty) throws IOException {
+    public String compressSelectedJavaScript(String inputFilename, String content) throws IOException {
         Compiler compiler = new Compiler();
         CompilerOptions options = new CompilerOptions();
 
@@ -229,7 +262,7 @@ public class MinifyUtil {
 
         CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 
-        List<SourceFile> inputs = new ArrayList<SourceFile>();
+        List<SourceFile> inputs = new ArrayList<>();
         inputs.add(SourceFile.fromCode(inputFilename, content));
 
         StringWriter outputWriter = new StringWriter();
@@ -240,12 +273,14 @@ public class MinifyUtil {
         return compiler.toSource();
     }
 
-    public void compressCssInternal(Reader in, Writer out, MinifyProperty minifyProperty) throws IOException {
+//    public void compressCssInternal(Reader in, Writer out, MinifyOptions minifyProperty) throws IOException {
+    public void compressCssInternal(Reader in, Writer out) throws IOException {
         try {
             CssCompressor compressor = new CssCompressor(in);
             in.close();
             in = null;
-            compressor.compress(out, minifyProperty.getLineBreakPosition());
+//            compressor.compress(out, minifyProperty.getLineBreakPosition());
+            compressor.compress(out, -1);
             out.flush();
         } finally {
             IOUtils.closeQuietly(in);
@@ -253,7 +288,8 @@ public class MinifyUtil {
         }
     }
 
-    public void compressHtmlInternal(Reader in, Writer out, MinifyProperty minifyProperty) throws IOException {
+//    public void compressHtmlInternal(Reader in, Writer out, MinifyOptions minifyProperty) throws IOException {
+    public void compressHtmlInternal(Reader in, Writer out) throws IOException {
         try {
             HtmlCompressor compressor = new HtmlCompressor();
             compressor.setRemoveIntertagSpaces(true);
@@ -270,7 +306,8 @@ public class MinifyUtil {
         }
     }
 
-    public MinifyFileResult compressContent(String inputFilename, String content, String mimeType, String outputFilename, MinifyProperty minifyProperty) throws IOException {
+//    public MinifyFileResult compressContent(String inputFilename, String content, String mimeType, String outputFilename, MinifyOptions minifyProperty) throws IOException {
+    public MinifyFileResult compressContent(String inputFilename, String content, String mimeType, String outputFilename) throws IOException {
         Writer out = null;
         MinifyFileResult minifyFileResult = new MinifyFileResult();
         Compiler compiler = new Compiler();
@@ -290,82 +327,71 @@ public class MinifyUtil {
 
         try {
             File outputFile = new File(outputFilename);
-            out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
+//            out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
+            out = new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8");
 
             String output;
-            switch (mimeType) {
-                case "text/html":
-                    HtmlCompressor htmlCompressor = new HtmlCompressor();
+            if (mimeType.contains("html")) {
+                HtmlCompressor htmlCompressor = new HtmlCompressor();
 
-                    htmlCompressor.setRemoveIntertagSpaces(true);
+                htmlCompressor.setRemoveIntertagSpaces(true);
 //                    htmlCompressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
 //                    htmlCompressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
 
-                    output = htmlCompressor.compress(content);
+                output = htmlCompressor.compress(content);
 
-                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderHTML())) {
-                        out.write(output);
-                    } else {
-                        out.write(MinifyProperty.getInstance().getHeaderHTML() + "\n" + output);
-                    }
+                if (StringUtils.isBlank(htmlOptionsModel.getHtmlHeaderOption())) {
+                    out.write(output);
+                } else {
+                    out.write(htmlOptionsModel.getHtmlHeaderOption() + "\n" + output);
+                }
+            } else if (mimeType.contains("javascript")) {
+                // TODO: Change to Google Closure Compiler.
+                compiler.compile(CommandLineRunner.getDefaultExterns(), inputs, options);
 
-                    break;
-                case "text/javascript":
-                    // TODO: Change to Google Closure Compiler.
-                    compiler.compile(CommandLineRunner.getDefaultExterns(), inputs, options);
+                if (StringUtils.isBlank(jsOptionsModel.getJsHeaderOption())) {
+                    out.write(compiler.toSource());
+                } else {
+                    out.write(jsOptionsModel.getJsHeaderOption() + "\n" + compiler.toSource());
+                }
+            } else if (mimeType.contains("css")) {
+                // TODO: Change to CSSNano.
+                Reader in = new StringReader(content);
+                CssCompressor cssCompressor = new CssCompressor(in);
+                in.close();
+                StringWriter outputWriter = new StringWriter();
+//                    cssCompressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
+                cssCompressor.compress(outputWriter, -1);
+                outputWriter.flush();
+                if (StringUtils.isBlank(cssOptionsModel.getCssHeaderOption())) {
+                    out.write(outputWriter.toString());
+                } else {
+                    out.write(cssOptionsModel.getCssHeaderOption() + "\n" + outputWriter.toString());
+                }
+                outputWriter.close();
+            } else if (mimeType.contains("json")) {
+                JsonMinifyUtil jsonCompressor = new JsonMinifyUtil();
+                output = jsonCompressor.minify(content);
 
-                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
-                        out.write(compiler.toSource());
-                    } else {
-                        out.write(MinifyProperty.getInstance().getHeaderJS() + "\n" + compiler.toSource());
-                    }
-                    
-                    break;
-                case "text/css":
-                    // TODO: Change to CSSNano.
-                    Reader in = new StringReader(content);
-                    CssCompressor cssCompressor = new CssCompressor(in);
-                    in.close();
-                    StringWriter outputWriter = new StringWriter();
-                    cssCompressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
-                    outputWriter.flush();
-                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderCSS())) {
-                        out.write(outputWriter.toString());
-                    } else {
-                        out.write(MinifyProperty.getInstance().getHeaderCSS() + "\n" + outputWriter.toString());
-                    }
-                    outputWriter.close();
+                if (StringUtils.isBlank(jsonOptionsModel.getJsonHeaderOption())) {
+                    out.write(output);
+                } else {
+                    out.write(jsonOptionsModel.getJsonHeaderOption() + "\n" + output);
+                }
+            } else if (mimeType.contains("xml")) {
+                XmlCompressor xmlCompressor = new XmlCompressor();
 
-                    break;
-                case "text/x-json":
-                    JSONMinifyUtil jsonCompressor = new JSONMinifyUtil();
-                    output = jsonCompressor.minify(content);
+                xmlCompressor.setRemoveIntertagSpaces(true);
+                xmlCompressor.setRemoveComments(true);
+                xmlCompressor.setEnabled(true);
 
-                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJSON())) {
-                        out.write(output);
-                    } else {
-                        out.write(MinifyProperty.getInstance().getHeaderJSON() + "\n" + output);
-                    }
+                output = xmlCompressor.compress(content);
 
-                    break;
-                case "text/xml-mime":
-                    XmlCompressor xmlCompressor = new XmlCompressor();
-
-                    xmlCompressor.setRemoveIntertagSpaces(true);
-                    xmlCompressor.setRemoveComments(true);
-                    xmlCompressor.setEnabled(true);
-
-                    output = xmlCompressor.compress(content);
-
-                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderXML())) {
-                        out.write(output);
-                    } else {
-                        out.write(MinifyProperty.getInstance().getHeaderXML() + "\n" + output);
-                    }
-                    
-                    break;
-                default:
-                    break;
+                if (StringUtils.isBlank(xmlOptionsModel.getXmlHeaderOption())) {
+                    out.write(output);
+                } else {
+                    out.write(xmlOptionsModel.getXmlHeaderOption() + "\n" + output);
+                }
             }
 
             out.flush();
@@ -375,18 +401,23 @@ public class MinifyUtil {
         return minifyFileResult;
     }
 
-    public MinifyFileResult compress(String inputFilename, String mimeType, String outputFilename, MinifyProperty minifyProperty) throws IOException {
+//    public MinifyFileResult compress(String inputFilename, String mimeType, String outputFilename, MinifyOptions minifyProperty) throws IOException {
+    public MinifyFileResult compress(String inputFilename, String mimeType, String outputFilename) throws IOException {
+        System.out.println("Input: " + inputFilename);
+        System.out.println("MimeType: " + mimeType);
+        System.out.println("Output: " + outputFilename);
+
         InputStreamReader in = null;
         Writer out = null;
         MinifyFileResult minifyFileResult = new MinifyFileResult();
         Compiler compiler = new Compiler();
         CompilerOptions options = new CompilerOptions();
-        
+
         compiler.initOptions(options);
-        
+
         options.setEmitUseStrict(false);
         options.setTrustedStrings(true);
-        
+
         CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 
         List<SourceFile> inputs = new ArrayList<>();
@@ -395,68 +426,59 @@ public class MinifyUtil {
         try {
             File inputFile = new File(inputFilename);
             File outputFile = new File(outputFilename);
-            in = new InputStreamReader(new FileInputStream(inputFile), minifyProperty.getCharset());
+//            in = new InputStreamReader(new FileInputStream(inputFile), minifyProperty.getCharset());
+            in = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
             minifyFileResult.setInputFileSize(inputFile.length());
-            out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
+//            out = new OutputStreamWriter(new FileOutputStream(outputFile), minifyProperty.getCharset());
+            out = new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8");
             String output;
 
-            switch (mimeType) {
-                case "text/html":
-                    HtmlCompressor htmlCompressor = new HtmlCompressor();
-                    htmlCompressor.setRemoveIntertagSpaces(true);
+            if (mimeType.contains("html")) {
+                HtmlCompressor htmlCompressor = new HtmlCompressor();
+                htmlCompressor.setRemoveIntertagSpaces(true);
 //                    htmlCompressor.setCompressCss(minifyProperty.isBuildInternalCSSMinify());               //compress inline css
 //                    htmlCompressor.setCompressJavaScript(minifyProperty.isBuildInternalJSMinify());        //compress inline javascript
 
-                    output = htmlCompressor.compress(fromStream(in));
-                    out.write(MinifyProperty.getInstance().getHeaderHTML() + "\n" + output);
+                output = htmlCompressor.compress(fromStream(in));
+                out.write(htmlOptionsModel.getHtmlHeaderOption() + "\n" + output);
+            } else if (mimeType.contains("javascript")) {
+                // TODO: Change to Google Closure Compiler.
+                compiler.compile(CommandLineRunner.getDefaultExterns(), inputs, options);
 
-                    break;
-                case "text/javascript":
-                    // TODO: Change to Google Closure Compiler.
-                    compiler.compile(CommandLineRunner.getDefaultExterns(), inputs, options);
+                if (StringUtils.isBlank(jsOptionsModel.getJsHeaderOption())) {
+                    out.write(compiler.toSource());
+                } else {
+                    out.write(jsOptionsModel.getJsHeaderOption() + "\n" + compiler.toSource());
+                }
+            } else if (mimeType.contains("css")) {
+                // TODO: Change to CSSNano.
+                CssCompressor cssCompressor = new CssCompressor(in);
+                StringWriter outputWriter = new StringWriter();
 
-                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
-                        out.write(compiler.toSource());
-                    } else {
-                        out.write(MinifyProperty.getInstance().getHeaderJS() + "\n" + compiler.toSource());
-                    }
-                    
-                    break;
-                case "text/css":
-                    // TODO: Change to CSSNano.
-                    CssCompressor cssCompressor = new CssCompressor(in);
-                    StringWriter outputWriter = new StringWriter();
+//                    cssCompressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
+                cssCompressor.compress(outputWriter, -1);
+                outputWriter.flush();
+                if (StringUtils.isBlank(jsOptionsModel.getJsHeaderOption())) {
+                    out.write(outputWriter.toString());
+                } else {
+                    out.write(cssOptionsModel.getCssHeaderOption() + "\n" + outputWriter.toString());
+                }
+                outputWriter.close();
+            } else if (mimeType.contains("json")) {
+                JsonMinifyUtil jsonCompressor = new JsonMinifyUtil();
 
-                    cssCompressor.compress(outputWriter, minifyProperty.getLineBreakPosition());
-                    outputWriter.flush();
-                    if (StringUtils.isBlank(MinifyProperty.getInstance().getHeaderJS())) {
-                        out.write(outputWriter.toString());
-                    } else {
-                        out.write(MinifyProperty.getInstance().getHeaderCSS() + "\n" + outputWriter.toString());
-                    }       outputWriter.close();
+                output = jsonCompressor.minify(fromStream(in));
+                out.write(jsonOptionsModel.getJsonHeaderOption() + "\n" + output);
+            } else if (mimeType.contains("text/xml-mime")) {
+                XmlCompressor xmlCompressor = new XmlCompressor();
 
-                    break;
-                case "text/x-json":
-                    JSONMinifyUtil jsonCompressor = new JSONMinifyUtil();
+                xmlCompressor.setRemoveIntertagSpaces(true);
+                xmlCompressor.setRemoveComments(true);
+                xmlCompressor.setEnabled(true);
 
-                    output = jsonCompressor.minify(fromStream(in));
-                    out.write(MinifyProperty.getInstance().getHeaderJSON() + "\n" + output);
+                output = xmlCompressor.compress(fromStream(in));
 
-                    break;
-                case "text/xml-mime":
-                    XmlCompressor xmlCompressor = new XmlCompressor();
-
-                    xmlCompressor.setRemoveIntertagSpaces(true);
-                    xmlCompressor.setRemoveComments(true);
-                    xmlCompressor.setEnabled(true);
-
-                    output = xmlCompressor.compress(fromStream(in));
-
-                    out.write(MinifyProperty.getInstance().getHeaderXML() + "\n" + output);
-
-                    break;
-                default:
-                    break;
+                out.write(xmlOptionsModel.getXmlHeaderOption() + "\n" + output);
             }
 
             in.close();
@@ -465,7 +487,7 @@ public class MinifyUtil {
             out.flush();
 
             minifyFileResult.setOutputFileSize(outputFile.length());
-            if (minifyProperty.isAppendLogToFile()) {
+            if (folderOptionsModel.getAddLogToFileOption()) {
                 out.append("\n<!--Size: " + minifyFileResult.getInputFileSize() + "=>"
                         + minifyFileResult.getOutputFileSize() + "Bytes "
                         + "\n Saved " + minifyFileResult.getSavedPercentage() + "%-->");
@@ -478,7 +500,8 @@ public class MinifyUtil {
         return minifyFileResult;
     }
 
-    public void compressXmlInternal(Reader in, Writer out, MinifyProperty minifyProperty) throws IOException {
+//    public void compressXmlInternal(Reader in, Writer out, MinifyOptions minifyProperty) throws IOException {
+    public void compressXmlInternal(Reader in, Writer out) throws IOException {
         try {
             XmlCompressor compressor = new XmlCompressor();
             compressor.setRemoveIntertagSpaces(true);
@@ -495,9 +518,10 @@ public class MinifyUtil {
         }
     }
 
-    public void compressJsonInternal(Reader in, Writer out, MinifyProperty minifyProperty) throws IOException {
+//    public void compressJsonInternal(Reader in, Writer out, MinifyOptions minifyProperty) throws IOException {
+    public void compressJsonInternal(Reader in, Writer out) throws IOException {
         try {
-            JSONMinifyUtil compressor = new JSONMinifyUtil();
+            JsonMinifyUtil compressor = new JsonMinifyUtil();
             String output = compressor.minify(fromStream(in));
             in.close();
             in = null;
@@ -516,12 +540,12 @@ public class MinifyUtil {
         int p = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
 
         if (extIndex > p) {
-            extension = fileName.substring(extIndex+1);
+            extension = fileName.substring(extIndex + 1);
             preExt = preExt + "." + extension;
         }
-        
+
         extIndex = fileName.lastIndexOf(preExt);
-        
+
         return extIndex > p;
     }
 

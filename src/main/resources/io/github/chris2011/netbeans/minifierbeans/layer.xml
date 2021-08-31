@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="MinificationOptionsDialog">
+        <file name="Css.instance">
+            <attr name="instanceClass" stringvalue="io.github.chris2011.netbeans.minifierbeans.css.ui.options.CssAdvancedOption"/>
+        </file>
+
+        <file name="Html.instance">
+            <attr name="instanceClass" stringvalue="io.github.chris2011.netbeans.minifierbeans.html.ui.options.HtmlAdvancedOption"/>
+        </file>
+
+        <file name="Js.instance">
+            <attr name="instanceClass" stringvalue="io.github.chris2011.netbeans.minifierbeans.javascript.ui.options.JsAdvancedOption"/>
+        </file>
+
+        <file name="Json.instance">
+            <attr name="instanceClass" stringvalue="io.github.chris2011.netbeans.minifierbeans.json.ui.options.JsonAdvancedOption"/>
+        </file>
+
+        <file name="Xml.instance">
+            <attr name="instanceClass" stringvalue="io.github.chris2011.netbeans.minifierbeans.xml.ui.options.XmlAdvancedOption"/>
+        </file>
+
+        <file name="Folder.instance">
+            <attr name="instanceClass" stringvalue="io.github.chris2011.netbeans.minifierbeans.folder.ui.options.FolderAdvancedOption"/>
+        </file>
+    </folder>
+</filesystem>

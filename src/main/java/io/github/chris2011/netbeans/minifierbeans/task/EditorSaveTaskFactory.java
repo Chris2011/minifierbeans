@@ -26,11 +26,9 @@ import org.netbeans.spi.editor.document.OnSaveTask;
     @MimeRegistration(mimeType = "text/x-json", service = OnSaveTask.Factory.class),
     @MimeRegistration(mimeType = "text/xml-mime", service = OnSaveTask.Factory.class)
 })
-    public  class EditorSaveTaskFactory implements OnSaveTask.Factory {
-
-        @Override
-        public OnSaveTask createTask(OnSaveTask.Context cntxt) {
-            return new EditorSaveTask(cntxt);
-        }
-
+public class EditorSaveTaskFactory implements OnSaveTask.Factory {
+    @Override
+    public OnSaveTask createTask(OnSaveTask.Context cntxt) {
+        return new EditorSaveTask(cntxt);
     }
+}

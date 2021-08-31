@@ -15,19 +15,16 @@
  */
 package io.github.chris2011.netbeans.minifierbeans.util.source.minify;
 
+import io.github.chris2011.netbeans.minifierbeans.folder.FolderOptionsModel;
+import io.github.chris2011.netbeans.minifierbeans.util.FileUtils;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import org.apache.commons.io.FileUtils;
 import org.netbeans.api.progress.ProgressHandle;
 import org.netbeans.api.progress.ProgressHandleFactory;
-import io.github.chris2011.netbeans.minifierbeans.ui.MinifyProperty;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -38,18 +35,18 @@ import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.RequestProcessor;
-import org.openide.util.TaskListener;
+import org.openide.util.Task;
 import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
 
 @ActionID(category = "Build",
-        id = "org.netbeans.util.source.minify.Minify")
-@ActionRegistration(iconBase = "io/github/chris2011/netbeans/minifierbeans/util/source/minify/compress.png",
-        displayName = "#CTL_Minify")
+    id = "org.netbeans.util.source.minify.Minify")
+@ActionRegistration(iconBase = "io/github/chris2011/netbeans/minifierbeans/compress.png",
+    displayName = "#CTL_Minify")
 @ActionReferences({
     @ActionReference(path = "Loaders/folder/any/Actions", position = 300, separatorBefore = 250, separatorAfter = 350)
 })
-@Messages("CTL_Minify=Minify WEB Content")
+@Messages("CTL_Minify=Minify Web Resources")
 public final class MinifyWebContent implements ActionListener {
     private final DataObject context;
 
@@ -60,42 +57,19 @@ public final class MinifyWebContent implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                minify();
-            }
+        Runnable runnable = () -> {
+            minify();
         };
         final RequestProcessor.Task theTask = RP.create(runnable);
-        final ProgressHandle ph = ProgressHandleFactory.createHandle("Minifying JS , CSS and other WEB Content ", theTask);
-        theTask.addTaskListener(new TaskListener() {
-            @Override
-            public void taskFinished(org.openide.util.Task task) {
-                ph.finish();
-            }
+        final ProgressHandle ph = ProgressHandleFactory.createHandle("Minifying CSS, HTML, JavaScript, JSON and XML.", theTask);
+        theTask.addTaskListener((Task task) -> {
+            ph.finish();
         });
         ph.start();
         theTask.schedule(0);
     }
 
-    String getRandomPostFix() {
-        DateFormat df = new SimpleDateFormat("_[MM-dd-yyyy_HH-mm-ss]");
-        Date today = Calendar.getInstance().getTime();
-        return df.format(today);
-    }
-
-    File getTargetFolder(File file) throws IOException {
-        if (file.exists()) {
-            file = new File(file.getParentFile().getPath() + File.separator + file.getName() + "_" + getRandomPostFix());
-            return getTargetFolder(file);
-        } else {
-            file.mkdir();
-            return file;
-        }
-    }
-
     public void minify() {
-        MinifyProperty minifyProperty = MinifyProperty.getInstance();
         InputOutput io = IOProvider.getDefault().getIO(Bundle.CTL_Minify(), false);
         MinifyUtil util = new MinifyUtil();
 
@@ -104,16 +78,15 @@ public final class MinifyWebContent implements ActionListener {
             FileObject source = context.getPrimaryFile();
             FileObject target = null;
 
-            if (minifyProperty.isSeparatBuild()) {
-                File sourceFile = FileUtil.toFile(source);
-                File targetFile = getTargetFolder(new File(sourceFile.getParentFile().getPath() + File.separator + sourceFile.getName() + "_BUILD"));
-                FileUtils.copyDirectory(sourceFile, targetFile);
-                target = FileUtil.toFileObject(targetFile);
+            if (FolderOptionsModel.getDefault().getCreateSeparateBuildFolderOption()) {
+                File sourceFolder = FileUtil.toFile(source);
+                File targetFolder = FileUtils.getTargetFolder(new File(sourceFolder.getParentFile().getPath() + File.separator + sourceFolder.getName() + "_minified"));
+                target = FileUtil.toFileObject(targetFolder);
             } else {
                 target = source;
             }
 
-            MinifyResult minifyResult = util.minify(target, minifyProperty);
+            MinifyResult minifyResult = util.minify(source, target);
             long endTime = new Date().getTime();
             long totalTime = endTime - startTime;
 
@@ -151,7 +124,7 @@ public final class MinifyWebContent implements ActionListener {
                         + "After Minifying JSON Files Size :  " + minifyResult.getOutputJsonFilesSize() + " Bytes \n"
                         + "JSON Space Saved " + jsonSpaceSaved + "% \n\n";
             }
-            if (minifyProperty.isEnableOutputLogAlert()) {
+            if (FolderOptionsModel.getDefault().getEnableOutputLogAlertOption()) {
                 showNotification(minifyResult, jsEval, cssEval, htmlEval, xmlEval, jsonEval, totalTime);
             }
         } catch (HeadlessException | IOException ex) {

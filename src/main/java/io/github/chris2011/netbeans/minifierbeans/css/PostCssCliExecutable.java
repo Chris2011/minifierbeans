@@ -72,6 +72,11 @@ public class PostCssCliExecutable {
         Future<Integer> task = getExecutable("Minification in progress")
                 .additionalParameters(getGenerateParams(inputFile, outputFile))
                 .run(getDescriptor());
+//        ProcessBuilder pb = getExecutable("Minification in progress");
+//        pb.setArguments(getGenerateParams(inputFile, outputFile));
+//        Future<Integer> task = 
+////                .setArguments().call();
+////                .run(getDescriptor());
 
         try {
             assert task != null : postCssPath;
@@ -84,6 +89,10 @@ public class PostCssCliExecutable {
     private ExternalExecutable getExecutable(String title) {
         assert title != null;
 
+//        ProcessBuilder pb = ProcessBuilder.getLocal();
+//        pb.setWorkingDirectory(getWorkDir());
+//
+//        return pb;
         return new ExternalExecutable(getCommand())
                 .workDir(getWorkDir())
                 .displayName(title)
@@ -109,6 +118,7 @@ public class PostCssCliExecutable {
 
     private File getWorkDir() {
         if (project == null) {
+//            return FileUtils.TMP_DIR.getAbsolutePath();
             return FileUtils.TMP_DIR;
         }
 
@@ -116,6 +126,7 @@ public class PostCssCliExecutable {
 
         assert workDir != null : project.getProjectDirectory();
 
+//        return workDir.getAbsolutePath();
         return workDir;
     }
 

@@ -16,20 +16,13 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel2" pref="794" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="headerLabelJS" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="headerScrollPaneJS" alignment="0" min="-2" pref="339" max="-2" attributes="0"/>
-                          <Component id="jPanel1" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel2" alignment="1" pref="794" max="32767" attributes="0"/>
+                  <Component id="headerLabelJs" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="headerScrollPaneJs" alignment="0" min="-2" pref="339" max="-2" attributes="0"/>
+                  <Component id="jPanel1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -38,15 +31,15 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" pref="119" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="headerLabelJS" min="-2" max="-2" attributes="0"/>
+              <Component id="headerLabelJs" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-              <Component id="headerScrollPaneJS" min="-2" pref="139" max="-2" attributes="0"/>
+              <Component id="headerScrollPaneJs" min="-2" pref="139" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -94,16 +87,15 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="newJSFile" min="-2" max="-2" attributes="0"/>
+                          <Component id="chbGenerateNewJsFile" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="preExtensionJS" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="txtJsPreExtension" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="extLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="autoMinifyJS" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="chbMinifyOnSave" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -112,7 +104,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="closureCompilerArgumentsHintsLabel" max="32767" attributes="0"/>
-                      <Component id="closureCompilerFlagsTextField" max="32767" attributes="0"/>
+                      <Component id="txtClosureCompilerFlagsTextField" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
@@ -121,34 +113,34 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="closureCompilerFlagsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="closureCompilerFlagsTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtClosureCompilerFlagsTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="closureCompilerArgumentsHintsLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="autoMinifyJS" min="-2" max="-2" attributes="0"/>
+                  <Component id="chbMinifyOnSave" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="newJSFile" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chbGenerateNewJsFile" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="extLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="preExtensionJS" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="txtJsPreExtension" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="12" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JCheckBox" name="autoMinifyJS">
+        <Component class="javax.swing.JCheckBox" name="chbMinifyOnSave">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/javascript/ui/options/Bundle.properties" key="JsOptionsPanel.autoMinifyJS.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/javascript/ui/options/Bundle.properties" key="JsOptionsPanel.chbMinifyOnSave.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
           </Properties>
@@ -156,13 +148,13 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="newJSFile">
+        <Component class="javax.swing.JCheckBox" name="chbGenerateNewJsFile">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/javascript/ui/options/Bundle.properties" key="JsOptionsPanel.newJSFile.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/javascript/ui/options/Bundle.properties" key="JsOptionsPanel.chbGenerateNewJsFile.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
           </Properties>
@@ -170,10 +162,10 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="preExtensionJS">
+        <Component class="javax.swing.JTextField" name="txtJsPreExtension">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/javascript/ui/options/Bundle.properties" key="JsOptionsPanel.preExtensionJS.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/javascript/ui/options/Bundle.properties" key="JsOptionsPanel.txtJsPreExtension.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -197,12 +189,15 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="closureCompilerFlagsTextField">
+        <Component class="javax.swing.JTextField" name="txtClosureCompilerFlagsTextField">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/javascript/ui/options/Bundle.properties" key="JsOptionsPanel.closureCompilerFlagsTextField.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/javascript/ui/options/Bundle.properties" key="JsOptionsPanel.txtClosureCompilerFlagsTextField.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="closureCompilerArgumentsHintsLabel">
           <Properties>
@@ -216,21 +211,24 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="headerLabelJS">
+    <Component class="javax.swing.JLabel" name="headerLabelJs">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/javascript/ui/options/Bundle.properties" key="JsOptionsPanel.headerLabelJS.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/javascript/ui/options/Bundle.properties" key="JsOptionsPanel.headerLabelJs.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="headerScrollPaneJS">
+    <Container class="javax.swing.JScrollPane" name="headerScrollPaneJs">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JEditorPane" name="headerEditorPaneJS">
+        <Component class="javax.swing.JEditorPane" name="txtHeaderEditorPaneJs">
+          <Properties>
+            <Property name="contentType" type="java.lang.String" value="text/javascript" noResource="true"/>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
           </AuxValues>

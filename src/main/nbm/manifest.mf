@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
+OpenIDE-Module-Layer: io/github/chris2011/netbeans/minifierbeans/layer.xml
 OpenIDE-Module-Localizing-Bundle: io/github/chris2011/netbeans/minifierbeans/Bundle.properties
 OpenIDE-Module-Requires: org.netbeans.modules.web.clientproject
 OpenIDE-Module-Install: io/github/chris2011/netbeans/minifierbeans/Installer.class

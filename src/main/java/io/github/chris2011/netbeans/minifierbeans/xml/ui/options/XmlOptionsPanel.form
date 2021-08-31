@@ -18,19 +18,14 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel1" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="jPanel2" min="-2" pref="794" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
+              <Component id="jPanel1" max="32767" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="headerScrollPaneXML" alignment="0" min="-2" pref="339" max="-2" attributes="0"/>
-                  <Component id="headerLabelXML" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="headerScrollPaneXml" alignment="0" min="-2" pref="339" max="-2" attributes="0"/>
+                  <Component id="headerLabelXml" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jPanel2" alignment="0" min="-2" pref="794" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
@@ -39,14 +34,15 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" pref="119" max="-2" attributes="0"/>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
-              <Component id="headerLabelXML" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="headerLabelXml" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="headerScrollPaneXML" min="-2" pref="145" max="-2" attributes="0"/>
+              <Component id="headerScrollPaneXml" min="-2" pref="139" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -59,7 +55,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="xmlMinifierLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="409" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -99,24 +95,19 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="newXMLFile" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="preExtensionXML" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="extLabel" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="autoMinifyXML" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="chbGenerateNewXmlFile" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="txtXmlPreExtension" min="-2" pref="50" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="extLabel" min="-2" max="-2" attributes="0"/>
               </Group>
+              <Component id="chbMinifyOnSave" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
                   <Component id="xmlMinifierFlagsLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="xmlMinifierArgumentsHintsLabel" alignment="0" max="32767" attributes="0"/>
-                      <Component id="xmlMinifierFlagsTextField" alignment="0" min="-2" pref="707" max="-2" attributes="0"/>
+                      <Component id="txtXmlMinifierFlags" alignment="0" min="-2" pref="707" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -124,34 +115,34 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="xmlMinifierFlagsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="xmlMinifierFlagsTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtXmlMinifierFlags" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="xmlMinifierArgumentsHintsLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="autoMinifyXML" min="-2" max="-2" attributes="0"/>
+                  <Component id="chbMinifyOnSave" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="newXMLFile" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chbGenerateNewXmlFile" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="extLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="preExtensionXML" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="txtXmlPreExtension" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="12" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JCheckBox" name="newXMLFile">
+        <Component class="javax.swing.JCheckBox" name="chbGenerateNewXmlFile">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/xml/ui/options/Bundle.properties" key="XmlOptionsPanel.newXMLFile.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/xml/ui/options/Bundle.properties" key="XmlOptionsPanel.chbGenerateNewXmlFile.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
           </Properties>
@@ -159,23 +150,23 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="preExtensionXML">
+        <Component class="javax.swing.JTextField" name="txtXmlPreExtension">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/xml/ui/options/Bundle.properties" key="XmlOptionsPanel.preExtensionXML.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/xml/ui/options/Bundle.properties" key="XmlOptionsPanel.txtXmlPreExtension.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="autoMinifyXML">
+        <Component class="javax.swing.JCheckBox" name="chbMinifyOnSave">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/xml/ui/options/Bundle.properties" key="XmlOptionsPanel.autoMinifyXML.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/xml/ui/options/Bundle.properties" key="XmlOptionsPanel.chbMinifyOnSave.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
           </Properties>
@@ -200,12 +191,15 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="xmlMinifierFlagsTextField">
+        <Component class="javax.swing.JTextField" name="txtXmlMinifierFlags">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/xml/ui/options/Bundle.properties" key="XmlOptionsPanel.xmlMinifierFlagsTextField.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+              <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/xml/ui/options/Bundle.properties" key="XmlOptionsPanel.txtXmlMinifierFlags.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="xmlMinifierArgumentsHintsLabel">
           <Properties>
@@ -219,21 +213,24 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="headerLabelXML">
+    <Component class="javax.swing.JLabel" name="headerLabelXml">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/xml/ui/options/Bundle.properties" key="XmlOptionsPanel.headerLabelXML.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="io/github/chris2011/netbeans/minifierbeans/xml/ui/options/Bundle.properties" key="XmlOptionsPanel.headerLabelXml.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="headerScrollPaneXML">
+    <Container class="javax.swing.JScrollPane" name="headerScrollPaneXml">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JEditorPane" name="headerEditorPaneXML">
+        <Component class="javax.swing.JEditorPane" name="txtHeaderEditorPaneXml">
+          <Properties>
+            <Property name="contentType" type="java.lang.String" value="text/xml" noResource="true"/>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
           </AuxValues>
