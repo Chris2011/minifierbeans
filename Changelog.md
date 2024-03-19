@@ -1,5 +1,11 @@
 # Changelog
 
+## Update in 3.5.0
+
+### General
+1 - [#101](https://github.com/Chris2011/minifierbeans/issues/101): Update compilers of 2024-02-23. (PR [#102](https://github.com/Chris2011/minifierbeans/pull/102) by [yoancutillas](https://github.com/yoancutillas))  
+
+
 ## Update in 3.4.0
 
 ### General
