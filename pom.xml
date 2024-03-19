@@ -5,7 +5,7 @@
     <!-- START Common stuff, can be copied and changed for other plugins -->
     <groupId>io.github.chris2011.netbeans.minifierbeans</groupId>
     <artifactId>Minifierbeans</artifactId>
-    <version>3.4.0</version>
+    <version>3.5.0</version>
     <packaging>nbm</packaging>
     <name>Minifierbeans</name>
     <url>https://github.com/Chris2011/minifierbeans</url>
@@ -291,6 +291,6 @@
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <netbeans.version>RELEASE90</netbeans.version>
+        <netbeans.version>RELEASE110</netbeans.version>
     </properties>
 </project>

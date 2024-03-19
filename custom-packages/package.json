@@ -1,13 +1,16 @@
 {
     "name": "minifierbeans-custom-packages",
-    "version": "1.4.1",
+    "version": "1.5.0",
     "description": "CLIs to minify JS, CSS, HTML and XML.",
     "devDependencies": {
-        "cssnano": "5.0.8",
-        "google-closure-compiler": "20210808.0.0",
-        "html-minifier-terser": "6.0.2",
-        "minify-xml": "3.2.0",
-        "postcss": "8.3.6",
-        "postcss-cli": "8.3.1"
+        "cssnano": "^6.1.0",
+        "google-closure-compiler": "^20240317.0.0",
+        "html-minifier-terser": "^7.2.0",
+        "minify-xml": "^4.4.1",
+        "postcss": "^8.4.37",
+        "postcss-cli": "^11.0.0"
+    },
+    "dependencies": {
+        "browserslist": "^4.23.0"
     }
 }
