@@ -5,9 +5,6 @@
 ![Contributors](https://img.shields.io/github/contributors/chris2011/minifierbeans.svg)
 ![Downloads](https://img.shields.io/github/downloads/chris2011/minifierbeans/total.svg)
 
-# ⚠️ KNOWN BUG ⚠️
-Atm there is a problem after installing while extracting. If you encounter the same problem like an exception while extracting or while using a minifier action please make sure that you have the latest custom-packages version 1.5.1 (can be found in package.json) and manually extract the archive into your usersfolder/.netbeans/minifierbeans/custom-packages/... (custom-packages/custom-packages is not the correct path)
-
 ## Description
 
 Plugin to minify JS , CSS and HTML for quicker page load times by reducing the size of js/css/html files.
