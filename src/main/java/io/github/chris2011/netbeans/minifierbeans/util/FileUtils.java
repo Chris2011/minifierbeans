@@ -1,7 +1,7 @@
 package io.github.chris2011.netbeans.minifierbeans.util;
 
 import io.github.chris2011.netbeans.minifierbeans.Installer;
-import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -41,17 +41,11 @@ import org.openide.util.Utilities;
 // XXX copied from PHP
 public final class FileUtils {
     private static final String DOWNLOAD_URL = "https://github.com/Chris2011/minifierbeans/releases/download/1.0.0-cp/custom-packages.zip";
-
     private static final int BUFFER_SIZE = 4096;
-
     private static final RequestProcessor RP = new RequestProcessor(Installer.class);
-
     private static final Logger LOGGER = Logger.getLogger(FileUtils.class.getName());
-
     private static final boolean IS_WINDOWS = Utilities.isWindows();
-
     public static final File TMP_DIR = new File(System.getProperty("java.io.tmpdir")); // NOI18N
-    
 
     private FileUtils() {
     }
@@ -199,8 +193,7 @@ public final class FileUtils {
         return sb.toString();
     }
 
-    public static void downloadFile(String saveDir)
-            throws IOException {
+    public static void downloadFile(String saveDir) throws IOException {
         final ProgressHandle handle = ProgressHandle.createHandle("Downloading minifierbeans archive");
         handle.start();
 
@@ -250,62 +243,54 @@ public final class FileUtils {
     }
 
     private static void extractArchive(String fileZip, String destDir) throws FileNotFoundException, IOException {
-        ProgressHandle handle = ProgressHandle.createHandle("Extracting minifierbeans archive");
+        ProgressHandle handle = ProgressHandle.createHandle("Extracting archive");
 
-        //Open the file 
-        try ( ZipFile file = new ZipFile(fileZip)) {
+        try (ZipFile zipFile = new ZipFile(fileZip)) {
             FileSystem fileSystem = FileSystems.getDefault();
-            //Get file entries
-            Enumeration<? extends ZipEntry> entries = file.entries();
+            Enumeration<? extends ZipEntry> entries = zipFile.entries();
 
-            int bytesRead;
-            int nread = 0;
+            int totalEntries = Collections.list(zipFile.entries()).size();
+            handle.start(totalEntries);
 
-            // TODO: Change to size of the zip file.
-            handle.start(100000000);
+            int completedEntries = 0;
 
-            //We will unzip files in this folder
-            //Iterate over entries
             while (entries.hasMoreElements()) {
                 ZipEntry entry = entries.nextElement();
-                //If directory then create a new directory in uncompressed folder
+                Path entryDestination = fileSystem.getPath(destDir, entry.getName());
+
                 if (entry.isDirectory()) {
-                    Files.createDirectories(fileSystem.getPath(destDir + entry.getName()));
-                } //Else create the file
-                else {
-                    InputStream is = file.getInputStream(entry);
-                    BufferedInputStream bis = new BufferedInputStream(is);
-                    String uncompressedFileName = destDir + entry.getName();
-                    Path uncompressedFilePath = fileSystem.getPath(uncompressedFileName);
-                    Files.createFile(uncompressedFilePath);
+                    Files.createDirectories(entryDestination);
+                } else {
+                    Files.createDirectories(entryDestination.getParent());
+                    try (InputStream in = zipFile.getInputStream(entry); BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(entryDestination))) {
 
-                    nread += entry.getSize();
-
-                    try ( FileOutputStream fileOutput = new FileOutputStream(uncompressedFileName)) {
-                        while (bis.available() > 0) {
-                            bytesRead = bis.read();
-
-                            fileOutput.write(bytesRead);
+                        byte[] buffer = new byte[4096];
+                        int length;
+                        while ((length = in.read(buffer)) > 0) {
+                            bos.write(buffer, 0, length);
                         }
-
-                        handle.progress(nread);
                     } catch (Exception ex) {
                         handle.finish();
-                        
+
                         ex.printStackTrace();
                         NotificationDisplayer.getDefault().notify("Error while extracting", NotificationDisplayer.Priority.HIGH.getIcon(), ex.getLocalizedMessage(), null);
                     }
+
+                    completedEntries++;
+                    handle.progress(completedEntries);
                 }
             }
 
             handle.finish();
-            NotificationDisplayer.getDefault().notify("Extracting successful", NotificationDisplayer.Priority.NORMAL.getIcon(), String.format("Done. %d MB extracted.", nread / 1024 / 1024), null);
+            NotificationDisplayer.getDefault().notify("Extracting successful", NotificationDisplayer.Priority.NORMAL.getIcon(), "Extraction complete.", null);
         } catch (IOException ex) {
             handle.finish();
+
+            ex.printStackTrace();
             NotificationDisplayer.getDefault().notify("Error while extracting", NotificationDisplayer.Priority.HIGH.getIcon(), ex.getLocalizedMessage(), null);
         }
     }
-    
+
     /**
      * Downloads a file from a URL
      *
@@ -324,7 +309,7 @@ public final class FileUtils {
 
         return directoryToBeDeleted.delete();
     }
-    
+
     public static String getRandomPostFix() {
         DateFormat df = new SimpleDateFormat("_[MM-dd-yyyy_HH-mm-ss]");
         Date today = Calendar.getInstance().getTime();
