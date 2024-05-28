@@ -1,6 +1,6 @@
 {
     "name": "minifierbeans-custom-packages",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "description": "CLIs to minify JS, CSS, HTML and XML.",
     "devDependencies": {
         "cssnano": "^6.1.0",
